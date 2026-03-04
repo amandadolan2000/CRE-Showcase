@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toronto CBD Office — 2026 Outlook</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --black:#111; --dark:#1a1a1a; --mid:#555; --light:#999;
+    --border:#e2e2e2; --bg:#f7f7f7; --white:#fff;
+    --pink:#006A4D; --pink-light:#e6f2ee; --pink-dark:#004d38;
+    --green:#27ae60; --green-light:#e8f8ef;
+    --amber:#e67e22; --amber-light:#fef5e7;
+    --red:#c0392b; --red-light:#fdecea;
+    --gold:#b8962e; --gold-light:#fdf6e3;
+    --slate:#2c3e50;
+  }
+  body { font-family:'Georgia',serif; background:var(--bg); color:var(--black); font-size:14px; line-height:1.6; }
+  @media print { .no-print{display:none!important} .page{box-shadow:none;margin:0;border-radius:0} body{background:white} }
+
+  /* PRINT BAR */
+  .print-bar { background:var(--pink); padding:0.8rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+  .print-bar span { font-family:sans-serif; font-size:0.75rem; color:white; letter-spacing:0.04em; }
+  .print-btn { font-family:sans-serif; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; background:white; color:var(--pink); border:none; padding:0.45rem 1.1rem; cursor:pointer; font-weight:700; transition:all 0.2s; }
+  .print-btn:hover { background:var(--pink-light); }
+
+  .container { max-width:960px; margin:0 auto; padding:2rem 1rem; }
+  .page { background:var(--white); margin-bottom:2rem; box-shadow:0 2px 16px rgba(0,0,0,0.07); }
+
+  /* COVER */
+  .cover { min-height:460px; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(150deg,#0d0d0d 0%,#0a1a12 55%,#0d2018 100%); color:white; position:relative; overflow:hidden; }
+  .cover-watermark { position:absolute; right:-2rem; bottom:-3rem; font-family:sans-serif; font-size:16rem; font-weight:900; color:rgba(0,106,77,0.08); letter-spacing:-0.05em; pointer-events:none; line-height:1; }
+  .cover-top { position:relative; z-index:2; padding:2.5rem 3rem 0; display:flex; justify-content:space-between; align-items:flex-start; }
+  .cover-logo { font-family:sans-serif; font-size:1.3rem; font-weight:900; color:var(--pink); letter-spacing:0.05em; }
+  .cover-logo span { color:white; }
+  .cover-pill { font-family:sans-serif; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.45); padding:0.3rem 0.8rem; }
+  .cover-main { position:relative; z-index:2; padding:2rem 3rem; }
+  .cover-kicker { font-family:sans-serif; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--pink); margin-bottom:0.8rem; display:flex; align-items:center; gap:0.8rem; }
+  .cover-kicker::before { content:''; display:block; width:2rem; height:1px; background:var(--pink); }
+  .cover-title { font-size:2.8rem; font-weight:400; line-height:1.1; color:white; margin-bottom:0.6rem; }
+  .cover-title em { font-style:italic; color:var(--pink); }
+  .cover-sub { font-family:sans-serif; font-size:0.82rem; color:rgba(255,255,255,0.45); margin-bottom:2.5rem; max-width:520px; line-height:1.6; }
+  .cover-call { display:inline-block; border:1px solid var(--pink); padding:1rem 1.5rem; margin-bottom:2rem; max-width:560px; }
+  .cover-call-label { font-family:sans-serif; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--pink); margin-bottom:0.4rem; }
+  .cover-call-text { font-size:1.05rem; color:white; line-height:1.5; font-style:italic; }
+  .cover-bottom { position:relative; z-index:2; padding:1.2rem 3rem; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+  .cover-author { font-family:sans-serif; font-size:0.72rem; color:rgba(255,255,255,0.4); }
+  .cover-author strong { color:white; display:block; }
+  .cover-date { font-family:sans-serif; font-size:0.65rem; color:rgba(255,255,255,0.25); letter-spacing:0.05em; }
+
+  /* SECTION */
+  .sec-header { background:var(--pink); color:white; padding:0.65rem 2rem; font-family:sans-serif; font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; }
+  .sec-body { padding:2rem; }
+  .sec-intro { font-size:0.92rem; color:var(--mid); line-height:1.95; margin-bottom:2rem; max-width:720px; }
+
+  /* CALL BOX */
+  .central-call { background:var(--pink); color:white; padding:2rem; margin-bottom:2rem; }
+  .central-call-label { font-family:sans-serif; font-size:0.65rem; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:0.6rem; }
+  .central-call-title { font-size:1.4rem; margin-bottom:0.8rem; font-weight:400; }
+  .central-call-body { font-size:0.88rem; color:rgba(255,255,255,0.85); line-height:1.85; }
+
+  /* ANALYST NOTE */
+  .analyst-note { background:var(--pink-light); border-left:3px solid var(--pink); padding:1.3rem 1.5rem; margin-top:1.5rem; font-size:0.85rem; color:var(--dark); line-height:1.85; }
+  .analyst-note strong { font-family:sans-serif; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--pink); display:block; margin-bottom:0.5rem; }
+
+  /* KPI STRIP */
+  .kpi-strip { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin-bottom:2rem; }
+  .kpi-cell { background:white; padding:1.1rem 1rem; }
+  .kpi-val { font-size:1.35rem; color:var(--dark); }
+  .kpi-val.up { color:var(--green); }
+  .kpi-val.dn { color:var(--pink); }
+  .kpi-label { font-family:sans-serif; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--light); margin-top:0.2rem; }
+  .kpi-delta { font-family:sans-serif; font-size:0.7rem; margin-top:0.2rem; color:var(--mid); }
+
+  /* TABLES */
+  table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+  th { background:var(--bg); font-family:sans-serif; font-size:0.63rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--mid); padding:0.6rem 0.8rem; text-align:left; border-bottom:2px solid var(--border); }
+  td { padding:0.55rem 0.8rem; border-bottom:1px solid var(--border); color:var(--dark); vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  .tr-total td { background:var(--pink-light); font-weight:600; color:var(--pink); border-top:2px solid var(--pink); }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .bull { color:var(--green); font-family:sans-serif; font-size:0.72rem; font-weight:700; }
+  .bear { color:var(--pink); font-family:sans-serif; font-size:0.72rem; font-weight:700; }
+  .neu { color:var(--amber); font-family:sans-serif; font-size:0.72rem; font-weight:700; }
+
+  /* SCENARIO */
+  .scenario-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; margin-bottom:2rem; }
+  @media(max-width:680px){ .scenario-grid{grid-template-columns:1fr} }
+  .scenario-card { border:1px solid var(--border); padding:1.5rem; }
+  .scenario-card.base { border-top:3px solid var(--pink); }
+  .scenario-card.bull { border-top:3px solid var(--green); }
+  .scenario-card.bear { border-top:3px solid var(--red); }
+  .scenario-label { font-family:sans-serif; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.5rem; }
+  .scenario-card.base .scenario-label { color:var(--pink); }
+  .scenario-card.bull .scenario-label { color:var(--green); }
+  .scenario-card.bear .scenario-label { color:var(--red); }
+  .scenario-title { font-size:0.95rem; color:var(--dark); margin-bottom:0.8rem; font-weight:400; }
+  .scenario-prob { font-family:sans-serif; font-size:0.72rem; color:var(--light); margin-bottom:1rem; }
+  .scenario-metrics { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem; }
+  .scenario-metric { display:flex; justify-content:space-between; font-size:0.78rem; padding:0.4rem 0; border-bottom:1px solid var(--border); }
+  .scenario-metric:last-child { border-bottom:none; }
+  .scenario-metric-label { color:var(--mid); }
+  .scenario-metric-val { font-family:sans-serif; font-weight:600; color:var(--dark); }
+  .scenario-triggers { font-size:0.78rem; color:var(--mid); line-height:1.7; }
+  .scenario-triggers strong { font-family:sans-serif; font-size:0.63rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--light); display:block; margin-bottom:0.3rem; }
+
+  /* THEME CARDS */
+  .theme-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+  @media(max-width:640px){ .theme-grid{grid-template-columns:1fr} }
+  .theme-card { border:1px solid var(--border); padding:1.5rem; }
+  .theme-icon { font-size:1.5rem; margin-bottom:0.8rem; }
+  .theme-title { font-family:sans-serif; font-size:0.82rem; font-weight:700; color:var(--dark); margin-bottom:0.5rem; }
+  .theme-body { font-size:0.82rem; color:var(--mid); line-height:1.75; margin-bottom:0.8rem; }
+  .theme-call { font-family:sans-serif; font-size:0.72rem; padding:0.4rem 0.7rem; display:inline-block; }
+  .theme-call.bull { background:var(--green-light); color:var(--green); }
+  .theme-call.bear { background:var(--red-light); color:var(--red); }
+  .theme-call.neu { background:var(--amber-light); color:var(--amber); }
+
+  /* SUPPLY TIMELINE */
+  .timeline { position:relative; padding-left:2rem; margin-top:1rem; }
+  .timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:1.5rem; }
+  .tl-dot { position:absolute; left:-2.35rem; top:0.3rem; width:10px; height:10px; border-radius:50%; border:2px solid white; }
+  .tl-dot.pink { background:var(--pink); outline:2px solid var(--pink); }
+  .tl-dot.green { background:var(--green); outline:2px solid var(--green); }
+  .tl-dot.amber { background:var(--amber); outline:2px solid var(--amber); }
+  .tl-dot.grey { background:var(--light); outline:2px solid var(--light); }
+  .tl-date { font-family:sans-serif; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--light); margin-bottom:0.2rem; }
+  .tl-title { font-size:0.88rem; color:var(--dark); margin-bottom:0.2rem; }
+  .tl-body { font-size:0.78rem; color:var(--mid); line-height:1.65; }
+
+  /* BIFURCATION */
+  .bifurcation { display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--border); }
+  .bif-col { padding:1.5rem; }
+  .bif-col.premium { background:var(--green-light); border-right:1px solid var(--border); }
+  .bif-col.commodity { background:var(--red-light); }
+  .bif-header { font-family:sans-serif; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1rem; font-weight:700; }
+  .bif-col.premium .bif-header { color:var(--green); }
+  .bif-col.commodity .bif-header { color:var(--red); }
+  .bif-list { list-style:none; display:flex; flex-direction:column; gap:0.5rem; }
+  .bif-list li { font-size:0.82rem; color:var(--dark); padding-left:1rem; position:relative; line-height:1.6; }
+  .bif-col.premium .bif-list li::before { content:'↑'; position:absolute; left:0; color:var(--green); font-weight:700; font-family:sans-serif; }
+  .bif-col.commodity .bif-list li::before { content:'↓'; position:absolute; left:0; color:var(--red); font-weight:700; font-family:sans-serif; }
+  @media(max-width:580px){ .bifurcation{grid-template-columns:1fr} .bif-col.premium{border-right:none;border-bottom:1px solid var(--border)} }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+  @media(max-width:640px){ .two-col{grid-template-columns:1fr} }
+  h3 { font-size:0.92rem; font-weight:400; color:var(--dark); margin-bottom:1rem; }
+  .source-line { font-family:sans-serif; font-size:0.65rem; color:var(--light); margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); line-height:1.7; }
+  .disclaimer { padding:1.5rem 2rem; background:var(--bg); border-top:1px solid var(--border); font-family:sans-serif; font-size:0.65rem; color:var(--light); line-height:1.6; }
+  .tag { display:inline-block; font-family:sans-serif; font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:2px; margin-right:0.3rem; }
+  .tag-bull { background:var(--green-light); color:var(--green); }
+  .tag-bear { background:var(--red-light); color:var(--red); }
+  .tag-neu { background:var(--amber-light); color:var(--amber); }
+</style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  <span>Toronto CBD Office — 2026 Outlook · Amanda Dolan, Research Analyst</span>
+  <button class="print-btn" onclick="window.print()">⬇ Download PDF</button>
+</div>
+
+<div class="container">
+
+  <!-- COVER -->
+  <div class="page">
+    <div class="cover">
+      <div class="cover-watermark">2026</div>
+      <div class="cover-top">
+        <div class="cover-logo">CBRE<span>.</span></div>
+        <div class="cover-pill">Original Research · Forward-Looking</div>
+      </div>
+      <div class="cover-main">
+        <div class="cover-kicker">Toronto CBD Office Market</div>
+        <div class="cover-title">A Tale of<br><em>Two Markets</em></div>
+        <div class="cover-sub">A forward-looking outlook on Toronto's downtown office market for 2026 — analysing supply constraints, demand dynamics, bifurcation risk, and the investment implications of a structurally divided market.</div>
+        <div class="cover-call">
+          <div class="cover-call-label">Central Thesis</div>
+          <div class="cover-call-text">"Toronto CBD office is not in a broad recovery. It is in a bifurcated one — and the gap between premium and commodity is about to widen permanently."</div>
+        </div>
+      </div>
+      <div class="cover-bottom">
+        <div class="cover-author"><strong>Amanda Dolan</strong>Research Analyst · CBRE Canada</div>
+        <div class="cover-date">Published March 2026 · Based on Q4 2025 Market Data</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THESIS -->
+  <div class="page">
+    <div class="sec-header">01 — The Central Thesis</div>
+    <div class="sec-body">
+
+      <div class="central-call">
+        <div class="central-call-label">Our Call</div>
+        <div class="central-call-title">A Tale of Two Markets</div>
+        <div class="central-call-body">Toronto's downtown office market enters 2026 with genuine momentum — but that momentum is not evenly distributed. AAA and well-positioned Class A product is in a supply-constrained upcycle. Class B/C is experiencing structural obsolescence that no amount of rent concession will fully reverse. Three forces are converging to make 2026 the year this bifurcation becomes permanent: the disappearance of new supply, accelerating RTO mandates pulling tenants toward quality, and large-block scarcity forcing major occupiers to make decisions now or lose access to premium space entirely. For investors, the window to acquire stabilised downtown Toronto office at historically wide cap rates is closing. For Class B/C landlords, the path forward runs through repositioning or conversion — not leasing recovery.</div>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi-cell">
+          <div class="kpi-val dn">15.0%</div>
+          <div class="kpi-label">Overall Vacancy (Q4 2025)</div>
+          <div class="kpi-delta">▼ 160 bps QoQ</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-val dn">3.0%</div>
+          <div class="kpi-label">AAA Vacancy (Q4 2025)</div>
+          <div class="kpi-delta">▼ 450 bps YoY</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-val up">2.6M SF</div>
+          <div class="kpi-label">2025 Annual Absorption</div>
+          <div class="kpi-delta">Strongest since 2016</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-val dn">25.4%</div>
+          <div class="kpi-label">Class B/C Vacancy</div>
+          <div class="kpi-delta">▲ YoY — still rising</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-val">15</div>
+          <div class="kpi-label">Blocks >100K SF Available</div>
+          <div class="kpi-delta">Decreasing rapidly</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-val up">$35.90</div>
+          <div class="kpi-label">Avg. Asking Net Rent/SF</div>
+          <div class="kpi-delta">Q1 2025 — 7-qtr high</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-val">2.8M SF</div>
+          <div class="kpi-label">National Construction Pipeline</div>
+          <div class="kpi-delta">69.4% pre-leased</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-val">2.25%</div>
+          <div class="kpi-label">Bank of Canada Rate</div>
+          <div class="kpi-delta">Held Dec 10, 2025</div>
+        </div>
+      </div>
+
+      <div class="analyst-note">
+        <strong>Why This Matters</strong>
+        The headline vacancy number of 15.0% obscures the reality of what is actually two distinct markets operating under the same label. A recruiter, investor, or occupier looking at Toronto CBD office through an aggregate lens will systematically misread the opportunity. The insight that matters in 2026 is not where the average is — it's understanding the gap between AAA at 3.0% and Class B/C at 25.4%, and what structural forces will drive that gap wider over the next 12–24 months.
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPLY -->
+  <div class="page">
+    <div class="sec-header">02 — The Supply Picture: A Structural Constraint, Not a Cycle</div>
+    <div class="sec-body">
+      <p class="sec-intro">The most underappreciated driver of the 2026 outlook is the near-total absence of new office supply. Toronto's development pipeline has effectively reached zero for downtown product — and what little is coming is already fully spoken for. This is not a temporary lull. It is a multi-year structural constraint that will define market dynamics well into the decade.</p>
+
+      <div class="two-col">
+        <div>
+          <h3>Active Development Pipeline — Downtown Toronto</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot pink"></div>
+              <div class="tl-date">Q1 2026</div>
+              <div class="tl-title">CIBC Square II — 1,500,000 SF</div>
+              <div class="tl-body">The last significant project in the downtown Toronto pipeline. 50 storeys. 100% pre-leased. Anchored by Canada's Big Five banks and major financial tenants. Delivers no net new available supply to the market.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot amber"></div>
+              <div class="tl-date">Potential 2027+</div>
+              <div class="tl-title">The HUB — 30 Bay Street (Speculative)</div>
+              <div class="tl-body">The most likely next significant development. Market intelligence suggests a potential bank pre-lease could trigger construction commencement in early 2026 — but even at an optimistic timeline, delivery would not occur until 2029/30 at the earliest. No relief for the current supply crunch.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot grey"></div>
+              <div class="tl-date">2026 Onwards</div>
+              <div class="tl-title">No Other Meaningful Supply</div>
+              <div class="tl-body">Construction starts hit multi-decade lows in 2025 — just 83,000 SF of new projects nationally in H2 2025. The national pipeline of 2.8M SF is 69.4% pre-leased. For practical purposes, the downtown Toronto office supply pipeline is empty beyond CIBC Square II.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Supply Constraint — The Investment Implication</h3>
+          <table>
+            <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+            <tbody>
+              <tr><td>Current development pipeline (national)</td><td class="num">2.8M SF</td></tr>
+              <tr><td>Pre-leased share of pipeline</td><td class="num">69.4%</td></tr>
+              <tr><td>Available new supply post-CIBC Sq. II</td><td class="num">~0 SF</td></tr>
+              <tr><td>Estimated supply gap (AAA/Class A)</td><td class="num">Structural</td></tr>
+              <tr><td>Estimated year of next meaningful delivery</td><td class="num">2029–2030</td></tr>
+              <tr><td>Annual construction starts (H2 2025)</td><td class="num">83,000 SF</td></tr>
+            </tbody>
+          </table>
+          <div class="analyst-note" style="margin-top:1.2rem;">
+            <strong>Analyst View</strong>
+            The development cycle that commenced in 2020 delivered over 9.7M SF of new downtown supply through 2025 — contributing to the vacancy spike that dominated headlines. That cycle is now definitively over. With no meaningful new supply on the horizon until 2029/30 at the earliest, the vacancy pressure of the past three years will not be replicated. This makes the current window — where cap rates are still wide and vacancy still elevated — potentially the last attractive entry point for core Toronto CBD office before the supply constraint fully prices in.
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem;">
+        <h3>Conversion Activity — Removing Inventory, Not Adding It</h3>
+        <p style="font-size:0.85rem;color:var(--mid);line-height:1.85;margin-bottom:1rem;">Eight conversion projects removed over 1.0M SF of office inventory in Q4 2025 alone. While the majority of this activity is concentrated in Calgary, Toronto conversions — primarily Class C assets in Downtown East and peripheral locations — are quietly shrinking the overall inventory base. This dynamic further tightens effective supply of premium space by removing Class B/C product that might otherwise compete (however weakly) for tenants.</p>
+        <table>
+          <thead><tr><th>Conversion Type</th><th class="num">Share of Total (Since 2021)</th><th>Implication</th></tr></thead>
+          <tbody>
+            <tr><td>Office-to-Residential</td><td class="num">76.4%</td><td>Permanent inventory removal — no reversal possible</td></tr>
+            <tr><td>Life Sciences / Education / Hotel / Mixed-Use</td><td class="num">21.2%</td><td>Repositioning — retains some economic life for asset</td></tr>
+            <tr><td>Other</td><td class="num">2.4%</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="source-line">Sources: CBRE Canada Q4 2025 Toronto Downtown Office Figures; CBRE Canada Q4 2025 Canada Office Figures; Newmark Q3 2025 Downtown Toronto Office Market Report (3Q25); CBRE Canada Canadian Office Market Had Another Strong Year in 2025.</div>
+    </div>
+  </div>
+
+  <!-- DEMAND & RTO -->
+  <div class="page">
+    <div class="sec-header">03 — Demand Dynamics: RTO, Large-Block Scarcity & The Broadening Tenant Base</div>
+    <div class="sec-body">
+      <p class="sec-intro">Demand in Toronto's downtown office market has undergone a fundamental shift in 2025. What began as a flight-to-quality narrative driven by a handful of financial tenants has broadened into a multi-sector, RTO-driven demand story — and the convergence of accelerating RTO mandates with rapidly depleting large-block availability is creating the conditions for a structurally tighter leasing market in 2026.</p>
+
+      <div class="theme-grid">
+
+        <div class="theme-card">
+          <div class="theme-icon">🏦</div>
+          <div class="theme-title">RTO Mandates — The Big 5 Effect</div>
+          <div class="theme-body">Canada's five largest banks implemented four and five-day in-office requirements in 2025, directly driving the surge in Financial Core leasing. The Financial Core will set a new annual leasing record in 2025, surpassing the previous record of 2.5M SF set in 2024. RBC, Rogers, and Starbucks Canada all recalled staff in 2025/early 2026. Federal employees move to four days in-office from summer 2026 — adding government-covenant demand to an already tight premium market.</div>
+          <span class="theme-call bull">↑ Strongly Bullish for AAA/Class A</span>
+        </div>
+
+        <div class="theme-card">
+          <div class="theme-icon">🔲</div>
+          <div class="theme-title">Large-Block Scarcity — Forcing Decisions</div>
+          <div class="theme-body">Only 15 contiguous blocks of over 100,000 SF remain available in downtown Toronto — and this figure is declining rapidly. Major tenants requiring large-format space face heightened competition and an increasingly binary choice: commit now or lose access to quality space. This dynamic is accelerating lease decisions that might otherwise have been deferred due to macro uncertainty, creating a self-reinforcing absorption cycle in H1 2026.</div>
+          <span class="theme-call bull">↑ Bullish — Accelerating Decisions</span>
+        </div>
+
+        <div class="theme-card">
+          <div class="theme-icon">🌐</div>
+          <div class="theme-title">Broadening Tenant Demand</div>
+          <div class="theme-body">2025 leasing was dominated by financial institutions, but the tenant base is broadening. Wealthsimple, Lyft, and Nvidia secured significant downtown Toronto square footage in 2025. Tech, professional services, and life sciences tenants are increasingly active. CBRE's Q4 data confirms demand is "spreading across industry groups" — reducing concentration risk and supporting sustained absorption beyond the bank-driven cycle of the past two years.</div>
+          <span class="theme-call bull">↑ Bullish — Diversifying Demand</span>
+        </div>
+
+        <div class="theme-card">
+          <div class="theme-icon">⚠️</div>
+          <div class="theme-title">Macro Uncertainty — Tariffs & Caution</div>
+          <div class="theme-body">US tariff risk and broader geopolitical uncertainty weighed on business confidence in 2025. However, the evidence suggests this is a decision-timing risk, not a demand-destruction risk. Tenants are delaying, not withdrawing. And critically — delayed decisions in a supply-constrained market actually worsen large-block scarcity, since occupiers hold onto premium space longer rather than releasing it. CUSMA protections have so far mitigated the worst-case tariff scenarios for Canadian business confidence.</div>
+          <span class="theme-call neu">→ Neutral — Timing Risk Only</span>
+        </div>
+
+      </div>
+
+      <div class="analyst-note" style="margin-top:0;">
+        <strong>The Scarcity Loop</strong>
+        The interaction between RTO mandates and large-block scarcity creates a reinforcing dynamic that is underappreciated in most market commentary. As RTO mandates force tenants back into offices, the quality bar for acceptable space rises — employees will resist commuting to substandard environments. This directs demand exclusively toward AAA and well-amenitised Class A product. With only 15 large blocks remaining, tenants face a genuine scarcity constraint — and scarcity accelerates commitment. The result: absorption in the premium segment is likely to remain elevated in 2026 even if the macro environment softens.
+      </div>
+
+      <div class="source-line" style="margin-top:1.5rem;">Sources: CBRE Canada Q4 2025 Toronto Downtown Office Figures; Newmark Q3 2025 Downtown Toronto Office Market Report; Royal LePage Commercial Outlook 2026; Benefits & Pensions Monitor (Feb. 2026); Avison Young 2026 Canadian Market Outlook (Dec. 2025); Altus Group Toronto CRE Market Update Q4 2025.</div>
+    </div>
+  </div>
+
+  <!-- BIFURCATION -->
+  <div class="page">
+    <div class="sec-header">04 — The Bifurcation: Premium vs. Commodity</div>
+    <div class="sec-body">
+      <p class="sec-intro">The defining structural story of Toronto's downtown office market in 2026 is not recovery — it is bifurcation. The gap between AAA/Class A product and Class B/C is not cyclical softness on one side and cyclical strength on the other. It is a permanent reset of what tenants will accept, driven by RTO mandates that require employers to offer quality space to justify the commute.</p>
+
+      <div class="bifurcation">
+        <div class="bif-col premium">
+          <div class="bif-header">AAA / Class A — In Upcycle</div>
+          <ul class="bif-list">
+            <li>AAA vacancy at 3.0% — effectively full</li>
+            <li>Class A vacancy fell 450 bps in 2025 alone</li>
+            <li>Avg. asking net rent hit $35.90/SF — 7-quarter high</li>
+            <li>AAA net effective rents beginning to climb</li>
+            <li>Large-block scarcity driving landlord leverage</li>
+            <li>Inducements declining in premium tier</li>
+            <li>Financial Core will set new annual leasing record in 2025</li>
+            <li>Investment activity concentrated in AAA segment</li>
+            <li>CIBC Square II 100% pre-leased — validates flight-to-quality</li>
+          </ul>
+        </div>
+        <div class="bif-col commodity">
+          <div class="bif-header">Class B/C — Structural Obsolescence</div>
+          <ul class="bif-list">
+            <li>Class B/C vacancy at 25.4% — still rising YoY</li>
+            <li>Vacancy rising even as overall market tightens</li>
+            <li>Tenants relocating to Class A, not renewing in B/C</li>
+            <li>RTO mandates accelerating exodus — quality non-negotiable</li>
+            <li>Rent concessions failing to retain or attract tenants</li>
+            <li>Conversion is the most viable path for many assets</li>
+            <li>Investment volume declining — limited buyer appetite</li>
+            <li>Suburban B/C marginally better — North Yonge showing life</li>
+            <li>No structural catalyst for vacancy reversal in sight</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="analyst-note" style="margin-top:1.5rem;">
+        <strong>The Permanent Reset Thesis</strong>
+        Pre-pandemic, Class B/C space served a legitimate market function — it was cheaper, often well-located, and acceptable to cost-conscious tenants. The post-pandemic era has fundamentally altered this equation. Employers who are asking staff to commute four or five days a week are implicitly making a promise: the office will be worth the trip. A tired Class C floor plate in a building without amenities, cycling facilities, or quality end-of-trip infrastructure does not fulfil that promise. This is not about the economic cycle — it is about a permanent shift in what occupiers owe their employees in exchange for in-office attendance. Class B/C landlords who do not invest in repositioning their assets will face structural vacancy, not cyclical vacancy. The distinction matters enormously for underwriting.
+      </div>
+
+      <div class="source-line">Sources: CBRE Canada Q4 2025 Toronto Downtown Office Figures; Globe and Mail — Office Vacancy Rates Continue to Drop (Jan. 2026); Cushman & Wakefield Toronto Office Marketbeat Q3 2025 (AAA rent growth 11.7% YoY); Canadian Mortgage Professional — Downtown Toronto Office Rents Rise to Seven-Quarter High (Apr. 2025).</div>
+    </div>
+  </div>
+
+  <!-- SCENARIOS -->
+  <div class="page">
+    <div class="sec-header">05 — Scenario Analysis: Base, Bull & Bear</div>
+    <div class="sec-body">
+      <p class="sec-intro">Three scenarios for Toronto CBD office through Q4 2026. Our base case reflects the most likely outcome given current fundamentals. The bull and bear cases are calibrated around the key swing variables: macro stability, RTO mandate sustainability, and the pace of large-block absorption.</p>
+
+      <div class="scenario-grid">
+
+        <div class="scenario-card bull">
+          <div class="scenario-label">Bull Case</div>
+          <div class="scenario-title">Supply Crunch Meets Accelerating Demand</div>
+          <div class="scenario-prob">Probability: ~25%</div>
+          <div class="scenario-metrics">
+            <div class="scenario-metric"><span class="scenario-metric-label">Overall Vacancy (Q4 2026)</span><span class="scenario-metric-val bull">11–12%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">AAA Vacancy</span><span class="scenario-metric-val bull">&lt;2%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">AAA Rent Growth</span><span class="scenario-metric-val bull">+12–15%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">Annual Absorption</span><span class="scenario-metric-val bull">>2.0M SF</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">Cap Rate Direction</span><span class="scenario-metric-val bull">Compressing</span></div>
+          </div>
+          <div class="scenario-triggers">
+            <strong>Triggers</strong>
+            Tariff concerns resolve cleanly. RTO mandates strengthen to 5-day across major employers. Federal government 5-day mandate drives significant government-covenant leasing. Large-block absorption exhausted by mid-year, forcing new construction announcements. BoC rate cuts accelerate investment activity.
+          </div>
+        </div>
+
+        <div class="scenario-card base">
+          <div class="scenario-label">Base Case — Our Call</div>
+          <div class="scenario-title">Bifurcated Tightening — Premium Up, Commodity Flat</div>
+          <div class="scenario-prob">Probability: ~55%</div>
+          <div class="scenario-metrics">
+            <div class="scenario-metric"><span class="scenario-metric-label">Overall Vacancy (Q4 2026)</span><span class="scenario-metric-val" style="color:var(--pink)">13–14%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">AAA Vacancy</span><span class="scenario-metric-val" style="color:var(--pink)">2–3%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">AAA Rent Growth</span><span class="scenario-metric-val" style="color:var(--pink)">+6–10%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">Annual Absorption</span><span class="scenario-metric-val" style="color:var(--pink)">1.2–1.8M SF</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">Cap Rate Direction</span><span class="scenario-metric-val" style="color:var(--pink)">Modest compression</span></div>
+          </div>
+          <div class="scenario-triggers">
+            <strong>Conditions</strong>
+            Macro uncertainty persists but does not escalate materially. RTO mandates hold at 3–4 day norms. Large-block absorption continues at a measured pace. Federal 4-day mandate (summer 2026) adds incremental demand. B/C vacancy holds flat or rises slightly. BoC holds or cuts once more.
+          </div>
+        </div>
+
+        <div class="scenario-card bear">
+          <div class="scenario-label">Bear Case</div>
+          <div class="scenario-title">Macro Shock Delays Recovery</div>
+          <div class="scenario-prob">Probability: ~20%</div>
+          <div class="scenario-metrics">
+            <div class="scenario-metric"><span class="scenario-metric-label">Overall Vacancy (Q4 2026)</span><span class="scenario-metric-val bear">15–17%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">AAA Vacancy</span><span class="scenario-metric-val bear">4–5%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">AAA Rent Growth</span><span class="scenario-metric-val bear">Flat to +2%</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-label">Annual Absorption</span><span class="scenario-metric-val bear">&lt;0.8M SF</span></div>
+            <div class="scenario-metric"><span class="scenario-metric-val bear">Cap Rate Direction</span><span class="scenario-metric-val bear">Flat / widening</span></div>
+          </div>
+          <div class="scenario-triggers">
+            <strong>Triggers</strong>
+            US tariffs escalate significantly, triggering business confidence collapse and mass hiring freezes. RTO mandates reversed or softened as employers compete for talent. Recession causes space give-backs that offset leasing demand. BoC forced to hold rates higher than expected due to inflation.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="analyst-note">
+        <strong>Why We Lean Base Over Bull</strong>
+        The fundamentals clearly support a continued tightening in the premium segment — supply is gone, demand is real, and RTO is accelerating. But the macro environment introduces meaningful uncertainty that we do not think the consensus is fully pricing in. US tariff risk, while partially mitigated by CUSMA, remains a live threat to business confidence — and business confidence, not supply and demand alone, determines the pace of leasing decisions. We lean base case not because we doubt the structural bull case, but because the timing of that bull case is genuinely uncertain in a tariff-driven macro environment. The premium trade is right — the question is whether it plays out in 12 months or 24.
+      </div>
+    </div>
+  </div>
+
+  <!-- INVESTMENT IMPLICATIONS -->
+  <div class="page">
+    <div class="sec-header">06 — Investment Implications</div>
+    <div class="sec-body">
+      <p class="sec-intro">The bifurcation thesis has direct and differentiated implications for capital deployment across the Toronto CBD office market. The investment narrative for 2026 is not a single market view — it is a highly asset-specific story where location, class, and lease quality will determine outcomes more than macro conditions.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Asset Type</th>
+            <th>Our View</th>
+            <th>Cap Rate Outlook</th>
+            <th>Rent Outlook</th>
+            <th>Recommended Strategy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>AAA / Trophy — Financial District Core</strong></td>
+            <td><span class="bull">↑ Strongly Bullish</span></td>
+            <td>Compressing — 6.0–6.25% by Q4 2026</td>
+            <td>+6–10% AAA net effective</td>
+            <td>Acquire now — window closing as cap rate compression accelerates</td>
+          </tr>
+          <tr>
+            <td><strong>Class A — Well-Positioned, Renovated</strong></td>
+            <td><span class="bull">↑ Bullish</span></td>
+            <td>Modest compression — 6.25–6.75%</td>
+            <td>Firming — inducements declining</td>
+            <td>Selectively acquire; prioritise Union Station adjacency and amenity quality</td>
+          </tr>
+          <tr>
+            <td><strong>Class A — Value-Add / Repositioning</strong></td>
+            <td><span class="neu">→ Selective</span></td>
+            <td>Flat — 7.0–7.5%</td>
+            <td>Dependent on capex program</td>
+            <td>Only where repositioning budget is committed and location is defensible</td>
+          </tr>
+          <tr>
+            <td><strong>Class B/C — Downtown Core</strong></td>
+            <td><span class="bear">↓ Bearish</span></td>
+            <td>Widening or untradeable</td>
+            <td>Declining — deep concessions required</td>
+            <td>Conversion analysis only — underwrite as residential or alternative use</td>
+          </tr>
+          <tr>
+            <td><strong>Suburban Class A — North Yonge</strong></td>
+            <td><span class="neu">→ Cautiously Positive</span></td>
+            <td>Stable — 7.0–7.5%</td>
+            <td>Modest improvement as RTO spreads</td>
+            <td>Monitor — North Yonge showing early signs of spillover from downtown tightening</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="analyst-note" style="margin-top:1.5rem;">
+        <strong>The 70 York Precedent</strong>
+        CBRE's sale of 70 York Street — 210,000 SF, 92.5% occupied, 6.5% cap rate, $639/SF — in November 2025 is the most instructive data point available for pricing stabilised downtown Toronto Class A office. At $639/SF and a 6.5% going-in cap rate, the deal was transacted at a meaningful discount to replacement cost. In a market where new supply is effectively zero until 2030, and where AAA vacancy is at 3.0%, the replacement cost argument for premium downtown office strengthens considerably over a 3–5 year hold. Investors underwriting similar assets today at 6.5% are buying into a market where cap rate compression is the most likely directional outcome under our base case.
+      </div>
+
+      <div class="source-line">Sources: CBRE Canada Q4 2025 Toronto Downtown Office Figures; RENX — Desjardins Acquires 70 York Street (Nov. 2025); Altus Group Toronto CRE Market Update Q4 2025 ($1.3B office investment volume, 19% YoY decline — concentrated in AAA); PwC/ULI Emerging Trends in Real Estate Canada 2026; Avison Young 2026 Canadian Market Outlook.</div>
+    </div>
+  </div>
+
+  <!-- RISKS -->
+  <div class="page">
+    <div class="sec-header">07 — Key Risks to the Thesis</div>
+    <div class="sec-body">
+      <table>
+        <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Our Assessment</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>US Tariff Escalation</strong><br><span style="font-size:0.75rem;color:var(--light)">CUSMA protections partially mitigating but not eliminating risk</span></td>
+            <td><span class="neu">Medium</span></td>
+            <td><span class="bear">High</span></td>
+            <td>A sustained tariff conflict would depress business confidence and delay leasing decisions — particularly for large-block tenants. Does not change the structural supply thesis but could push the bull case 12–18 months to the right.</td>
+          </tr>
+          <tr>
+            <td><strong>RTO Mandate Reversal</strong><br><span style="font-size:0.75rem;color:var(--light)">Employers softening mandates to compete for talent</span></td>
+            <td><span class="neu">Low-Medium</span></td>
+            <td><span class="bear">High</span></td>
+            <td>The primary driver of near-term demand. A broad reversal of RTO mandates would materially reduce absorption velocity. However, the structural supply constraint limits downside — vacancy can only rise so far before the pipeline response kicks in.</td>
+          </tr>
+          <tr>
+            <td><strong>Interest Rate Shock</strong><br><span style="font-size:0.75rem;color:var(--light)">BoC held at 2.25% — December 2025</span></td>
+            <td><span class="neu">Low</span></td>
+            <td><span class="neu">Medium</span></td>
+            <td>Higher-for-longer rates affect investment activity more than leasing. Cap rate compression thesis weakens if rates rise materially. However, at 2.25%, the BoC has significant room to cut if growth deteriorates — limiting the upside risk to rates.</td>
+          </tr>
+          <tr>
+            <td><strong>Class B/C Contagion to Class A</strong><br><span style="font-size:0.75rem;color:var(--light)">Structural weakness bleeding into lower-quality Class A</span></td>
+            <td><span class="neu">Low</span></td>
+            <td><span class="neu">Medium</span></td>
+            <td>The bifurcation is currently holding cleanly at the Class A/B boundary. The risk is that a prolonged demand weakness causes this boundary to migrate upward — pulling weaker Class A assets into the structural obsolescence category. Early monitoring metric: watch Class A sublease space.</td>
+          </tr>
+          <tr>
+            <td><strong>New Construction Announcement</strong><br><span style="font-size:0.75rem;color:var(--light)">30 Bay Street / The HUB pre-lease triggering starts</span></td>
+            <td><span class="neu">Medium</span></td>
+            <td><span class="neu">Low (near-term)</span></td>
+            <td>Even if construction is announced in 2026, delivery is 2029/30 at earliest. Near-term supply thesis is unaffected. Could temper rent growth expectations in outer years of underwriting for assets acquired today.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="source-line">Sources: Altus Group Toronto CRE Market Update Q4 2025 (BoC rate, CUSMA, market sentiment); Royal LePage Commercial 2026 Outlook; Newmark Q3 2025 Toronto Office Market Report (30 Bay Street / The HUB); CBRE Canada Q4 2025 Canada Office Figures.</div>
+    </div>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="page">
+    <div class="sec-header">08 — Conclusion</div>
+    <div class="sec-body">
+      <div class="central-call">
+        <div class="central-call-label">The Bottom Line</div>
+        <div class="central-call-title">Two Markets. One Decision.</div>
+        <div class="central-call-body">Toronto CBD office in 2026 will reward investors, occupiers, and analysts who understand that the aggregate headline number is irrelevant. The only question that matters is which side of the bifurcation you are on. AAA and well-positioned Class A product is entering a period of genuine scarcity-driven pricing power — a window that will remain open until the next development cycle delivers supply in 2029/30, and perhaps longer. Class B/C faces a structural reckoning that rent incentives alone cannot resolve. For investors, the thesis is clear: buy quality, at the right basis, now — before cap rate compression fully prices in the supply constraint. For occupiers, the message is equally clear: secure your space before the large-block market closes entirely. The 15 remaining contiguous blocks over 100,000 SF will not last the year.</div>
+      </div>
+
+      <div class="source-line">
+        <strong>Full Source List:</strong> CBRE Canada Q4 2025 Toronto Downtown Office Figures (cbre.ca); CBRE Canada Q4 2025 Canada Office Figures (cbre.ca); CBRE Canada — Canadian Office Market Had Another Strong Year in 2025 (Press Release, Jan. 2026); RENX — Toronto Leads Office Market Comeback (Dec. 2025); RENX — Desjardins Acquires 70 York Street (Nov. 2025); Newmark — Q3 2025 Downtown Toronto Office Market Report (Oct. 2025); Cushman & Wakefield — Toronto Office Marketbeat Q3 2025; Altus Group — Toronto Commercial Real Estate Market Update Q4 2025; Royal LePage — Commercial Market Outlook 2026; PwC/ULI — Emerging Trends in Real Estate Canada 2026; Avison Young — 2026 Canadian Market Outlook (Dec. 2025); The Globe and Mail — Office Vacancy Rates Continue to Drop (Jan. 2026); Canadian Mortgage Professional — Downtown Toronto Office Rents Rise to Seven-Quarter High (Apr. 2025); Benefits & Pensions Monitor — Office Workers' Slow Return Reshapes Canada's CRE (Feb. 2026); BlogTO — Toronto's Office Market Could See Major Rebound in 2026 (Dec. 2025). Prepared by Amanda Dolan, Research Analyst, CBRE Canada. March 2026. All forecasts represent the author's original analysis and do not constitute CBRE's official market position.
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="disclaimer">
+      <strong>DISCLAIMER</strong> — This report has been prepared by Amanda Dolan for portfolio and research demonstration purposes. All market data is sourced from publicly available reports as cited. Forward-looking statements, forecasts, and scenario analyses represent the author's original analytical views and do not constitute investment advice or CBRE Limited's official market position. Actual market outcomes may differ materially from those projected. © Amanda Dolan, March 2026.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
