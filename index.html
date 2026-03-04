@@ -9,7 +9,7 @@
   :root {
     --black: #0d0d0d; --dark: #1a1a1a; --mid: #5a5a5a; --light: #aaaaaa;
     --border: #ebebeb; --bg: #f8f8f8; --white: #ffffff;
-    --accent: #1a4a6b; --accent-light: #eef3f8; --accent-mid: #2a6496;
+    --accent: #c0475f; --accent-light: #fdf0f3; --accent-mid: #a33a50;
     --pink: #e8a0b0; --gold: #c9a84c;
   }
   html { scroll-behavior: smooth; }
@@ -187,8 +187,20 @@
 <section class="hero">
   <div class="hero-inner">
     <p class="hero-eyebrow">CRE Research Analyst</p>
-    <h1>Amanda<br><em>Dolan</em></h1>
+    <h1>Amanda<br><em>Dolan</em> <svg width="48" height="48" viewBox="0 0 100 100" style="display:inline-block;vertical-align:middle;margin-left:0.2rem;margin-bottom:0.5rem;" xmlns="http://www.w3.org/2000/svg">
+      <!-- left loop -->
+      <path d="M50 52 C40 35, 10 30, 15 50 C18 62, 38 60, 50 52Z" fill="#e8a0b0" opacity="0.9"/>
+      <!-- right loop -->
+      <path d="M50 52 C60 35, 90 30, 85 50 C82 62, 62 60, 50 52Z" fill="#d4607e" opacity="0.85"/>
+      <!-- left ribbon tail -->
+      <path d="M50 54 C42 62, 28 75, 22 85" stroke="#e8a0b0" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <!-- right ribbon tail -->
+      <path d="M50 54 C58 62, 72 75, 78 85" stroke="#d4607e" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <!-- centre knot -->
+      <ellipse cx="50" cy="52" rx="7" ry="6" fill="#c0475f"/>
+    </svg></h1>
     <p class="hero-sub">Finance & Economics graduate with hands-on industry experience at CBRE, combining strong market fundamentals with a genuine passion for commercial real estate research and capital markets.</p>
+    <p style="font-family:sans-serif;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--light);margin-bottom:0.8rem;">Areas of Focus</p>
     <div class="hero-tags">
       <span class="tag">Toronto Market</span>
       <span class="tag">Capital Markets</span>
@@ -369,13 +381,13 @@
       <div class="sample-type">Offering Memorandum & Pro Forma</div>
       <div class="sample-title">70 York Street, Toronto CBD</div>
       <div class="sample-desc">Full institutional OM and acquisition pro forma for a 210,000 SF Class A office tower in Toronto's Financial District — including 10-yr DCF, direct cap, sensitivity tables, and levered vs. unlevered returns.</div>
-      <button class="sample-btn" onclick="window.open('70-york.html')">View Case Study</button>
+      <button class="sample-btn" onclick="window.open('70-york.html', '_blank')">View Case Study</button>
     </div>
     <div class="sample-card">
-      <div class="sample-type">Market Report</div>
-      <div class="sample-title">Toronto Industrial Market — Q1 2025 Overview <span class="sample-badge">In Progress</span></div>
-      <div class="sample-desc">Analysis of net absorption, vacancy trends, and rental rate growth across the GTA industrial market, with submarket breakdowns for Mississauga, Brampton, and the 400-series corridors.</div>
-      <button class="sample-btn">Coming Soon</button>
+      <div class="sample-type">Research Report</div>
+      <div class="sample-title">Toronto CBD Office — 2026 Outlook</div>
+      <div class="sample-desc">An original forward-looking research report on Toronto's downtown office market — arguing a bifurcated recovery thesis across supply constraints, RTO dynamics, Class B/C obsolescence, scenario analysis, and investment implications.</div>
+      <button class="sample-btn" onclick="window.open('toronto-office-outlook.html', '_blank')">View Report</button>
     </div>
     <div class="sample-card">
       <div class="sample-type">Financial Model</div>
@@ -413,7 +425,7 @@
       <div class="photo-socials">
         <a href="https://www.linkedin.com/in/amanda-dolan-96b824198" target="_blank" class="photo-social-link">LinkedIn</a>
         <span style="color:var(--border)">·</span>
-        <a href="mailto:your@email.com" class="photo-social-link">Email</a>
+        <a href="mailto:amanda.dolan@outlook.com" class="photo-social-link">Email</a>
       </div>
     </div>
 
@@ -546,7 +558,7 @@
   <h2 class="section-title">Contact</h2>
   <p class="section-intro">Open to research analyst and capital markets roles in Toronto's commercial real estate market. Always happy to connect.</p>
   <div class="contact-inner">
-    <a href="mailto:your@email.com" class="contact-link">✉ Email</a>
+    <a href="mailto:amanda.dolan@outlook.com" class="contact-link">✉ Email</a>
     <a href="https://www.linkedin.com/in/amanda-dolan-96b824198" target="_blank" class="contact-link">in LinkedIn</a>
   </div>
 </section>
@@ -562,7 +574,18 @@
     document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
     if (!isActive) card.classList.add('active');
   }
-  function loadPhoto(e) {
+  function loadHeroPhoto(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.getElementById('heroPhotoImg');
+      img.src = ev.target.result;
+      img.classList.add('loaded');
+      document.getElementById('heroPhotoPlaceholder').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
@@ -573,6 +596,10 @@
       document.getElementById('photoPlaceholder').style.display = 'none';
     };
     reader.readAsDataURL(file);
+  }
+</script>
+</body>
+</html>
   }
 </script>
 </body>
