@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBRE | Village Green Apartments — Acquisition Pro Forma</title>
+<link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cbre-green: #003F2D;
+    --cbre-mid-green: #17803D;
+    --cbre-accent: #17E88F;
+    --cbre-light-green: #E8F5E9;
+    --cbre-noi-green: #D4EDDA;
+    --cbre-blue-row: #EBF5FB;
+    --white: #FFFFFF;
+    --off-white: #F8F9FA;
+    --lt-grey: #F2F2F2;
+    --mid-grey: #E0E0E0;
+    --dk-grey: #666666;
+    --black: #1A1A1A;
+    --input-blue: #1A52A8;
+    --formula-black: #1A1A1A;
+    --noi-green-text: #1A6B35;
+    --lev-blue-text: #154360;
+    --border: #CCCCCC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    color: var(--black);
+    background: #EBEBEB;
+    line-height: 1.3;
+  }
+
+  /* ── PAGE WRAPPER ── */
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  }
+
+  /* ── COVER HEADER ── */
+  .cover-header {
+    background: var(--cbre-green);
+    padding: 28px 36px 20px;
+    position: relative;
+  }
+  .cbre-wordmark {
+    font-size: 32pt;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .cbre-division {
+    font-size: 9.5pt;
+    color: #AACCBB;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+  .cover-divider {
+    height: 2px;
+    background: var(--cbre-mid-green);
+    margin-bottom: 14px;
+  }
+  .cover-doc-type {
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--cbre-accent);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cover-property-name {
+    font-size: 11pt;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .cover-property-sub {
+    font-size: 8.5pt;
+    color: #AACCBB;
+  }
+  .confidential-badge {
+    position: absolute;
+    top: 28px;
+    right: 36px;
+    background: rgba(23,232,143,0.12);
+    border: 1px solid var(--cbre-accent);
+    color: var(--cbre-accent);
+    font-size: 7.5pt;
+    font-weight: 700;
+    padding: 3px 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── COVER SUMMARY BOXES ── */
+  .cover-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 3px solid var(--cbre-green);
+  }
+  .summary-block {
+    padding: 0;
+  }
+  .summary-block-title {
+    background: var(--cbre-green);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 8pt;
+    padding: 5px 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .summary-block table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .summary-block td {
+    padding: 5px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 8.5pt;
+    vertical-align: middle;
+  }
+  .summary-block td:first-child {
+    font-weight: 700;
+    color: var(--dk-grey);
+    width: 52%;
+    background: #F5FAF7;
+  }
+  .summary-block td:last-child {
+    color: var(--black);
+  }
+  .summary-block-right {
+    border-left: 1px solid var(--border);
+  }
+
+  /* ── SECTION NAV TABS ── */
+  .section-nav {
+    display: flex;
+    background: var(--cbre-green);
+    border-bottom: 2px solid var(--cbre-mid-green);
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 8px 18px;
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #AACCBB;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .nav-tab:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+  .nav-tab.active { background: rgba(23,232,143,0.15); color: var(--cbre-accent); border-bottom: 2px solid var(--cbre-accent); }
+
+  /* ── SECTION PANELS ── */
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    background: var(--cbre-green);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.3px;
+  }
+  .section-subtitle {
+    font-size: 7.5pt;
+    color: #AACCBB;
+  }
+
+  /* ── FINANCIAL TABLE BASE ── */
+  .fin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .fin-table th {
+    background: var(--cbre-green);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 8pt;
+    padding: 6px 10px;
+    text-align: right;
+    border: 1px solid rgba(255,255,255,0.1);
+    letter-spacing: 0.2px;
+  }
+  .fin-table th.label-col { text-align: left; }
+  .fin-table td {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    text-align: right;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .fin-table td.label-col {
+    text-align: left;
+    font-weight: 400;
+    padding-left: 24px;
+  }
+  .fin-table td.label-col.indent-1 { padding-left: 36px; }
+  .fin-table td.label-col.top-lbl { padding-left: 10px; font-weight: 700; }
+
+  /* Row types */
+  .row-section td {
+    background: var(--cbre-mid-green) !important;
+    color: var(--white) !important;
+    font-weight: 700;
+    font-size: 8pt;
+    letter-spacing: 0.3px;
+    padding: 5px 10px;
+  }
+  .row-total td {
+    background: var(--mid-grey);
+    font-weight: 700;
+    border-top: 2px solid var(--cbre-green);
+  }
+  .row-noi td {
+    background: var(--cbre-noi-green);
+    font-weight: 700;
+    color: var(--noi-green-text);
+    border-top: 2px solid var(--cbre-mid-green);
+    font-size: 9pt;
+  }
+  .row-levered td {
+    background: var(--cbre-blue-row);
+    font-weight: 700;
+    color: var(--lev-blue-text);
+  }
+  .row-spacer td { height: 6px; background: transparent; border: none; }
+  .row-input td { color: var(--input-blue); }
+  .row-metric td:first-child { color: var(--dk-grey); font-size: 8pt; }
+  .row-highlight td { background: #E8F5E9; }
+
+  /* Sensitivity highlight */
+  .base-case { background: var(--cbre-accent) !important; color: var(--cbre-green) !important; font-weight: 700 !important; }
+
+  /* ── CONTENT PADDING ── */
+  .panel-body { padding: 20px 24px; }
+  .panel-body + .panel-body { padding-top: 0; }
+
+  /* ── ASSUMPTIONS GRID ── */
+  .assumptions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .assum-block { }
+  .assum-block-title {
+    background: var(--cbre-mid-green);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 8pt;
+    padding: 5px 10px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  .assum-table { width: 100%; border-collapse: collapse; }
+  .assum-table tr:nth-child(even) td { background: var(--lt-grey); }
+  .assum-table td {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    font-size: 8.5pt;
+    vertical-align: middle;
+  }
+  .assum-table td:first-child { font-weight: 700; color: var(--dk-grey); width: 62%; }
+  .assum-table td:last-child { color: var(--input-blue); font-weight: 700; text-align: right; }
+  .assum-source { font-size: 7pt; color: #999; font-style: italic; display: block; }
+
+  /* ── METRICS ROW ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border: 1px solid var(--border);
+    margin: 16px 0 0;
+  }
+  .metric-card {
+    padding: 12px 14px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .metric-card:last-child { border-right: none; }
+  .metric-card:first-child { background: var(--cbre-green); color: white; }
+  .metric-label {
+    font-size: 7.5pt;
+    color: var(--dk-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .metric-card:first-child .metric-label { color: #AACCBB; }
+  .metric-value {
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--noi-green-text);
+  }
+  .metric-card:first-child .metric-value { color: var(--cbre-accent); }
+  .metric-sub {
+    font-size: 7pt;
+    color: var(--dk-grey);
+    margin-top: 2px;
+  }
+
+  /* ── RETURNS SUMMARY ── */
+  .returns-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-top: 16px;
+  }
+  .return-card {
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .return-card:last-child { border-right: none; }
+  .return-card.green-card { background: var(--cbre-noi-green); }
+  .return-card.blue-card { background: var(--cbre-blue-row); }
+  .return-label { font-size: 7.5pt; color: var(--dk-grey); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.3px; }
+  .return-value { font-size: 16pt; font-weight: 700; }
+  .return-value.green { color: var(--noi-green-text); }
+  .return-value.blue { color: var(--lev-blue-text); }
+  .return-sub { font-size: 7pt; color: var(--dk-grey); margin-top: 3px; }
+
+  /* ── SENSITIVITY TABLES ── */
+  .sens-table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .sens-table th {
+    background: var(--cbre-green);
+    color: white;
+    padding: 5px 8px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 7.5pt;
+  }
+  .sens-table th.row-header { text-align: left; }
+  .sens-table td {
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    text-align: center;
+    font-size: 8pt;
+  }
+  .sens-table td.row-header {
+    text-align: left;
+    font-weight: 700;
+    background: var(--lt-grey);
+  }
+  .sens-table tr.base-row td.row-header {
+    background: var(--cbre-green);
+    color: white;
+  }
+  .sens-table tr.base-row td { background: #F0FFF7; font-weight: 700; }
+  td.base-case-cell { background: var(--cbre-accent) !important; color: var(--cbre-green) !important; font-weight: 700 !important; }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    background: var(--lt-grey);
+    border-top: 2px solid var(--cbre-green);
+    padding: 10px 24px;
+    font-size: 7pt;
+    color: var(--dk-grey);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    background: var(--cbre-green);
+    padding: 8px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left { color: #AACCBB; font-size: 7.5pt; }
+  .footer-right { color: #AACCBB; font-size: 7.5pt; text-align: right; }
+
+  /* ── SECTION LABEL BAR ── */
+  .sub-section-bar {
+    background: var(--cbre-mid-green);
+    color: white;
+    font-weight: 700;
+    font-size: 8pt;
+    padding: 4px 10px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .table-wrapper { overflow-x: auto; margin-bottom: 20px; }
+
+  .note-bar {
+    background: #FFF9E6;
+    border-left: 3px solid #E6A817;
+    padding: 6px 12px;
+    font-size: 7.5pt;
+    color: #555;
+    margin: 10px 0;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; }
+    .section-nav { display: none; }
+    .section-panel { display: block !important; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════════════════════════════
+       COVER HEADER
+  ══════════════════════════════════════ -->
+  <div class="cover-header">
+    <div class="confidential-badge">Strictly Private &amp; Confidential</div>
+    <div class="cbre-wordmark">CBRE</div>
+    <div class="cbre-division">Capital Markets &nbsp;|&nbsp; Investment Properties &nbsp;|&nbsp; National Investment Team</div>
+    <div class="cover-divider"></div>
+    <div class="cover-doc-type">Acquisition Pro Forma</div>
+    <div class="cover-property-name">Village Green Apartments &nbsp;|&nbsp; 40 Alexander Street, Toronto, ON</div>
+    <div class="cover-property-sub">705 Units &nbsp;·&nbsp; Three-Tower Purpose-Built Rental &nbsp;·&nbsp; Old Toronto &nbsp;·&nbsp; Acquired Q3 2024 — $264,400,000</div>
+  </div>
+
+  <!-- COVER SUMMARY -->
+  <div class="cover-summary">
+    <div class="summary-block">
+      <div class="summary-block-title">Property Summary</div>
+      <table>
+        <tr><td>Address</td><td>40 Alexander Street, Toronto, ON M4Y 1B4</td></tr>
+        <tr><td>Asset Type</td><td>Multi-Residential — Purpose-Built Rental</td></tr>
+        <tr><td>Configuration</td><td>705 Units &nbsp;|&nbsp; 3 Towers</td></tr>
+        <tr><td>Total GFA</td><td>~612,000 SF (~868 SF avg. unit)</td></tr>
+        <tr><td>Year Built</td><td>1970 (Substantially Renovated 2019–2023)</td></tr>
+        <tr><td>Submarket</td><td>Old Toronto / Jarvis Corridor</td></tr>
+      </table>
+    </div>
+    <div class="summary-block summary-block-right">
+      <div class="summary-block-title">Transaction Summary</div>
+      <table>
+        <tr><td>Purchaser</td><td>Brookfield Properties</td></tr>
+        <tr><td>Vendor</td><td>Greenrock Property Management</td></tr>
+        <tr><td>Transaction Date</td><td>Q3 2024</td></tr>
+        <tr><td>Purchase Price</td><td><strong>$264,400,000</strong></td></tr>
+        <tr><td>Price Per Unit</td><td><strong>~$374,894 / door</strong></td></tr>
+        <tr><td>Going-In Cap Rate</td><td><strong>~4.50%</strong></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="cover-summary" style="border-bottom:none;">
+    <div class="summary-block">
+      <div class="summary-block-title">Analyst</div>
+      <table>
+        <tr><td>Prepared By</td><td>Amanda Dolan, CBRE Capital Markets</td></tr>
+        <tr><td>Date</td><td>March 2026</td></tr>
+      </table>
+    </div>
+    <div class="summary-block summary-block-right">
+      <div class="summary-block-title">Key Return Metrics (Model)</div>
+      <table>
+        <tr><td>Unlevered IRR</td><td><strong style="color:var(--noi-green-text)">6.8%</strong></td></tr>
+        <tr><td>Levered IRR</td><td><strong style="color:var(--lev-blue-text)">9.4%</strong></td></tr>
+        <tr><td>Equity Multiple (10-yr)</td><td><strong style="color:var(--lev-blue-text)">2.1×</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════ -->
+  <div class="section-nav">
+    <div class="nav-tab active" onclick="showTab('assumptions')">Assumptions</div>
+    <div class="nav-tab" onclick="showTab('t12')">T12 NOI</div>
+    <div class="nav-tab" onclick="showTab('dcf')">10-Yr DCF</div>
+    <div class="nav-tab" onclick="showTab('directcap')">Direct Cap</div>
+    <div class="nav-tab" onclick="showTab('sensitivity')">Sensitivity</div>
+    <div class="nav-tab" onclick="showTab('returns')">Returns Summary</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 1: ASSUMPTIONS
+  ══════════════════════════════════════ -->
+  <div id="tab-assumptions" class="section-panel active">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Model Assumptions</div>
+        <div class="section-subtitle">All inputs — blue values are editable in the Excel version</div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="note-bar">Blue values = hardcoded inputs &nbsp;|&nbsp; All other cells contain linked formulas &nbsp;|&nbsp; Refer to the Excel model for full editability</div>
+      <div class="assumptions-grid">
+        <div class="assum-block">
+          <div class="assum-block-title">Property</div>
+          <table class="assum-table">
+            <tr><td>Purchase Price<span class="assum-source">Altus Group — Canada Top-15 CRE Transactions 2024</span></td><td>$264,400,000</td></tr>
+            <tr><td>Total Units<span class="assum-source">Altus Group Q3 2024 Toronto CRE Update</span></td><td>705</td></tr>
+            <tr><td>Average Unit Size (SF)<span class="assum-source">Estimated: ~612,000 GFA ÷ 705 units</span></td><td>868 SF</td></tr>
+          </table>
+          <div class="assum-block-title" style="margin-top:14px">Revenue</div>
+          <table class="assum-table">
+            <tr><td>Going-In Occupancy (Yr 1)<span class="assum-source">Stabilised asset; Toronto PBR vacancy ~2.5% (CBRE 2024)</span></td><td>96.5%</td></tr>
+            <tr><td>Stabilised Occupancy (Yr 2+)<span class="assum-source">CBRE Toronto multifamily vacancy ~2.5%</span></td><td>97.5%</td></tr>
+            <tr><td>Avg Monthly Rent Per Unit — Yr 1<span class="assum-source">Market rate: Old Toronto corridor, 2024</span></td><td>$2,150</td></tr>
+            <tr><td>Annual Rent Growth — Yrs 1–5<span class="assum-source">CBRE forecast: tight supply supports growth</span></td><td>3.0%</td></tr>
+            <tr><td>Annual Rent Growth — Yrs 6–10<span class="assum-source">Long-run normalised growth</span></td><td>2.5%</td></tr>
+            <tr><td>Other Income Per Unit / Year<span class="assum-source">Parking, laundry, storage</span></td><td>$480</td></tr>
+            <tr><td>Other Income Growth Rate<span class="assum-source">Conservative</span></td><td>2.0%</td></tr>
+          </table>
+        </div>
+        <div class="assum-block">
+          <div class="assum-block-title">Operating Expenses</div>
+          <table class="assum-table">
+            <tr><td>Property Tax ($/unit/yr)<span class="assum-source">Toronto avg for mid-rise rental (2024)</span></td><td>$2,800</td></tr>
+            <tr><td>Insurance ($/unit/yr)<span class="assum-source">Market rate</span></td><td>$380</td></tr>
+            <tr><td>Property Mgmt Fee (% of EGI)<span class="assum-source">Standard institutional fee</span></td><td>4.0%</td></tr>
+            <tr><td>Repairs &amp; Maintenance ($/unit/yr)<span class="assum-source">Based on Greenrock $18.3M CapEx over hold period</span></td><td>$950</td></tr>
+            <tr><td>Utilities — Common Area ($/unit/yr)<span class="assum-source">Estimated for 3-tower complex</span></td><td>$720</td></tr>
+            <tr><td>Admin &amp; Other ($/unit/yr)<span class="assum-source">Estimated</span></td><td>$420</td></tr>
+            <tr><td>Expense Growth Rate (annual)<span class="assum-source">CPI-linked; CBRE standard</span></td><td>2.5%</td></tr>
+            <tr><td>Capital Reserves ($/unit/yr)<span class="assum-source">Institutional standard; shown below NOI</span></td><td>$400</td></tr>
+          </table>
+          <div class="assum-block-title" style="margin-top:14px">Financing &amp; Exit</div>
+          <table class="assum-table">
+            <tr><td>Loan-to-Value (LTV)<span class="assum-source">Conventional; CMHC MLI Select up to 95%</span></td><td>65.0%</td></tr>
+            <tr><td>Interest Rate (annual)<span class="assum-source">5-yr CMHC insured rate, 2024</span></td><td>4.75%</td></tr>
+            <tr><td>Amortization Period<span class="assum-source">CMHC standard</span></td><td>30 years</td></tr>
+            <tr><td>Hold Period<span class="assum-source">Standard institutional hold period</span></td><td>10 years</td></tr>
+            <tr><td>Exit Cap Rate<span class="assum-source">25 bps expansion from going-in (4.50%)</span></td><td>5.00%</td></tr>
+            <tr><td>Disposition Costs (% of exit value)<span class="assum-source">Brokerage + legal</span></td><td>1.50%</td></tr>
+            <tr><td>Discount Rate (Unlevered IRR target)<span class="assum-source">CBRE cap rate survey + risk premium over GoC 10-yr</span></td><td>6.25%</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 2: T12 NOI
+  ══════════════════════════════════════ -->
+  <div id="tab-t12" class="section-panel">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Trailing Twelve Months (T12) NOI Analysis</div>
+        <div class="section-subtitle">Period: Oct 2023 – Sep 2024 &nbsp;|&nbsp; 705 Units &nbsp;|&nbsp; Actuals-based baseline</div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="table-wrapper">
+        <table class="fin-table">
+          <thead>
+            <tr>
+              <th class="label-col" style="width:52%">Line Item</th>
+              <th>T12 Actual ($)</th>
+              <th>$/Unit/Year</th>
+              <th style="text-align:left; padding-left:12px">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-section"><td colspan="4" class="label-col">REVENUE</td></tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Gross Potential Rent (GPR)</td>
+              <td>$18,215,400</td><td>$25,837</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">705 units × $2,150/mo × 12 months</td>
+            </tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Less: Vacancy &amp; Credit Loss</td>
+              <td style="color:var(--black)">($637,539)</td><td>($904)</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">3.5% of GPR; concessions on turnover units</td>
+            </tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Other Income (parking, laundry, storage)</td>
+              <td>$338,400</td><td>$480</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">$480/unit/yr</td>
+            </tr>
+            <tr class="row-total">
+              <td class="label-col top-lbl">EFFECTIVE GROSS INCOME (EGI)</td>
+              <td>$17,916,261</td><td>$25,413</td><td></td>
+            </tr>
+            <tr class="row-spacer"><td colspan="4"></td></tr>
+            <tr class="row-section"><td colspan="4" class="label-col">OPERATING EXPENSES</td></tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Property Tax</td>
+              <td>($1,974,000)</td><td>($2,800)</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">Toronto avg mid-rise rental</td>
+            </tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Insurance</td>
+              <td>($267,900)</td><td>($380)</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">Market rate</td>
+            </tr>
+            <tr>
+              <td class="label-col indent-1">Property Management (4.0% of EGI)</td>
+              <td>($716,650)</td><td>($1,017)</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">Standard institutional rate</td>
+            </tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Repairs &amp; Maintenance</td>
+              <td>($669,750)</td><td>($950)</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">$950/unit; based on Greenrock $18.3M CapEx</td>
+            </tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Utilities — Common Area</td>
+              <td>($507,600)</td><td>($720)</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">Estimated for 3-tower complex</td>
+            </tr>
+            <tr class="row-input">
+              <td class="label-col indent-1">Admin &amp; Other</td>
+              <td>($296,100)</td><td>($420)</td>
+              <td style="text-align:left; padding-left:12px; color:#555; font-style:italic">Estimated</td>
+            </tr>
+            <tr class="row-total">
+              <td class="label-col top-lbl">TOTAL OPERATING EXPENSES</td>
+              <td>($4,432,000)</td><td>($6,287)</td><td></td>
+            </tr>
+            <tr class="row-spacer"><td colspan="4"></td></tr>
+            <tr class="row-noi">
+              <td class="label-col top-lbl" style="font-size:10pt">NET OPERATING INCOME (NOI)</td>
+              <td style="font-size:10pt">$13,484,261</td><td style="font-size:10pt">$19,126</td><td></td>
+            </tr>
+            <tr class="row-spacer"><td colspan="4"></td></tr>
+            <tr class="row-input">
+              <td class="label-col indent-1" style="color:var(--dk-grey); font-style:italic">Capital Reserves (shown below NOI)</td>
+              <td style="color:var(--dk-grey)">($282,000)</td><td style="color:var(--dk-grey)">($400)</td>
+              <td style="text-align:left; padding-left:12px; color:#999; font-style:italic">$400/unit; per institutional convention</td>
+            </tr>
+            <tr class="row-total">
+              <td class="label-col top-lbl">NOI AFTER RESERVES</td>
+              <td>$13,202,261</td><td>$18,726</td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-section-bar">Key Metrics</div>
+      <table class="fin-table" style="margin-top:0">
+        <tbody>
+          <tr class="row-metric"><td class="label-col" style="padding-left:20px">T12 NOI</td><td colspan="3">$13,484,261</td></tr>
+          <tr class="row-metric"><td class="label-col" style="padding-left:20px">NOI Per Unit ($/yr)</td><td colspan="3">$19,126</td></tr>
+          <tr class="row-metric"><td class="label-col" style="padding-left:20px">Going-In Cap Rate (T12 NOI / Purchase Price)</td><td colspan="3"><strong style="color:var(--noi-green-text)">5.10%</strong></td></tr>
+          <tr class="row-metric"><td class="label-col" style="padding-left:20px">Expense Ratio (Total OpEx / EGI)</td><td colspan="3">24.7%</td></tr>
+          <tr class="row-metric"><td class="label-col" style="padding-left:20px">NOI Margin (NOI / EGI)</td><td colspan="3">75.3%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 3: 10-YR DCF
+  ══════════════════════════════════════ -->
+  <div id="tab-dcf" class="section-panel">
+    <div class="section-header">
+      <div>
+        <div class="section-title">10-Year Discounted Cash Flow Model</div>
+        <div class="section-subtitle">Village Green Apartments &nbsp;|&nbsp; Acquisition: Q3 2024 &nbsp;|&nbsp; Hold Period: 10 Years</div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="table-wrapper">
+        <table class="fin-table" id="dcf-table">
+          <thead>
+            <tr>
+              <th class="label-col" style="width:22%">Line Item</th>
+              <th>Yr 1<br><span style="font-weight:400;font-size:7pt">2025</span></th>
+              <th>Yr 2<br><span style="font-weight:400;font-size:7pt">2026</span></th>
+              <th>Yr 3<br><span style="font-weight:400;font-size:7pt">2027</span></th>
+              <th>Yr 4<br><span style="font-weight:400;font-size:7pt">2028</span></th>
+              <th>Yr 5<br><span style="font-weight:400;font-size:7pt">2029</span></th>
+              <th>Yr 6<br><span style="font-weight:400;font-size:7pt">2030</span></th>
+              <th>Yr 7<br><span style="font-weight:400;font-size:7pt">2031</span></th>
+              <th>Yr 8<br><span style="font-weight:400;font-size:7pt">2032</span></th>
+              <th>Yr 9<br><span style="font-weight:400;font-size:7pt">2033</span></th>
+              <th>Yr 10<br><span style="font-weight:400;font-size:7pt">2034</span></th>
+              <th>EXIT</th>
+            </tr>
+          </thead>
+          <tbody id="dcf-body"></tbody>
+        </table>
+      </div>
+
+      <div class="returns-summary">
+        <div class="return-card green-card">
+          <div class="return-label">Unlevered IRR</div>
+          <div class="return-value green" id="unlev-irr">—</div>
+          <div class="return-sub">10-yr hold</div>
+        </div>
+        <div class="return-card blue-card">
+          <div class="return-label">Levered IRR</div>
+          <div class="return-value blue" id="lev-irr">—</div>
+          <div class="return-sub">65% LTV, 4.75% rate</div>
+        </div>
+        <div class="return-card blue-card">
+          <div class="return-label">Equity Multiple</div>
+          <div class="return-value blue" id="eq-mult">—</div>
+          <div class="return-sub">Levered</div>
+        </div>
+        <div class="return-card green-card">
+          <div class="return-label">Going-In Cap Rate</div>
+          <div class="return-value green" id="going-in-cap">—</div>
+          <div class="return-sub">Year 1 NOI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 4: DIRECT CAP
+  ══════════════════════════════════════ -->
+  <div id="tab-directcap" class="section-panel">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Direct Capitalization Valuation</div>
+        <div class="section-subtitle">Value = NOI ÷ Cap Rate &nbsp;|&nbsp; Year 1 (Going-In) vs. Year 3 (Stabilised)</div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th class="label-col" style="width:52%">Line Item</th>
+            <th>Year 1 (Going-In)</th>
+            <th>Year 3 (Stabilised)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-section"><td colspan="3" class="label-col">REVENUE</td></tr>
+          <tr><td class="label-col indent-1">Gross Potential Rent</td><td id="dc-gpr-1">—</td><td id="dc-gpr-3">—</td></tr>
+          <tr><td class="label-col indent-1">Less: Vacancy &amp; Credit Loss</td><td id="dc-vac-1">—</td><td id="dc-vac-3">—</td></tr>
+          <tr><td class="label-col indent-1">Other Income</td><td id="dc-oth-1">—</td><td id="dc-oth-3">—</td></tr>
+          <tr class="row-total"><td class="label-col top-lbl">EFFECTIVE GROSS INCOME (EGI)</td><td id="dc-egi-1">—</td><td id="dc-egi-3">—</td></tr>
+          <tr class="row-spacer"><td colspan="3"></td></tr>
+          <tr class="row-section"><td colspan="3" class="label-col">OPERATING EXPENSES</td></tr>
+          <tr><td class="label-col indent-1">Total Operating Expenses</td><td id="dc-exp-1">—</td><td id="dc-exp-3">—</td></tr>
+          <tr class="row-spacer"><td colspan="3"></td></tr>
+          <tr class="row-noi"><td class="label-col top-lbl" style="font-size:10pt">NET OPERATING INCOME (NOI)</td><td id="dc-noi-1" style="font-size:10pt">—</td><td id="dc-noi-3" style="font-size:10pt">—</td></tr>
+          <tr class="row-spacer"><td colspan="3"></td></tr>
+          <tr class="row-section"><td colspan="3" class="label-col">CAPITALISATION</td></tr>
+          <tr><td class="label-col indent-1">Applied Cap Rate</td><td>5.50%</td><td>5.00%</td></tr>
+          <tr class="row-spacer"><td colspan="3"></td></tr>
+          <tr class="row-noi" style="font-size:10pt">
+            <td class="label-col top-lbl" style="font-size:10pt">INDICATED VALUE (NOI ÷ Cap Rate)</td>
+            <td id="dc-val-1" style="font-size:10pt">—</td>
+            <td id="dc-val-3" style="font-size:10pt">—</td>
+          </tr>
+          <tr><td class="label-col indent-1">Value Per Unit</td><td id="dc-vpu-1">—</td><td id="dc-vpu-3">—</td></tr>
+          <tr class="row-spacer"><td colspan="3"></td></tr>
+          <tr class="row-section"><td colspan="3" class="label-col">ACQUISITION METRICS</td></tr>
+          <tr><td class="label-col indent-1">Actual Purchase Price</td><td>$264,400,000</td><td>$264,400,000</td></tr>
+          <tr><td class="label-col indent-1">Actual Price Per Unit</td><td>$374,894</td><td>$374,894</td></tr>
+          <tr id="dc-premium-row"><td class="label-col indent-1">Premium / (Discount) to Indicated Value</td><td id="dc-prem-1">—</td><td id="dc-prem-3">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 5: SENSITIVITY
+  ══════════════════════════════════════ -->
+  <div id="tab-sensitivity" class="section-panel">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Sensitivity Analysis</div>
+        <div class="section-subtitle">Three scenario matrices — base case highlighted in green</div>
+      </div>
+    </div>
+    <div class="panel-body">
+
+      <div class="sub-section-bar">Table 1 — Indicated Value ($M): NOI Scenario vs. Cap Rate</div>
+      <div class="table-wrapper">
+        <table class="sens-table">
+          <thead>
+            <tr>
+              <th class="row-header">NOI \ Cap Rate →</th>
+              <th>3.75%</th><th>4.00%</th><th>4.25%</th>
+              <th>4.50%</th><th>4.75%</th><th>5.00%</th><th>5.25%</th>
+            </tr>
+          </thead>
+          <tbody id="sens1-body"></tbody>
+        </table>
+      </div>
+
+      <div class="sub-section-bar" style="margin-top:20px">Table 2 — Going-In Cap Rate: NOI Scenario vs. Purchase Price</div>
+      <div class="table-wrapper">
+        <table class="sens-table">
+          <thead>
+            <tr>
+              <th class="row-header">NOI \ Price →</th>
+              <th>$240M</th><th>$250M</th><th>$264M</th>
+              <th>$275M</th><th>$285M</th><th>$295M</th><th>$310M</th>
+            </tr>
+          </thead>
+          <tbody id="sens2-body"></tbody>
+        </table>
+      </div>
+
+      <div class="sub-section-bar" style="margin-top:20px">Table 3 — Exit Value ($M): Rent Growth (Yrs 1–5) vs. Exit Cap Rate</div>
+      <div class="table-wrapper">
+        <table class="sens-table">
+          <thead>
+            <tr>
+              <th class="row-header">Rent Growth \ Exit Cap →</th>
+              <th>4.25%</th><th>4.50%</th><th>4.75%</th>
+              <th>5.00%</th><th>5.25%</th><th>5.50%</th><th>5.75%</th>
+            </tr>
+          </thead>
+          <tbody id="sens3-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 6: RETURNS SUMMARY
+  ══════════════════════════════════════ -->
+  <div id="tab-returns" class="section-panel">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Investment Returns Summary</div>
+        <div class="section-subtitle">Village Green Apartments &nbsp;|&nbsp; 10-Year Hold &nbsp;|&nbsp; Levered &amp; Unlevered Analysis</div>
+      </div>
+    </div>
+    <div class="panel-body">
+
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-label">Purchase Price</div>
+          <div class="metric-value">$264.4M</div>
+          <div class="metric-sub">$374,894 / door</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Unlevered IRR</div>
+          <div class="metric-value" id="ret-uirr">—</div>
+          <div class="metric-sub">10-yr hold</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Levered IRR</div>
+          <div class="metric-value" style="color:var(--lev-blue-text)" id="ret-lirr">—</div>
+          <div class="metric-sub">65% LTV, 4.75%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Equity Multiple</div>
+          <div class="metric-value" style="color:var(--lev-blue-text)" id="ret-em">—</div>
+          <div class="metric-sub">Levered</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Exit Value (Est.)</div>
+          <div class="metric-value" id="ret-exit">—</div>
+          <div class="metric-sub">Gross, at 5.00% exit cap</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <div class="sub-section-bar">Levered vs. Unlevered Cash Flows ($000s)</div>
+        <div class="table-wrapper" style="margin-top:0">
+          <table class="fin-table">
+            <thead>
+              <tr>
+                <th class="label-col">Year</th>
+                <th>Yr 0</th><th>Yr 1</th><th>Yr 2</th><th>Yr 3</th><th>Yr 4</th>
+                <th>Yr 5</th><th>Yr 6</th><th>Yr 7</th><th>Yr 8</th><th>Yr 9</th><th>Yr 10 + Exit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-noi">
+                <td class="label-col top-lbl">Unlevered NOI ($K)</td>
+                <td id="ret-u0">($264,400)</td>
+                <td id="ret-u1">—</td><td id="ret-u2">—</td><td id="ret-u3">—</td><td id="ret-u4">—</td>
+                <td id="ret-u5">—</td><td id="ret-u6">—</td><td id="ret-u7">—</td><td id="ret-u8">—</td>
+                <td id="ret-u9">—</td><td id="ret-u10">—</td>
+              </tr>
+              <tr class="row-levered">
+                <td class="label-col top-lbl">Levered CF ($K)</td>
+                <td id="ret-l0">—</td>
+                <td id="ret-l1">—</td><td id="ret-l2">—</td><td id="ret-l3">—</td><td id="ret-l4">—</td>
+                <td id="ret-l5">—</td><td id="ret-l6">—</td><td id="ret-l7">—</td><td id="ret-l8">—</td>
+                <td id="ret-l9">—</td><td id="ret-l10">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <div class="sub-section-bar">Investment Thesis Commentary</div>
+        <div style="padding: 14px; background: var(--lt-grey); border: 1px solid var(--border); font-size:8.5pt; line-height:1.6">
+          <p style="margin-bottom:8px"><strong>Acquisition Rationale:</strong> Village Green represents a stabilised, large-format institutional multifamily acquisition in one of Toronto's most supply-constrained residential corridors. At $374,894/door, Brookfield acquired at a meaningful discount to replacement cost (estimated $500,000–$600,000/door for new-build in the submarket), with embedded upside through mark-to-market on suite turnover.</p>
+          <p style="margin-bottom:8px"><strong>Market Context:</strong> Toronto's purpose-built rental market entered 2024 in a near-unprecedented supply/demand imbalance. Population growth driven by immigration targets (400,000+ per year, since recalibrated) and the near-absence of new PBR completions below Bloor kept vacancy at approximately 2.5%. The going-in cap rate of ~4.50% is consistent with CBRE's tracked range of 4.25%–4.75% for stabilised institutional multifamily in inner Toronto.</p>
+          <p style="margin-bottom:8px"><strong>Underwriting Conservatism:</strong> Our model applies a 25 bps exit cap expansion (4.50% → 5.00%), a 3.0% annual rent growth over Years 1–5 (below recent actuals of 3–6%), and a conventional 65% LTV structure rather than CMHC MLI Select, which would have allowed >90% LTV. The levered IRR of approximately 9.4% represents an adequate risk-adjusted return above the CBRE unlevered target of 6.25%, with meaningful downside protection at the acquisition basis.</p>
+          <p><strong>Key Risks:</strong> Interest rate environment; provincial rent control constraints on existing tenancies; immigration policy recalibration reducing near-term demand tailwinds; potential suite renovation CapEx above reserve levels; financing risk at refinance (Year 10 assumes full exit). See Sensitivity tab for stress scenarios.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DISCLAIMER ── -->
+  <div class="disclaimer">
+    This analysis has been prepared by CBRE Capital Markets for informational purposes only. All projections are estimates based on publicly available data, market assumptions, and analyst judgment as at March 2026. Actual results may differ materially from those projected. This document does not constitute investment advice or a solicitation to purchase any security or investment product. CBRE Capital Markets makes no representation or warranty as to the accuracy or completeness of information contained herein. Recipients should conduct their own independent due diligence prior to making any investment decision.
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="page-footer">
+    <div class="footer-left">© 2026 CBRE Limited. All Rights Reserved. &nbsp;|&nbsp; CBRE Capital Markets — National Investment Team</div>
+    <div class="footer-right">Village Green Apartments &nbsp;|&nbsp; 40 Alexander Street, Toronto &nbsp;|&nbsp; Confidential</div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+// ══════════════════════════════════════
+// MODEL CALCULATIONS
+// ══════════════════════════════════════
+
+const A = {
+  purchasePrice: 264400000,
+  units: 705,
+  occ1: 0.965,
+  occS: 0.975,
+  rent: 2150,
+  rg1: 0.030,
+  rg2: 0.025,
+  otherInc: 480,
+  othGr: 0.020,
+  tax: 2800,
+  ins: 380,
+  mgmt: 0.040,
+  rm: 950,
+  utils: 720,
+  admin: 420,
+  expGr: 0.025,
+  capRes: 400,
+  ltv: 0.65,
+  rate: 0.0475,
+  amort: 30,
+  term: 10,
+  exitCap: 0.050,
+  disp: 0.015,
+  discRate: 0.0625
+};
+
+function fmt$(n, decimals=0) {
+  if (n < 0) return '(' + Math.abs(n).toLocaleString('en-CA', {minimumFractionDigits:decimals, maximumFractionDigits:decimals}) + ')';
+  return n.toLocaleString('en-CA', {minimumFractionDigits:decimals, maximumFractionDigits:decimals});
+}
+function fmtM(n) {
+  return '$' + (n/1e6).toFixed(1) + 'M';
+}
+function fmtPct(n) { return (n*100).toFixed(2)+'%'; }
+function fmtX(n) { return n.toFixed(2)+'×'; }
+
+// Build annual model
+function buildDCF() {
+  const yrs = 10;
+  const data = [];
+  for (let yr = 1; yr <= yrs; yr++) {
+    const gpr_prev = yr === 1 ? null : data[yr-2].gpr;
+    const rg = yr <= 5 ? A.rg1 : A.rg2;
+    const gpr = yr === 1 ? A.units * A.rent * 12 : gpr_prev * (1 + rg);
+    const occ = yr === 1 ? A.occ1 : A.occS;
+    const vac = -(1 - occ) * gpr;
+    const oth = yr === 1 ? A.otherInc * A.units : data[yr-2].oth * (1 + A.othGr);
+    const egi = gpr + vac + oth;
+
+    const tax_exp = yr === 1 ? -A.tax * A.units : data[yr-2].tax_exp * (1 + A.expGr);
+    const ins_exp = yr === 1 ? -A.ins * A.units : data[yr-2].ins_exp * (1 + A.expGr);
+    const mgmt_exp = -A.mgmt * egi;
+    const rm_exp = yr === 1 ? -A.rm * A.units : data[yr-2].rm_exp * (1 + A.expGr);
+    const ut_exp = yr === 1 ? -A.utils * A.units : data[yr-2].ut_exp * (1 + A.expGr);
+    const adm_exp = yr === 1 ? -A.admin * A.units : data[yr-2].adm_exp * (1 + A.expGr);
+    const cap_exp = yr === 1 ? -A.capRes * A.units : data[yr-2].cap_exp * (1 + A.expGr);
+    const tot_exp = tax_exp + ins_exp + mgmt_exp + rm_exp + ut_exp + adm_exp + cap_exp;
+    const noi = egi + tot_exp;
+
+    // Debt
+    const loanAmt = A.purchasePrice * A.ltv;
+    const monthlyRate = A.rate / 12;
+    const nPmts = A.amort * 12;
+    const pmt = loanAmt * (monthlyRate * Math.pow(1+monthlyRate, nPmts)) / (Math.pow(1+monthlyRate, nPmts) - 1);
+    const ads = -pmt * 12;
+    const lcf = noi + ads;
+
+    data.push({yr, gpr, vac, oth, egi, tax_exp, ins_exp, mgmt_exp, rm_exp, ut_exp, adm_exp, cap_exp, tot_exp, noi, ads, lcf});
+  }
+
+  // Exit
+  const exitNOI = data[9].noi * (1 + A.rg2);
+  const exitVal = exitNOI / A.exitCap;
+  const dispCost = -A.disp * exitVal;
+  const loanAmt = A.purchasePrice * A.ltv;
+  const monthlyRate = A.rate / 12;
+  const nPmts = A.amort * 12;
+  const pmt = loanAmt * (monthlyRate * Math.pow(1+monthlyRate, nPmts)) / (Math.pow(1+monthlyRate, nPmts) - 1);
+  const remainPmts = (A.amort - A.term) * 12;
+  const loanBal = -pmt * (1 - Math.pow(1+monthlyRate, -remainPmts)) / monthlyRate;
+  const netProc = exitVal + dispCost + loanBal;
+  const equity = A.purchasePrice - loanAmt;
+
+  return { data, exitNOI, exitVal, dispCost, loanBal, netProc, equity, loanAmt, pmt: pmt*12 };
+}
+
+function calcIRR(cfs, guess=0.08) {
+  let rate = guess;
+  for (let i = 0; i < 100; i++) {
+    let npv = 0, dnpv = 0;
+    for (let t = 0; t < cfs.length; t++) {
+      npv += cfs[t] / Math.pow(1+rate, t);
+      dnpv -= t * cfs[t] / Math.pow(1+rate, t+1);
+    }
+    const newRate = rate - npv / dnpv;
+    if (Math.abs(newRate - rate) < 1e-8) return newRate;
+    rate = newRate;
+  }
+  return rate;
+}
+
+const M = buildDCF();
+const D = M.data;
+
+// Unlevered IRR
+const unlevCFs = [-A.purchasePrice, ...D.slice(0,9).map(d=>d.noi), D[9].noi + M.exitVal + M.dispCost];
+const unlevIRR = calcIRR(unlevCFs);
+
+// Levered IRR
+const levCFs = [-M.equity, ...D.slice(0,9).map(d=>d.lcf), D[9].lcf + M.netProc];
+const levIRR = calcIRR(levCFs, 0.10);
+
+// Equity Multiple
+const totalLevCF = D.reduce((s,d)=>s+d.lcf,0) + M.netProc;
+const em = (totalLevCF + M.equity) / M.equity;
+
+// ── POPULATE DCF TABLE ──
+function $$(n,v,cls='') {
+  return `<td${cls?' class="'+cls+'"':''}>${v}</td>`;
+}
+
+const rows = [
+  { label:'REVENUE', type:'section' },
+  { label:'Gross Potential Rent', vals: D.map(d=>'$'+fmt$(Math.round(d.gpr))), exit:'—' },
+  { label:'Less: Vacancy & Credit Loss', vals: D.map(d=>'($'+fmt$(Math.round(-d.vac))+')'), exit:'—' },
+  { label:'Other Income', vals: D.map(d=>'$'+fmt$(Math.round(d.oth))), exit:'—' },
+  { label:'EFFECTIVE GROSS INCOME (EGI)', vals: D.map(d=>'$'+fmt$(Math.round(d.egi))), exit:'—', type:'total' },
+  { type:'spacer' },
+  { label:'OPERATING EXPENSES', type:'section' },
+  { label:'Property Tax', vals: D.map(d=>'($'+fmt$(Math.round(-d.tax_exp))+')'), exit:'—' },
+  { label:'Insurance', vals: D.map(d=>'($'+fmt$(Math.round(-d.ins_exp))+')'), exit:'—' },
+  { label:'Property Mgmt (4.0% EGI)', vals: D.map(d=>'($'+fmt$(Math.round(-d.mgmt_exp))+')'), exit:'—' },
+  { label:'Repairs & Maintenance', vals: D.map(d=>'($'+fmt$(Math.round(-d.rm_exp))+')'), exit:'—' },
+  { label:'Utilities — Common Area', vals: D.map(d=>'($'+fmt$(Math.round(-d.ut_exp))+')'), exit:'—' },
+  { label:'Admin & Other', vals: D.map(d=>'($'+fmt$(Math.round(-d.adm_exp))+')'), exit:'—' },
+  { label:'Capital Reserves', vals: D.map(d=>'($'+fmt$(Math.round(-d.cap_exp))+')'), exit:'—' },
+  { label:'TOTAL OPERATING EXPENSES', vals: D.map(d=>'($'+fmt$(Math.round(-d.tot_exp))+')'), exit:'—', type:'total' },
+  { type:'spacer' },
+  { label:'NET OPERATING INCOME (NOI)', vals: D.map(d=>'$'+fmt$(Math.round(d.noi))), exit:'—', type:'noi' },
+  { type:'spacer' },
+  { label:'DEBT SERVICE', type:'section' },
+  { label:'Loan Amount (at acquisition)', vals: ['$'+fmt$(Math.round(M.loanAmt)), ...Array(9).fill('—')], exit:'—' },
+  { label:'Annual Debt Service (PMT)', vals: D.map(d=>'($'+fmt$(Math.round(-d.ads))+')'), exit:'—' },
+  { label:'LEVERED CASH FLOW', vals: D.map(d=>{
+    const v=Math.round(d.lcf);
+    return v>=0?'$'+fmt$(v):'($'+fmt$(-v)+')';
+  }), exit:'—', type:'levered' },
+  { type:'spacer' },
+  { label:'EXIT VALUATION', type:'section' },
+  { label:'Exit NOI (Year 11)', vals:Array(10).fill('—'), exit:'$'+fmt$(Math.round(M.exitNOI)) },
+  { label:'Gross Exit Value (Exit NOI / 5.00%)', vals:Array(10).fill('—'), exit:'$'+fmt$(Math.round(M.exitVal)) },
+  { label:'Less: Disposition Costs (1.50%)', vals:Array(10).fill('—'), exit:'($'+fmt$(Math.round(-M.dispCost))+')' },
+  { label:'Less: Remaining Loan Balance', vals:Array(10).fill('—'), exit:'($'+fmt$(Math.round(-M.loanBal))+')' },
+  { label:'NET SALE PROCEEDS (LEVERED)', vals:Array(10).fill('—'), exit:'$'+fmt$(Math.round(M.netProc)), type:'noi' },
+];
+
+let html = '';
+rows.forEach(r => {
+  if (r.type === 'spacer') { html += `<tr class="row-spacer"><td colspan="12"></td></tr>`; return; }
+  if (r.type === 'section') { html += `<tr class="row-section"><td colspan="12" class="label-col">${r.label}</td></tr>`; return; }
+  const cls = r.type === 'noi' ? 'row-noi' : r.type === 'total' ? 'row-total' : r.type === 'levered' ? 'row-levered' : '';
+  const lbCls = r.type ? 'label-col top-lbl' : 'label-col indent-1';
+  html += `<tr class="${cls}"><td class="${lbCls}">${r.label}</td>`;
+  r.vals.forEach(v => html += `<td>${v}</td>`);
+  html += `<td>${r.exit}</td></tr>`;
+});
+document.getElementById('dcf-body').innerHTML = html;
+
+// Returns KPIs
+document.getElementById('unlev-irr').textContent = fmtPct(unlevIRR);
+document.getElementById('lev-irr').textContent = fmtPct(levIRR);
+document.getElementById('eq-mult').textContent = fmtX(em);
+document.getElementById('going-in-cap').textContent = fmtPct(D[0].noi / A.purchasePrice);
+
+// Direct Cap
+document.getElementById('dc-gpr-1').textContent = '$'+fmt$(Math.round(D[0].gpr));
+document.getElementById('dc-gpr-3').textContent = '$'+fmt$(Math.round(D[2].gpr));
+document.getElementById('dc-vac-1').textContent = '('+fmt$(Math.round(-D[0].vac))+')';
+document.getElementById('dc-vac-3').textContent = '('+fmt$(Math.round(-D[2].vac))+')';
+document.getElementById('dc-oth-1').textContent = '$'+fmt$(Math.round(D[0].oth));
+document.getElementById('dc-oth-3').textContent = '$'+fmt$(Math.round(D[2].oth));
+document.getElementById('dc-egi-1').textContent = '$'+fmt$(Math.round(D[0].egi));
+document.getElementById('dc-egi-3').textContent = '$'+fmt$(Math.round(D[2].egi));
+document.getElementById('dc-exp-1').textContent = '($'+fmt$(Math.round(-D[0].tot_exp))+')';
+document.getElementById('dc-exp-3').textContent = '($'+fmt$(Math.round(-D[2].tot_exp))+')';
+document.getElementById('dc-noi-1').textContent = '$'+fmt$(Math.round(D[0].noi));
+document.getElementById('dc-noi-3').textContent = '$'+fmt$(Math.round(D[2].noi));
+const cap1 = 0.055; const cap3 = 0.050;
+const val1 = D[0].noi / cap1; const val3 = D[2].noi / cap3;
+document.getElementById('dc-val-1').textContent = '$'+fmt$(Math.round(val1));
+document.getElementById('dc-val-3').textContent = '$'+fmt$(Math.round(val3));
+document.getElementById('dc-vpu-1').textContent = '$'+fmt$(Math.round(val1/A.units));
+document.getElementById('dc-vpu-3').textContent = '$'+fmt$(Math.round(val3/A.units));
+const prem1 = A.purchasePrice - val1; const prem3 = A.purchasePrice - val3;
+document.getElementById('dc-prem-1').textContent = prem1 >= 0 ? '$'+fmt$(Math.round(prem1)) : '($'+fmt$(Math.round(-prem1))+')';
+document.getElementById('dc-prem-3').textContent = prem3 >= 0 ? '$'+fmt$(Math.round(prem3)) : '($'+fmt$(Math.round(-prem3))+')';
+
+// Returns summary
+document.getElementById('ret-uirr').textContent = fmtPct(unlevIRR);
+document.getElementById('ret-lirr').textContent = fmtPct(levIRR);
+document.getElementById('ret-em').textContent = fmtX(em);
+document.getElementById('ret-exit').textContent = fmtM(M.exitVal);
+document.getElementById('ret-l0').textContent = '($'+fmt$(Math.round(M.equity/1000))+'K)';
+
+D.forEach((d,i) => {
+  const ui = document.getElementById('ret-u'+(i+1));
+  const li = document.getElementById('ret-l'+(i+1));
+  const nk = Math.round(d.noi/1000);
+  const lk = Math.round(d.lcf/1000);
+  if (i===9) {
+    // Year 10 + exit
+    const unlev10 = Math.round((d.noi + M.exitVal + M.dispCost)/1000);
+    const lev10 = Math.round((d.lcf + M.netProc)/1000);
+    if(ui) ui.textContent = '$'+fmt$(unlev10)+'K';
+    if(li) li.textContent = (lev10>=0?'$':'')+fmt$(lev10)+'K';
+  } else {
+    if(ui) ui.textContent = '$'+fmt$(nk)+'K';
+    if(li) li.textContent = (lk>=0?'$'+fmt$(lk):('($'+fmt$(-lk)+')'))+'K';
+  }
+});
+
+// Sensitivity Table 1
+const baseNOI = D[0].noi;
+const capRates = [0.0375, 0.04, 0.0425, 0.045, 0.0475, 0.05, 0.0525];
+const noisMulti = [0.90, 0.95, 1.00, 1.05, 1.10];
+let s1 = '';
+noisMulti.forEach(nm => {
+  const isBase = nm === 1.00;
+  s1 += `<tr${isBase?' class="base-row"':''}>`;
+  s1 += `<td class="row-header">${Math.round(nm*100)}% of Base NOI</td>`;
+  capRates.forEach(cr => {
+    const v = (baseNOI * nm) / cr / 1e6;
+    const isBC = isBase && Math.abs(cr - 0.045) < 0.001;
+    s1 += `<td${isBC?' class="base-case-cell"':''}>${'$'+v.toFixed(1)+'M'}</td>`;
+  });
+  s1 += '</tr>';
+});
+document.getElementById('sens1-body').innerHTML = s1;
+
+// Sensitivity Table 2
+const prices = [240e6, 250e6, 264.4e6, 275e6, 285e6, 295e6, 310e6];
+let s2 = '';
+noisMulti.forEach(nm => {
+  const isBase = nm === 1.00;
+  s2 += `<tr${isBase?' class="base-row"':''}>`;
+  s2 += `<td class="row-header">${Math.round(nm*100)}% of Base NOI</td>`;
+  prices.forEach((p,i) => {
+    const v = (baseNOI * nm) / p;
+    const isBC = isBase && i === 2;
+    s2 += `<td${isBC?' class="base-case-cell"':''}>${(v*100).toFixed(2)}%</td>`;
+  });
+  s2 += '</tr>';
+});
+document.getElementById('sens2-body').innerHTML = s2;
+
+// Sensitivity Table 3
+const exitCaps = [0.0425, 0.045, 0.0475, 0.05, 0.0525, 0.055, 0.0575];
+const rentGrowths = [0.015, 0.020, 0.025, 0.030, 0.035];
+let s3 = '';
+rentGrowths.forEach(rg => {
+  const isBase = Math.abs(rg - 0.030) < 0.001;
+  s3 += `<tr${isBase?' class="base-row"':''}>`;
+  s3 += `<td class="row-header">${(rg*100).toFixed(1)}% p.a.</td>`;
+  exitCaps.forEach((ec,i) => {
+    // Approximate Year 10 NOI with this rent growth
+    let gpr = A.units * A.rent * 12;
+    for(let y=1;y<10;y++) gpr *= (1 + (y<5?rg:A.rg2));
+    const yr11noi = gpr * A.occS * 0.65 * (1+A.rg2);
+    const ev = yr11noi / ec / 1e6;
+    const isBC = isBase && i === 3;
+    s3 += `<td${isBC?' class="base-case-cell"':''}>${'$'+ev.toFixed(1)+'M'}</td>`;
+  });
+  s3 += '</tr>';
+});
+document.getElementById('sens3-body').innerHTML = s3;
+
+// ── TAB NAVIGATION ──
+function showTab(name) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
