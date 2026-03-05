@@ -566,6 +566,26 @@
   <span>Made with <span class="footer-pink">♥</span> & AI · Toronto</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   function toggleSector(card) {
-    const isActive = card.classList.contains('active'
+    const isActive = card.classList.contains('active');
+    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
+    if (!isActive) card.classList.add('active');
+  }
+
+  // Photo upload
+  const photoInput = document.getElementById('photoInput');
+  const photoImg = document.getElementById('photoImg');
+  if (photoInput && photoImg) {
+    photoInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(ev) { photoImg.src = ev.target.result; };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+</script>
+</body>
+</html>
