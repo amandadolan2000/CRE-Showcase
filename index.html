@@ -389,11 +389,14 @@
       <div class="sample-desc">An original forward-looking research report on Toronto's downtown office market — arguing a bifurcated recovery thesis across supply constraints, RTO dynamics, Class B/C obsolescence, scenario analysis, and investment implications.</div>
       <button class="sample-btn" onclick="window.open('toronto-office-outlook.html', '_blank')">View Report</button>
     </div>
-    <div class="sample-card">
-      <div class="sample-type">Financial Model</div>
-      <div class="sample-title">Multifamily Acquisition Pro Forma <span class="sample-badge">In Progress</span></div>
-      <div class="sample-desc">A 10-year DCF model for a stabilised mid-rise rental building in Toronto, including T12 NOI baseline, rent growth assumptions, unlevered and levered return analysis.</div>
-      <button class="sample-btn">Coming Soon</button>
+    <div class="sample-card featured">
+      <div class="sample-type">Acquisition Pro Forma</div>
+      <div class="sample-title">Village Green Apartments — Multifamily Acquisition Pro Forma</div>
+      <div class="sample-desc">Institutional-grade acquisition pro forma for Brookfield's $264.4M purchase of 705-unit Village Green Apartments in Old Toronto — T12 NOI baseline, 10-year DCF, direct cap valuation, sensitivity tables, and levered vs. unlevered return analysis.</div>
+      <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+        <button class="sample-btn" onclick="window.open('Village_Green_ProForma.html', '_blank')">View Report</button>
+        <button class="sample-btn" onclick="window.open('Village_Green_ProForma.xlsx', '_blank')" style="background:transparent; border:1.5px solid var(--accent); color:var(--accent);">View Sheet</button>
+      </div>
     </div>
     <div class="sample-card">
       <div class="sample-type">Research Note</div>
@@ -425,7 +428,7 @@
       <div class="photo-socials">
         <a href="https://www.linkedin.com/in/amanda-dolan-96b824198" target="_blank" class="photo-social-link">LinkedIn</a>
         <span style="color:var(--border)">·</span>
-        <a href="mailto:amanda.dolan2000@gmail.com" class="photo-social-link">Email</a>
+        <a href="/cdn-cgi/l/email-protection#8cede1ede2e8eda2e8e3e0ede2bebcbcbcccebe1ede5e0a2efe3e1" class="photo-social-link">Email</a>
       </div>
     </div>
 
@@ -538,7 +541,6 @@
           <div class="resume-skills">
             <span class="resume-skill">Excel / Financial Modelling</span>
             <span class="resume-skill">CoStar</span>
-            <span class="resume-skill">Argus</span>
             <span class="resume-skill">DCF Analysis</span>
             <span class="resume-skill">Pro Forma Underwriting</span>
             <span class="resume-skill">Market Research</span>
@@ -558,8 +560,8 @@
   <h2 class="section-title">Contact</h2>
   <p class="section-intro">Open to research analyst and capital markets roles in Toronto's commercial real estate market. Always happy to connect.</p>
   <div class="contact-inner">
-    <a href="mailto:amanda.dolan2000@gmail.com" class="contact-link">✉ Email</a>
-    <a href="https://www.linkedin.com/in/amanda-dolan-96b824198" target="_blank" class="contact-link">in LinkedIn</a>
+    <a href="/cdn-cgi/l/email-protection#eb8a868a858f8ac58f84878a85d9dbdbdbab8c868a8287c5888486" class="contact-link">✉ Email</a>
+    <a href="https://www.linkedin.com/in/amanda-dolan-96b824198" target="_blank" class="contact-link">LinkedIn</a>
   </div>
 </section>
 
@@ -568,16 +570,10 @@
   <span>Made with <span class="footer-pink">♥</span> & AI · Toronto</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function toggleSector(card) {
     const isActive = card.classList.contains('active');
     document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
     if (!isActive) card.classList.add('active');
   }
-  function loadPhoto(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const img = document.getElementById('photoImg');
-      img.
+  functio
