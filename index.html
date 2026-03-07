@@ -219,7 +219,7 @@
 <section id="sectors">
   <p class="section-label">Market Knowledge</p>
   <h2 class="section-title">Commercial Real Estate Sectors</h2>
-  <p class="section-intro">A working knowledge of the five core CRE asset classes — their investment drivers, supply dynamics, and macroeconomic sensitivities, with a focus on the Toronto market.</p>
+  <p class="section-intro">A working knowledge of five core CRE asset classes — their investment drivers, supply dynamics, and macroeconomic sensitivities, with a focus on the Toronto market.</p>
   <div class="sectors-grid">
 
     <div class="sector-card" onclick="toggleSector(this)">
@@ -376,6 +376,7 @@
   <p class="section-label">Work Samples</p>
   <h2 class="section-title">Reports & Financial Models</h2>
   <p class="section-intro">A growing portfolio of original research reports and financial models across Toronto's commercial real estate market.</p>
+  <p style="font-size:0.8rem; color:var(--light); max-width:640px; margin-bottom:2.5rem; line-height:1.8; font-style:italic;">None of the models, reports, or analysis on this site were produced in connection with any employer or client engagement. This is independent work — I learn by doing, and this is how I do it.</p>
   <div class="samples-grid">
     <div class="sample-card featured">
       <div class="sample-type">Offering Memorandum & Pro Forma</div>
@@ -394,12 +395,6 @@
         <button class="sample-btn" onclick="window.open('70-york-deal-package.html', '_blank')">View Package</button>
       </div>
     </div>
-    <div class="sample-card">
-      <div class="sample-type">Research Report</div>
-      <div class="sample-title">Toronto CBD Office — 2026 Outlook</div>
-      <div class="sample-desc">An original forward-looking research report on Toronto's downtown office market — arguing a bifurcated recovery thesis across supply constraints, RTO dynamics, Class B/C obsolescence, scenario analysis, and investment implications.</div>
-      <button class="sample-btn" onclick="window.open('toronto-office-outlook.html', '_blank')">View Report</button>
-    </div>
     <div class="sample-card featured">
       <div class="sample-type">Acquisition Pro Forma</div>
       <div class="sample-title">Village Green Apartments — Multifamily Acquisition Pro Forma</div>
@@ -407,6 +402,37 @@
       <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
         <button class="sample-btn" onclick="window.open('Village_Green_ProForma.html', '_blank')">View Report</button>
         <button class="sample-btn" onclick="window.open('Village_Green_ProForma.xlsx', '_blank')" style="background:transparent; border:1.5px solid var(--accent); color:var(--accent);">View Sheet</button>
+      </div>
+    </div>
+    <div class="sample-card">
+      <div class="sample-type">Research Report</div>
+      <div class="sample-title">Toronto CBD Office — 2026 Outlook</div>
+      <div class="sample-desc">An original forward-looking research report on Toronto's downtown office market — arguing a bifurcated recovery thesis across supply constraints, RTO dynamics, Class B/C obsolescence, scenario analysis, and investment implications.</div>
+      <button class="sample-btn" onclick="window.open('toronto-office-outlook.html', '_blank')">View Report</button>
+    </div>
+    <div class="sample-card">
+      <div class="sample-type">Research Paper</div>
+      <div class="sample-title">The Data Centre Demand Paradox</div>
+      <div class="sample-desc">Structural growth, capital risk, and the AI infrastructure cycle — examining Toronto and Eastern Ontario's data centre market, the Michael Burry/Cisco thesis, bubble risk, and a capital markets framework for institutional investors.</div>
+      <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+        <button class="sample-btn" onclick="window.open('datacenter_cre_paper.pdf', '_blank')">View Paper</button>
+        <button class="sample-btn" onclick="window.open('DatacenterPresentation_Annotated.pptx', '_blank')" style="background:transparent; border:1.5px solid var(--accent); color:var(--accent);">View Slides</button>
+      </div>
+    </div>
+    <div class="sample-card">
+      <div class="sample-type">Research Paper</div>
+      <div class="sample-title">The Tokenized Frontier</div>
+      <div class="sample-desc">How crypto, blockchain, and stablecoins will reshape commercial real estate — covering the technology stack, global tokenization markets, six core benefits, seven material risks, and a strategic positioning framework for CBRE in the Toronto and Eastern Ontario market.</div>
+      <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+        <button class="sample-btn" onclick="window.open('TokenizationCRE.pdf', '_blank')">View Paper</button>
+      </div>
+    </div>
+    <div class="sample-card">
+      <div class="sample-type">Research Paper</div>
+      <div class="sample-title">The Longevity Horizon</div>
+      <div class="sample-desc">How extended human lifespans will reshape commercial real estate and capital markets — from FDA-approved age-reversal trials to sector-by-sector CRE impacts, duration risk, wealth concentration dynamics, and a framework for institutional investors.</div>
+      <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+        <button class="sample-btn" onclick="window.open('longevity_cre_paper.pdf', '_blank')">View Paper</button>
       </div>
     </div>
   </div>
@@ -566,7 +592,7 @@
   <span>Made with <span class="footer-pink">♥</span> & AI · Toronto</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   function toggleSector(card) {
     const isActive = card.classList.contains('active');
     document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
@@ -581,3 +607,11 @@
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
+        reader.onload = function(ev) { photoImg.src = ev.target.result; };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+</script>
+</body>
+</html>
