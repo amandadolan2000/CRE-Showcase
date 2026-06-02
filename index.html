@@ -62,24 +62,52 @@
   .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 400; color: var(--black); margin-bottom: 1rem; }
   .section-intro { color: var(--mid); font-size: 0.95rem; max-width: 540px; margin-bottom: 3.5rem; line-height: 1.9; }
 
-  /* SECTORS */
-  .sectors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
+  /* SECTORS — CAROUSEL */
+  .sector-carousel { border: 1px solid var(--border); }
+  .sector-nav {
+    display: flex; align-items: stretch; border-bottom: 1px solid var(--border);
+    overflow-x: auto; -webkit-overflow-scrolling: touch; background: var(--bg);
+  }
+  .sector-tab {
+    flex: 1 1 auto; min-width: 130px; white-space: nowrap;
+    font-family: sans-serif; font-size: 0.78rem; letter-spacing: 0.03em;
+    color: var(--mid); background: none; border: none; cursor: pointer;
+    padding: 1rem 1.2rem; display: flex; align-items: center; justify-content: center;
+    gap: 0.5rem; position: relative; transition: color 0.2s, background 0.2s;
+    border-right: 1px solid var(--border);
+  }
+  .sector-tab:last-child { border-right: none; }
+  .sector-tab .tab-icon { font-size: 1rem; }
+  .sector-tab::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
+    background: var(--accent); transform: scaleX(0); transition: transform 0.25s;
+  }
+  .sector-tab:hover { color: var(--accent); }
+  .sector-tab.active { color: var(--accent); background: var(--accent-light); font-weight: 700; }
+  .sector-tab.active::after { transform: scaleX(1); }
+
+  .sector-viewport { overflow: hidden; position: relative; }
+  .sector-track { display: flex; transition: transform 0.4s ease; }
   .sector-card {
-    border: 1px solid var(--border); padding: 2rem; cursor: pointer;
-    transition: all 0.25s; position: relative; overflow: hidden;
+    flex: 0 0 100%; min-width: 100%; padding: 2.5rem 2rem; box-sizing: border-box;
   }
-  .sector-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-    background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  .sector-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .sector-name { font-family: sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: 0.3rem; letter-spacing: 0.02em; }
+  .sector-tagline { font-size: 0.85rem; color: var(--light); margin-bottom: 1rem; font-family: sans-serif; }
+  .sector-detail { font-size: 0.82rem; color: var(--dark); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 1.2rem; margin-top: 0.5rem; }
+
+  .carousel-controls { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding: 0.8rem 1.2rem; background: var(--bg); }
+  .carousel-arrow {
+    font-family: sans-serif; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase;
+    background: none; border: 1px solid var(--border); color: var(--mid);
+    padding: 0.45rem 1rem; cursor: pointer; transition: all 0.2s;
   }
-  .sector-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,74,107,0.08); }
-  .sector-card:hover::after, .sector-card.active::after { transform: scaleX(1); }
-  .sector-card.active { background: var(--accent-light); border-color: var(--accent); }
-  .sector-icon { font-size: 1.6rem; margin-bottom: 1rem; }
-  .sector-name { font-family: sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--black); margin-bottom: 0.3rem; letter-spacing: 0.02em; }
-  .sector-tagline { font-size: 0.8rem; color: var(--light); margin-bottom: 1rem; font-family: sans-serif; }
-  .sector-detail { display: none; font-size: 0.82rem; color: var(--dark); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 1.2rem; margin-top: 0.5rem; }
-  .sector-card.active .sector-detail { display: block; }
+  .carousel-arrow:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .carousel-arrow:disabled { opacity: 0.35; cursor: default; }
+  .carousel-dots { display: flex; gap: 0.5rem; }
+  .carousel-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); border: none; cursor: pointer; padding: 0; transition: background 0.2s, transform 0.2s; }
+  .carousel-dot.active { background: var(--accent); transform: scale(1.3); }
+  @media (max-width: 600px) { .sector-tab { min-width: 110px; font-size: 0.72rem; } }
   .sector-detail ul { padding-left: 1rem; }
   .sector-detail li { margin-bottom: 0.4rem; }
   .sector-detail strong {
@@ -220,155 +248,169 @@
   <p class="section-label">Market Knowledge</p>
   <h2 class="section-title">Commercial Real Estate Sectors</h2>
   <p class="section-intro">A working knowledge of five core CRE asset classes — their investment drivers, supply dynamics, and macroeconomic sensitivities, with a focus on the Toronto market.</p>
-  <div class="sectors-grid">
-
-    <div class="sector-card" onclick="toggleSector(this)">
+  <div class="sector-carousel">
+    <div class="sector-nav" id="sectorNav">
+      <button class="sector-tab active" onclick="goToSector(0)"><span class="tab-icon">🏭</span>Industrial</button>
+      <button class="sector-tab" onclick="goToSector(1)"><span class="tab-icon">🏢</span>Multifamily</button>
+      <button class="sector-tab" onclick="goToSector(2)"><span class="tab-icon">🏙️</span>Office</button>
+      <button class="sector-tab" onclick="goToSector(3)"><span class="tab-icon">🛍️</span>Retail</button>
+      <button class="sector-tab" onclick="goToSector(4)"><span class="tab-icon">🖥️</span>Data Centers</button>
+    </div>
+    <div class="sector-viewport">
+      <div class="sector-track" id="sectorTrack">
+        <div class="sector-card">
       <div class="sector-icon">🏭</div>
       <div class="sector-name">Industrial</div>
       <div class="sector-tagline">Logistics, warehousing & last-mile</div>
       <div class="sector-detail">
         <strong>Investment Drivers</strong>
         <ul>
-          <li>E-commerce growth driving sustained demand for distribution space</li>
-          <li>Near-shoring and supply chain restructuring increasing domestic inventory needs</li>
-          <li>Low vacancy across major markets supporting rent growth</li>
+          <li>After 12 consecutive quarters of increases, Canadian industrial vacancy plateaued at 5.2% in Q4 2025 — a potential inflection point. JLL Canada expects vacancy to begin falling and rents to rise through 2026 as new development slows</li>
+          <li>GTA industrial investment reached $1.5 billion in Q1 2026 — an 11% year-over-year increase — supported by high-value acquisitions including the former Toys "R" Us GTA headquarters for $137M and a Sobeys distribution centre for $115M</li>
+          <li>A "flight-to-quality" trend continues to drive GTA leasing, with Class A, high-specification assets built for advanced automation and sustainable energy requirements expected to capture the next wave of expansionary demand</li>
         </ul>
         <strong>Toronto Market Context</strong>
         <ul>
-          <li>GTA is Canada's largest industrial market, anchored by the 400-series highway corridors</li>
-          <li>Availability rates rising as new supply delivers, but demand expected to tighten through 2025</li>
-          <li>Mississauga, Brampton, and Vaughan remain key submarkets for big-box logistics</li>
+          <li>GTA availability held steady at 5.0% in Q1 2026 following two consecutive quarterly decreases, with 2.0 million sq. ft. of positive net absorption — part of a combined 8.1 million sq. ft. over the last three quarters (CBRE Q1 2026)</li>
+          <li>Of 841,000 sq. ft. of new GTA supply delivered in Q1 2026, approximately 92% remained unleased at time of reporting. With 35 projects totalling 9.8 million sq. ft. under construction and 58% still available, near-term availability is expected to remain elevated (Altus Group Q1 2026)</li>
+          <li>The GTA under-construction pipeline has fallen to its lowest level since 2018, with 8.0 million sq. ft. anticipated for 2026 delivery — a meaningful supply-side pullback supporting medium-term rent recovery (CBRE Q1 2026)</li>
         </ul>
         <strong>Key Metrics</strong>
         <ul>
-          <li>Net absorption, availability rate, average asking net rent</li>
-          <li>Clear height, truck courts, and dock doors as value drivers</li>
+          <li>Average asking net rents fell only $0.06/SF quarter-over-quarter to $16.32/SF in Q1 2026 — nearly flattened after nine consecutive quarters of decreases (CBRE Q1 2026)</li>
+          <li>Net absorption, availability rate, clear height, truck courts, and dock doors remain the primary leasing and valuation metrics across GTA industrial</li>
         </ul>
         <div class="cbre-note">
           <span>CBRE Insight</span>
-          CBRE's Q4 2025 industrial report noted GTA net absorption of 4.3M SF — the highest of any Canadian market — driven largely by pre-leased new supply. CBRE Toronto's industrial team tracks over 500M SF of GTA inventory.
+          CBRE's Q1 2026 GTA Industrial Figures confirm positive leasing momentum against a backdrop of near-term supply overhang and geopolitical uncertainty around U.S. trade. The thinning pipeline, stabilizing rents, and sustained absorption position GTA industrial as one of Canada's most closely watched markets for a 2026–2027 recovery cycle.
         </div>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sector-card" onclick="toggleSector(this)">
+        <div class="sector-card">
       <div class="sector-icon">🏢</div>
       <div class="sector-name">Multifamily</div>
-      <div class="sector-tagline">Rental apartments & purpose-built residential</div>
+      <div class="sector-tagline">Purpose-built rental & residential investment</div>
       <div class="sector-detail">
         <strong>Investment Drivers</strong>
         <ul>
-          <li>Structural housing undersupply in Toronto driving persistent rental demand</li>
-          <li>High homeownership costs pushing demand into the rental market</li>
-          <li>Immigration-driven population growth sustaining absorption</li>
+          <li>GTA multifamily investment reached nearly $675 million in Q1 2026 — a 232% year-over-year increase. Toronto and Halton regions individually posted increases of 569% and 90%, reflecting broad-based institutional reallocation of capital toward residential density (Altus Group Q1 2026)</li>
+          <li>2025 was the first year in Canada in which more purpose-built rental units were under construction than condos or single-family homes. National multifamily investment sales reached $10.2 billion — a 13.6% annual increase — halting a four-year slide in transaction volume (JLL Canada 2026)</li>
+          <li>Booming purpose-built supply combined with plateauing population growth is helping to stabilize apartment rents across Canada, with asking rents falling year-over-year in every major city except Edmonton (JLL Canada 2026)</li>
         </ul>
         <strong>Toronto Market Context</strong>
         <ul>
-          <li>Toronto's purpose-built rental vacancy rate remains near historic lows</li>
-          <li>Rent control regime on pre-1991 buildings creates a two-tier market dynamic</li>
-          <li>Intensification along transit corridors (Eglinton Crosstown, Ontario Line) driving new supply nodes</li>
+          <li>CMHC's 2025 Rental Market Report found the GTA purpose-built vacancy rate rose to 3.0% — the highest outside of the pandemic since 2004 — driven by declining international migration, condo rental competition, and a softening economic backdrop</li>
+          <li>Vacancy in buildings constructed between 1975–2004 remained tightest, while post-2015 units saw smaller vacancy increases despite added supply. Ontario's rent control framework on pre-1991 buildings continues to create a two-tier market dynamic (CMHC 2025)</li>
+          <li>Q1 2026 saw a measurable decline in end-user condo demand and a record accumulation of unsold inventory in the secondary market, with downward pressure on rental rates and landlords increasingly offering incentives to maintain occupancy (Altus Group Q1 2026)</li>
         </ul>
         <strong>Key Metrics</strong>
         <ul>
-          <li>Vacancy rate, average market rent, rent-to-income ratios</li>
-          <li>NOI growth and cap rate spreads to government bonds</li>
+          <li>Vacancy rate (purpose-built vs. condo rental), average market rent, rent growth year-over-year, NOI, cap rate spreads to GoC bonds, DSCR under CMHC MLI Select</li>
         </ul>
         <div class="cbre-note">
           <span>CBRE Insight</span>
-          CBRE's National Investment Team is active in multifamily capital markets across the GTA, tracking purpose-built rental transactions and providing valuation advisory to major pension fund and REIT clients.
+          CBRE's National Investment Team tracks GTA multifamily capital markets across purpose-built and value-add rental assets. Near-term vacancy softening is being read by many institutional investors as a cyclical entry point ahead of the next immigration-driven demand cycle, which CMHC projects will resume in 2027.
         </div>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sector-card" onclick="toggleSector(this)">
+        <div class="sector-card">
       <div class="sector-icon">🏙️</div>
       <div class="sector-name">Office</div>
-      <div class="sector-tagline">Workspace, CBD & suburban campuses</div>
+      <div class="sector-tagline">Downtown recovery & flight to quality</div>
       <div class="sector-detail">
         <strong>Investment Drivers</strong>
         <ul>
-          <li>Flight-to-quality driving demand for AAA and well-repositioned Class A product</li>
-          <li>Hybrid work permanently reshaping space requirements per employee</li>
-          <li>Conversion opportunities creating value from distressed Class B/C assets</li>
+          <li>Downtown Toronto registered over 2.1 million sq. ft. of net absorption in Q1 2026 — the largest quarterly figure in recorded history. Overall downtown vacancy fell 120 bps to 13.4%, with Class AAA and A assets accounting for the majority of space taken (CBRE Q1 2026)</li>
+          <li>Trophy assets — the top tier within Class A — have seen vacancy decline for five consecutive quarters and are now below 10% for the first time since 2020. National sublease space has declined for 11 consecutive quarters, falling a cumulative 6.5 million sq. ft. from its peak (CBRE Canada Q1 2026)</li>
+          <li>The GTA office sector recorded $485 million in investment dollar volume in Q1 2026 — a 103% year-over-year increase — with activity concentrated in Class AAA and A assets (Altus Group Q1 2026)</li>
         </ul>
         <strong>Toronto Market Context</strong>
         <ul>
-          <li>Downtown Toronto recorded 2.65M SF of positive net absorption in 2025 — second consecutive year of recovery</li>
-          <li>AAA vacancy sits at just 7.2%; CIBC Square II (1.5M SF) is the only significant new supply, fully pre-leased</li>
-          <li>Union Station adjacency is the defining location variable — tenants prioritise transit access to drive return-to-office</li>
+          <li>Toronto has driven national office leasing for three consecutive quarters of 1.0M+ sq. ft. net absorption. Downtown vacancy fell to 14.4% in Q1 2026 from 18.3% a year prior — a 390-basis-point year-over-year improvement (CBRE Canada Q1 2026)</li>
+          <li>Recovery is spreading beyond the Financial Core — Class A vacancy has declined 600 bps over the last 12 months, narrowing the performance gap with trophy product. Large block vacancy continues to fall, with remaining options concentrated in the Greater Core (CBRE Q1 2026)</li>
+          <li>With the fully pre-leased CIBC Square II delivered, Toronto's construction pipeline has fallen to a 22-year low with only 396,000 sq. ft. remaining under construction. Over 1.5 million sq. ft. was removed from inventory for conversion in Q1 2026 — a record quarterly high (CBRE Canada Q1 2026)</li>
         </ul>
         <strong>Key Metrics</strong>
         <ul>
-          <li>Availability vs. vacancy rate, net absorption, sublease as % of vacancy</li>
-          <li>Submarket divergence: downtown core vs. Midtown vs. suburban 905</li>
+          <li>Vacancy rate by class (AAA/A/B/C), net absorption, sublease availability, new supply pipeline, office-to-residential conversion volume</li>
         </ul>
         <div class="cbre-note">
           <span>CBRE Insight</span>
-          CBRE's National Investment Team recently advised on the sale of 70 York Street — a 210,000 SF Class A tower in the Financial District — for $134.6M, reflecting a 6.5% cap rate and below-replacement-cost basis of $639/SF.
+          CBRE Canada Research Managing Director Marc Meehan noted Q1 2026 as the first quarter where tenant demand is beginning to spread beyond trophy buildings to broader Class A product — a critical signal that Toronto's office recovery is broadening in scope, not just deepening within the Financial Core.
         </div>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sector-card" onclick="toggleSector(this)">
+        <div class="sector-card">
       <div class="sector-icon">🛍️</div>
       <div class="sector-name">Retail</div>
-      <div class="sector-tagline">Neighbourhood centres, malls & mixed-use</div>
+      <div class="sector-tagline">Resilient fundamentals amid structural change</div>
       <div class="sector-detail">
         <strong>Investment Drivers</strong>
         <ul>
-          <li>Experiential and necessity-based retail outperforming discretionary categories</li>
-          <li>Grocery-anchored neighbourhood centres demonstrating resilience through cycles</li>
-          <li>Mixed-use intensification unlocking additional value on retail-zoned land</li>
+          <li>GTA retail investment totalled $314 million in Q1 2026 — a 66% year-over-year decline driven by a shortage of available product in high-demand corridors, not weak demand. Historically tight conditions and limited inventory suppressed transaction volume (Altus Group Q1 2026)</li>
+          <li>Canadian retail spending was up 4.5% through November 2025. However, food inflation running at 7.3% is driving consumer trade-down behaviour toward discount and essential formats, reshaping tenant mix across the GTA (JLL Canada 2026)</li>
+          <li>The closure of Hudson's Bay stores left a significant physical void nationally. Discount chains and thrift stores are opening at a rapid pace, while mall owners are actively repositioning anchor space toward experiential and mixed-use formats (JLL Canada 2026)</li>
         </ul>
         <strong>Toronto Market Context</strong>
         <ul>
-          <li>Wellness, athleisure, and beauty dominated Toronto retail leasing in 2025, per CBRE research</li>
-          <li>Ossington Avenue emerged as one of the city's most in-demand streetfront retail corridors</li>
-          <li>Simons entering Yorkdale and Eaton Centre signals renewed anchor tenant confidence in major centres</li>
+          <li>CBRE's Canada Retail Rent Survey notes strong interest from replacement tenants for available HBC boxes. Most spaces will require time to absorb as landlords realign centre strategy around long-term vision — but demand fundamentals remain intact (CBRE H1 2025)</li>
+          <li>Suburban retail leasing kicked off 2025 with strong momentum, fuelled by a competitive pre-leasing market among new market entrants and expanding tenants. Vacancy is expected to remain stable as demand for space stays firm (CBRE H1 2025)</li>
+          <li>Despite headwinds including declining population growth and eroding consumer purchasing power, the GTA's status as Canada's primary commercial hub continues to attract international brands seeking a Canadian market entry (Altus Group Q1 2026)</li>
         </ul>
         <strong>Key Metrics</strong>
         <ul>
-          <li>Sales per square foot, occupancy cost ratio, foot traffic counts</li>
-          <li>Anchor tenant credit quality and lease expiry profiles</li>
+          <li>Vacancy rate by format (high street, enclosed mall, strip centre), average asking net rent, anchor tenant occupancy, foot traffic indices, cap rates by subtype</li>
         </ul>
         <div class="cbre-note">
           <span>CBRE Insight</span>
-          CBRE's Urban Retail team, led by SVP Arlin Markowitz, specialises in streetfront and luxury retail investment in Downtown Toronto — one of North America's most active urban retail markets.
+          CBRE's Canadian Retail team continues to track GTA shopping centre repositioning as HBC's dissolution reshapes the large-format landscape. Grocery-anchored and necessity-based retail has demonstrated the greatest cap rate stability through the interest rate cycle, while landlord capital is flowing into experiential and mixed-use repositioning across the GTA's major enclosed centres.
         </div>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sector-card" onclick="toggleSector(this)">
+        <div class="sector-card">
       <div class="sector-icon">🖥️</div>
       <div class="sector-name">Data Centers</div>
-      <div class="sector-tagline">Digital infrastructure & cloud facilities</div>
+      <div class="sector-tagline">AI infrastructure & digital real estate</div>
       <div class="sector-detail">
         <strong>Investment Drivers</strong>
         <ul>
-          <li>AI and cloud computing driving unprecedented demand for compute capacity</li>
-          <li>Power availability and grid access emerging as the primary site constraint globally</li>
-          <li>Institutional capital repositioning data centers as core infrastructure allocation</li>
+          <li>JLL Canada identified data centres as one of the sectors with the most meaningful investment volume acceleration in 2025 — alongside office and seniors housing — as AI-compute demand drove a structural step-change in leasing activity and capital deployment (JLL Canada 2026)</li>
+          <li>CoreWeave led the GTA wholesale colocation market in H1 2025, securing approximately 52 MW of preleasing — the largest single commitment in Canadian data centre history. Initial infrastructure was operational by June 2025, underscoring the urgency of AI-driven demand (CBRE H1 2025)</li>
+          <li>AI deployments are driving a step-change in construction costs, with power density requirements of 60–132 kW/rack accelerating liquid cooling adoption and pushing build-out costs above $13 million CAD per project (CBRE H1 2025)</li>
         </ul>
         <strong>Toronto Market Context</strong>
         <ul>
-          <li>Toronto is Canada's largest data centre market, benefiting from proximity to US hyperscalers and a stable regulatory environment</li>
-          <li>Power grid constraints in the GTA are increasingly limiting new development — energy access is becoming the key differentiator</li>
-          <li>Canadian data sovereignty concerns driving domestic demand from financial services and government tenants</li>
+          <li>Toronto's data centre market has shifted focus from latency to power and security. Scarcity of immediately available colocation space in the 3-to-6 MW range — concentrated across only three Toronto locations — is creating a supply bottleneck and upward price pressure on mid-market enterprise demand (CBRE H1 2025)</li>
+          <li>Data centre development land commands a significant premium over traditional industrial sites due to limited parcels with sufficient grid capacity — exemplified by Prologis's 40-acre acquisition in Mississauga specifically for data centre development (CBRE H1 2025)</li>
+          <li>Montreal's market is seeing strong parallel demand for AI-ready capacity, primarily from existing operators with power allocations already in place — highlighting that grid access, not tenant demand, is the binding constraint across both major Canadian markets (CBRE Canada)</li>
         </ul>
         <strong>Key Metrics</strong>
         <ul>
-          <li>Megawatts (MW) of critical IT load, power usage effectiveness (PUE)</li>
-          <li>Colocation vs. hyperscale lease structure, utilization rates</li>
+          <li>IT power capacity (MW), power usage effectiveness (PUE), pre-commitment rate, rack density (kW/rack), colocation vs. hyperscale absorption split</li>
         </ul>
         <div class="cbre-note">
           <span>CBRE Insight</span>
-          CBRE's Global Data Centre Solutions team tracks Canadian market fundamentals and advises institutional investors on acquisitions, development, and leasing strategy across the digital infrastructure sector.
+          CBRE's Global Data Centre Solutions team advises institutional investors across Canada's digital infrastructure sector on acquisitions, development, and leasing strategy. Access to committed grid capacity has become the single most critical constraint on GTA data centre development — making power-secured sites a distinct and premium asset class within the broader industrial and infrastructure investment landscape.
         </div>
-      </div>
+          </div>
+        </div>
     </div>
-
+    <div class="carousel-controls">
+      <button class="carousel-arrow" id="sectorPrev" onclick="moveSector(-1)">← Prev</button>
+      <div class="carousel-dots">
+        <button class="carousel-dot active" onclick="goToSector(0)" aria-label="Go to Industrial"></button>
+        <button class="carousel-dot" onclick="goToSector(1)" aria-label="Go to Multifamily"></button>
+        <button class="carousel-dot" onclick="goToSector(2)" aria-label="Go to Office"></button>
+        <button class="carousel-dot" onclick="goToSector(3)" aria-label="Go to Retail"></button>
+        <button class="carousel-dot" onclick="goToSector(4)" aria-label="Go to Data Centers"></button>
+      </div>
+      <button class="carousel-arrow" id="sectorNext" onclick="moveSector(1)">Next →</button>
+    </div>
   </div>
-  <p style="font-family:sans-serif;font-size:0.72rem;color:var(--light);margin-top:1.2rem;letter-spacing:0.04em;">↑ Click any sector to expand</p>
 </section>
 
 <!-- WORK SAMPLES -->
@@ -475,13 +517,14 @@
               <div class="resume-role">Workplace Experience Coordinator (Contract)</div>
               <div class="resume-org">CBRE</div>
               <ul class="resume-bullets">
-                <li>Manage day-to-day workplace operations for institutional occupiers across commercial office assets</li>
-                <li>Liaise directly with tenants, vendors, and asset management teams in a fast-paced institutional environment</li>
-                <li>Gained direct exposure to how global CRE firms operate at scale across leasing, facilities, and client services</li>
+                <li>Deployed on-site at GE Vernova's Sydney office as part of CBRE's workplace solutions contract, supporting facilities and operations management within a corporate occupier environment and ensuring accuracy and timeliness of service delivery across multiple stakeholder groups</li>
+                <li>Launched a recurring quarterly client drinks event between GE Vernova and a major client to strengthen the business relationship ahead of a pending contract renewal, demonstrating initiative in maintaining high-value partnerships</li>
+                <li>Gained direct exposure to how CBRE's platform operates at the occupier level, including data management workflows, compliance with service standards, and cross-functional team coordination</li>
+                <li>Created the national engagement budget report presented monthly to Country Council Directors, and compiled occupancy reports used to inform lease renewal decisions — demonstrating the ability to synthesize complex operational data into clear, accurate deliverables for senior stakeholders</li>
               </ul>
             </div>
             <div style="text-align:right">
-              <div class="resume-date">Jan 2026 – Jul 2026</div>
+              <div class="resume-date">Jan 2026 – Jun 2026</div>
               <div class="resume-location">Sydney, NSW</div>
             </div>
           </div>
@@ -490,8 +533,9 @@
               <div class="resume-role">Assistant Operations Manager</div>
               <div class="resume-org">Med Supper Club</div>
               <ul class="resume-bullets">
-                <li>Oversaw front-of-house operations and managed team scheduling, vendor coordination, and client experience</li>
-                <li>Developed strong organisational and relationship management skills in a high-volume environment</li>
+                <li>Tracked daily covers, revenue, and labour costs in Excel, producing weekly summaries for ownership to monitor performance against targets</li>
+                <li>Liaised with ownership on weekly operational priorities, translating management directives into actionable plans for the floor team</li>
+                <li>Supported end-of-month financial reporting by consolidating labour and cost data into structured summaries for ownership</li>
               </ul>
             </div>
             <div style="text-align:right">
@@ -504,7 +548,9 @@
               <div class="resume-role">Server</div>
               <div class="resume-org">Local Public Eatery</div>
               <ul class="resume-bullets">
-                <li>Built client-facing skills and team communication in a fast-paced hospitality setting</li>
+                <li>Delivered reliable, accurate service in a fast-paced, high-volume environment — managing multiple competing priorities simultaneously while maintaining consistency and attention to detail</li>
+                <li>Coordinated closely with kitchen and management teams to ensure timely, accurate delivery of service, demonstrating strong communication and organizational skills under pressure</li>
+                <li>Maintained up-to-date knowledge of daily menu changes and specials, applying a proactive approach to staying current with evolving information — directly transferable to tracking and reporting on changing market data</li>
               </ul>
             </div>
             <div style="text-align:right">
@@ -520,10 +566,6 @@
             <div>
               <div class="resume-role">Bachelor of Arts — International Economics & Finance, Minor in Real Estate Management (Honours)</div>
               <div class="resume-org">Toronto Metropolitan University</div>
-              <ul class="resume-bullets">
-                <li>Minor in Real Estate Management</li>
-                <li>Coursework in international economics, corporate finance, investment analysis, and real estate valuation</li>
-              </ul>
             </div>
             <div style="text-align:right">
               <div class="resume-date">2018 – 2023</div>
@@ -533,40 +575,49 @@
             <div>
               <div class="resume-role">A.CRE Accelerator — Real Estate Financial Modelling Program (In Progress)</div>
               <div class="resume-org">Adventures in CRE (A.CRE)</div>
-              <ul class="resume-bullets">
-                <li>Building institutional-grade pro formas, DCF models, and acquisition underwriting from scratch in Excel</li>
-              </ul>
             </div>
             <div style="text-align:right">
-              <div class="resume-date">Expected May 2026</div>
+              <div class="resume-date">2026</div>
             </div>
           </div>
           <div class="resume-item">
             <div>
-              <div class="resume-role">Ontario Mortgage Agent Course</div>
-              <div class="resume-org">Real Estate and Mortgage Institute of Canada (REMIC)</div>
-              <ul class="resume-bullets">
-                <li>Debt structures, underwriting principles, and real estate financing mechanics</li>
-              </ul>
+              <div class="resume-role">Claude 101 | Introduction to Claude Cowork | AI Fluency: Framework and Foundations</div>
+              <div class="resume-org">Anthropic Academy</div>
             </div>
             <div style="text-align:right">
-              <div class="resume-date">Oct 2023</div>
+              <div class="resume-date">2026</div>
             </div>
           </div>
         </div>
 
         <div class="resume-block">
-          <div class="resume-block-title">Skills & Tools</div>
-          <div class="resume-skills">
-            <span class="resume-skill">Microsoft Excel</span>
-            <span class="resume-skill">PowerPoint</span>
-            <span class="resume-skill">Word</span>
-            <span class="resume-skill">AI Tools</span>
-            <span class="resume-skill">DCF Analysis</span>
-            <span class="resume-skill">Pro Forma Underwriting</span>
-            <span class="resume-skill">Market Research</span>
-            <span class="resume-skill">Capital Markets</span>
-            <span class="resume-skill">Investment Analysis</span>
+          <div class="resume-block-title">Skills & Technology</div>
+          <div style="margin-bottom:1.2rem;">
+            <div style="font-family:sans-serif; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); margin-bottom:0.7rem;">Software & Tools</div>
+            <div class="resume-skills">
+              <span class="resume-skill">Microsoft Excel (Intermediate)</span>
+              <span class="resume-skill">PowerPoint</span>
+              <span class="resume-skill">Word</span>
+              <span class="resume-skill">Canva</span>
+              <span class="resume-skill">AI Tools</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:sans-serif; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); margin-bottom:0.7rem;">Core Competencies</div>
+            <div class="resume-skills">
+              <span class="resume-skill">Data Collection & Analysis</span>
+              <span class="resume-skill">Report Preparation</span>
+              <span class="resume-skill">Stakeholder Coordination</span>
+              <span class="resume-skill">Attention to Detail</span>
+              <span class="resume-skill">Written & Verbal Communication</span>
+              <span class="resume-skill">Team Collaboration</span>
+              <span class="resume-skill">Organization</span>
+              <span class="resume-skill">Deadline Management</span>
+              <span class="resume-skill">AI-Assisted Research & Analysis</span>
+              <span class="resume-skill">AI Workflow Automation</span>
+              <span class="resume-skill">AI Agents & Task Automation</span>
+            </div>
           </div>
         </div>
       </div>
@@ -591,13 +642,28 @@
 </footer>
 
 <script>
-  function toggleSector(card) {
-    const isActive = card.classList.contains('active');
-    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
-    if (!isActive) card.classList.add('active');
+  let sectorIndex = 0;
+  const sectorCount = document.querySelectorAll('.sector-card').length;
+
+  function renderSector() {
+    const track = document.getElementById('sectorTrack');
+    track.style.transform = `translateX(-${sectorIndex * 100}%)`;
+    document.querySelectorAll('.sector-tab').forEach((t, i) => t.classList.toggle('active', i === sectorIndex));
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === sectorIndex));
+    document.getElementById('sectorPrev').disabled = sectorIndex === 0;
+    document.getElementById('sectorNext').disabled = sectorIndex === sectorCount - 1;
   }
 
+  function goToSector(i) {
+    sectorIndex = Math.max(0, Math.min(sectorCount - 1, i));
+    renderSector();
+  }
 
+  function moveSector(dir) {
+    goToSector(sectorIndex + dir);
+  }
+
+  renderSector();
 </script>
 </body>
 </html>
