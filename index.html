@@ -37,58 +37,107 @@
   }
   .hero-inner { max-width: 520px; position: relative; z-index: 1; flex-shrink: 0; }
 
-  /* STAT BLOCK */
-  .hero-stats { flex: 0 0 340px; position: relative; z-index: 1; }
-  .stat-block-header {
+  /* SECTOR SNAPSHOT */
+  .hero-stats { flex: 0 0 270px; min-width: 0; max-width: 270px; position: relative; z-index: 1; margin-left: auto; }
+
+  .snapshot-header {
     font-family: sans-serif; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--light); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem;
+    color: var(--accent); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem;
+    border: 1px solid #555; padding: 0.55rem 0.7rem; background: #fff;
   }
-  .stat-block-header::before { content: ''; display: block; width: 1.2rem; height: 1px; background: var(--accent); }
+  .snapshot-header::before { content: ''; display: block; width: 1.2rem; height: 1px; background: var(--accent); }
   .stat-pulse {
     display: inline-block; width: 6px; height: 6px; border-radius: 50%;
     background: var(--accent); margin-left: auto;
     animation: pulse 2s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.7); } }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
 
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
-  .stat-card {
-    background: #fff; padding: 1.2rem 1.1rem; position: relative; overflow: hidden;
-    transition: background 0.2s;
-  }
-  .stat-card:hover { background: var(--accent-light); }
-  .stat-card.wide { grid-column: span 2; }
-  .stat-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-    background: var(--accent); transition: width 0.4s ease;
-  }
-  .stat-card:hover::after { width: 100%; }
-  .stat-value {
-    font-family: sans-serif; font-size: 1.65rem; font-weight: 700;
-    color: var(--black); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.35rem;
-  }
-  .stat-value .stat-unit { font-size: 1rem; font-weight: 400; color: var(--accent); }
-  .stat-trend {
-    display: inline-block; font-size: 0.62rem; font-family: sans-serif;
-    padding: 0.15rem 0.4rem; margin-bottom: 0.4rem; letter-spacing: 0.04em;
-  }
-  .stat-trend.up { background: var(--accent-light); color: var(--accent); }
-  .stat-trend.down { background: var(--accent-light); color: var(--accent); }
-  .stat-label { font-family: sans-serif; font-size: 0.7rem; color: var(--mid); line-height: 1.4; margin-bottom: 0.3rem; }
-  .stat-source { font-family: sans-serif; font-size: 0.58rem; color: var(--light); letter-spacing: 0.05em; text-transform: uppercase; }
+  .snapshot-wrap { border: 1.5px solid #555; background: #fff; }
 
-  .stat-block-footer {
+  .snapshot-tabs { display: none; }
+  .snapshot-tab {
+    flex: 1; padding: 0.65rem 0.3rem; font-family: sans-serif; font-size: 0.65rem;
+    letter-spacing: 0.02em; text-align: center; background: none; border: none;
+    border-right: 1px solid var(--border); cursor: pointer; color: var(--light);
+    transition: color 0.2s, background 0.2s; white-space: nowrap; position: relative;
+  }
+  .snapshot-tab:last-child { border-right: none; }
+  .snapshot-tab .tab-icon { display: block; font-size: 1rem; margin-bottom: 0.2rem; }
+  .snapshot-tab.active { color: var(--accent); background: var(--accent-light); font-weight: 700; }
+  .snapshot-tab::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.2s;
+  }
+  .snapshot-tab.active::after { transform: scaleX(1); }
+
+  .snapshot-progress { display: none; }
+  .snapshot-progress-bar {
+    height: 100%; background: var(--accent); width: 0%;
+    transition: width linear;
+  }
+
+  .snapshot-viewport { overflow: hidden; }
+  .snapshot-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.5rem 0.7rem; border-top: 1px solid var(--border); background: #fff;
+  }
+  .snapshot-nav-btn {
+    width: 26px; height: 26px; border: 1px solid var(--border); background: #fff;
+    color: var(--mid); font-size: 0.85rem; cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .snapshot-nav-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .snapshot-nav-indicator {
+    font-family: sans-serif; font-size: 0.62rem; color: var(--light);
+    letter-spacing: 0.08em;
+  }
+  .snapshot-track { display: flex; transition: transform 0.4s ease; }
+  .snapshot-slide { flex: 0 0 100%; min-width: 100%; padding: 1.2rem 0.8rem; box-sizing: border-box; }
+
+  .snapshot-sector-label {
+    font-family: sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .snapshot-sector-label .sector-src {
+    font-weight: 400; color: var(--light); font-size: 0.58rem; letter-spacing: 0.04em;
+  }
+
+  .snapshot-stat {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 0.55rem 0; border-bottom: 1px solid var(--border);
+  }
+  .snapshot-stat:last-of-type { border-bottom: none; }
+  .snapshot-stat-label {
+    font-family: sans-serif; font-size: 0.68rem; color: var(--mid); flex: 1;
+  }
+  .snapshot-stat-value {
+    font-family: sans-serif; font-size: 1rem; font-weight: 700;
+    color: var(--black); letter-spacing: -0.02em; text-align: right;
+  }
+  .snapshot-stat-sub {
+    font-size: 0.58rem; color: var(--light); display: block; text-align: right;
+    font-family: sans-serif; margin-top: 0.1rem;
+  }
+
+  .snapshot-trend {
+    margin-top: 0.9rem; padding: 0.55rem 0.7rem; background: var(--accent-light);
+    font-family: sans-serif; font-size: 0.68rem; color: var(--dark); line-height: 1.5;
+    border-left: 2px solid var(--accent);
+  }
+  .snapshot-trend-arrow { font-weight: 700; color: var(--accent); margin-right: 0.3rem; }
+
+  .snapshot-footer {
     font-family: sans-serif; font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--light); margin-top: 0.8rem; text-align: right;
+    color: var(--light); margin-top: 0.7rem; text-align: right;
   }
 
   @media (max-width: 960px) {
     .hero { flex-direction: column; align-items: flex-start; gap: 3rem; min-height: auto; padding-bottom: 60px; }
-    .hero-stats { flex: none; width: 100%; max-width: 500px; }
-  }
-  @media (max-width: 500px) {
-    .stat-grid { grid-template-columns: 1fr; }
-    .stat-card.wide { grid-column: span 1; }
+    .hero-stats { flex: none; width: 100%; max-width: 520px; }
   }
   .hero-eyebrow { font-family: sans-serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
   .hero-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
@@ -176,6 +225,7 @@
   .samples-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
   .sample-card {
     border: 1px solid var(--border); padding: 1.5rem; transition: all 0.25s; position: relative;
+    background: var(--accent-light);
   }
   .sample-card:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgba(26,74,107,0.07); transform: translateY(-2px); }
   .sample-card.featured { border-color: var(--accent); background: var(--accent-light); }
@@ -246,6 +296,178 @@
 
   footer { padding: 1.5rem 6%; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; font-size: 0.72rem; color: var(--light); border-top: 3px solid var(--accent); background: var(--accent-light); }
   .footer-pink { color: var(--pink); }
+
+  /* SUBMARKET MAP */
+  #submarket-map { background: #fff; }
+  .map-container { display: grid; grid-template-columns: 1fr 360px; gap: 2rem; align-items: start; }
+  .map-svg-wrap { position: relative; background: #f4f8fb; border: 1px solid var(--border); }
+
+  .map-panel { border: 1px solid var(--border); min-height: 420px; display: flex; flex-direction: column; }
+  .map-panel-default { padding: 2rem 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; flex: 1; }
+  .map-panel-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .map-panel-prompt { font-family: sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--black); margin-bottom: 0.4rem; }
+  .map-panel-sub { font-family: sans-serif; font-size: 0.72rem; color: var(--light); line-height: 1.6; margin-bottom: 1.2rem; }
+  .map-panel-list { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+  .map-chip { font-family: sans-serif; font-size: 0.65rem; padding: 0.3rem 0.6rem; border: 1px solid var(--border); color: var(--mid); cursor: pointer; transition: all 0.2s; }
+  .map-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .map-panel-detail { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+  .map-detail-header { display: flex; align-items: flex-start; gap: 0.8rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+  .map-detail-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .map-detail-name { font-family: sans-serif; font-size: 1rem; font-weight: 700; color: var(--black); margin-bottom: 0.2rem; }
+  .map-detail-primary { font-family: sans-serif; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; }
+  .map-stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+  .map-stat-row:last-child { border-bottom: none; }
+  .map-stat-label { font-family: sans-serif; font-size: 0.7rem; color: var(--mid); }
+  .map-stat-value { font-family: sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--black); display: block; text-align: right; }
+  .map-stat-note { font-family: sans-serif; font-size: 0.6rem; color: var(--light); display: block; text-align: right; }
+  .map-detail-insight { margin-top: 1rem; padding: 0.7rem 0.8rem; background: var(--accent-light); border-left: 2px solid var(--accent); font-size: 0.72rem; color: var(--dark); line-height: 1.6; }
+  .map-detail-source { margin-top: 0.5rem; font-family: sans-serif; font-size: 0.58rem; color: var(--light); text-align: right; letter-spacing: 0.05em; text-transform: uppercase; }
+  @media (max-width: 900px) { .map-container { grid-template-columns: 1fr; } .map-panel { min-height: auto; } }
+
+
+  /* SKYLINE HERO BACKGROUND */
+  #skylineSvg { transition: transform 0.1s ease-out; }
+  .hero { overflow: hidden; }
+
+
+  /* VISUAL TIMELINE */
+  #timeline { background: #fff; overflow: hidden; }
+  .vtl-legend { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .vtl-legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: sans-serif; font-size: 0.72rem; color: var(--mid); }
+  .vtl-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .vtl-nav { display: flex; align-items: center; gap: 0.8rem; }
+  .vtl-arrow {
+    flex-shrink: 0; width: 36px; height: 36px; border: 1px solid var(--border);
+    background: none; cursor: pointer; font-size: 1rem; color: var(--mid);
+    transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+  }
+  .vtl-arrow:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .vtl-arrow:disabled { opacity: 0.3; cursor: default; }
+  .vtl-scroll-wrap { overflow: hidden; flex: 1; position: relative; }
+  .vtl-track { position: relative; transition: transform 0.4s ease; }
+  .vtl-line {
+    position: absolute; height: 2px; background: var(--border); left: 0;
+    transform: translateY(-50%);
+  }
+  .vtl-year {
+    position: absolute; transform: translateX(-50%);
+    font-family: sans-serif; font-size: 0.7rem; font-weight: 700;
+    color: var(--mid); letter-spacing: 0.05em;
+    bottom: 14px;
+    background: #fff; padding: 0 6px; z-index: 5;
+  }
+  .vtl-year-tick {
+    position: absolute; width: 1px; background: var(--border);
+    top: 160px; transform: translateX(-50%);
+    height: 195px;
+  }
+  .vtl-dot {
+    position: absolute; width: 12px; height: 12px; border-radius: 50%;
+    cursor: pointer; z-index: 3; border: 2px solid #fff;
+    transition: transform 0.2s; transform: translate(0,0);
+  }
+  .vtl-dot:hover { transform: scale(1.4); }
+  .vtl-connector { position: absolute; width: 2px; z-index: 2; }
+  .vtl-card {
+    position: absolute; width: 178px; background: var(--accent-light);
+    border: 1px solid; padding: 0.7rem 0.8rem; cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s; z-index: 4;
+  }
+  .vtl-card:hover { box-shadow: 0 4px 16px rgba(192,71,95,0.15); transform: translateY(-2px); }
+  .vtl-card--top { transform-origin: bottom center; }
+  .vtl-card--bottom { transform-origin: top center; }
+  .vtl-card--top:hover { transform: translateY(-4px); }
+  .vtl-card--bottom:hover { transform: translateY(4px); }
+  .vtl-card-date { font-family: sans-serif; font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.25rem; font-weight: 700; }
+  .vtl-card-title { font-family: sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--black); margin-bottom: 0.2rem; line-height: 1.3; }
+  .vtl-card-short { font-family: sans-serif; font-size: 0.65rem; color: var(--mid); line-height: 1.4; margin-bottom: 0.4rem; }
+  .vtl-badge { font-family: sans-serif; font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.1rem 0.4rem; }
+
+  /* Modal */
+  .vtl-modal {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    z-index: 1000; align-items: center; justify-content: center;
+  }
+  .vtl-modal.open { display: flex; }
+  .vtl-modal-box {
+    background: #fff; max-width: 520px; width: 90%; padding: 2rem;
+    max-height: 80vh; overflow-y: auto; position: relative;
+  }
+  .vtl-modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+  .vtl-modal-date { font-family: sans-serif; font-size: 0.68rem; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .vtl-modal-title { font-family: sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--black); }
+  .vtl-modal-close { background: none; border: none; font-size: 1.1rem; color: var(--light); cursor: pointer; padding: 0; }
+  .vtl-modal-close:hover { color: var(--accent); }
+  .vtl-modal-badge-wrap { margin-bottom: 1rem; }
+  .vtl-modal-badge { font-family: sans-serif; font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.6rem; }
+  .vtl-modal-desc { font-size: 0.85rem; color: var(--dark); line-height: 1.8; }
+
+
+  /* REPORTS SECTION — refined theme-consistent design */
+  #work {
+    background: linear-gradient(180deg, #fff 0%, var(--accent-light) 100%);
+    position: relative;
+  }
+  #work::before {
+    content: ''; position: absolute; top: 0; left: 6%; right: 6%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  #work .sample-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 1.6rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+  }
+  #work .sample-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+  #work .sample-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(192,71,95,0.12);
+  }
+  #work .sample-card:hover::before { transform: scaleY(1); }
+  #work .sample-card.featured {
+    background: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(192,71,95,0.08);
+  }
+  #work .sample-card.featured::before { transform: scaleY(1); }
+  #work .sample-type {
+    font-family: sans-serif; font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.8rem;
+    display: inline-block; padding: 0.25rem 0.6rem;
+    background: var(--accent-light);
+  }
+  #work .sample-title {
+    font-family: sans-serif; font-size: 0.98rem; font-weight: 700;
+    color: var(--black); line-height: 1.4; margin-bottom: 0.7rem;
+    letter-spacing: -0.01em;
+  }
+  #work .sample-desc {
+    font-size: 0.8rem; color: var(--mid);
+    line-height: 1.75; margin-bottom: 1.4rem;
+  }
+  #work .sample-link {
+    font-family: sans-serif; font-size: 0.7rem;
+    color: var(--accent); text-decoration: none;
+    letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+  #work .sample-link:hover { gap: 0.7rem; }
+  #work .sample-link::after { content: '→'; font-weight: 400; }
+
 </style>
 </head>
 <body>
@@ -292,55 +514,245 @@
   </div>
 
   <div class="hero-stats">
-    <div class="stat-block-header">
-      Toronto Market Snapshot
+    <div class="snapshot-header">
+      Toronto Market Snapshot · By Sector
       <span class="stat-pulse"></span>
     </div>
-    <div class="stat-grid">
+    <div class="snapshot-wrap">
 
-      <div class="stat-card">
-        <div class="stat-value"><span class="counter" data-target="13.4" data-decimals="1">0</span><span class="stat-unit">%</span></div>
-        <div><span class="stat-trend down">↓ 120 bps QoQ</span></div>
-        <div class="stat-label">Downtown Office Vacancy</div>
-        <div class="stat-source">CBRE · Q1 2026</div>
+      <div class="snapshot-tabs" id="snapshotTabs">
+        <button class="snapshot-tab active" onclick="goToSnapshot(0)"><span class="tab-icon">🏭</span>Industrial</button>
+        <button class="snapshot-tab" onclick="goToSnapshot(1)"><span class="tab-icon">🏢</span>Multifamily</button>
+        <button class="snapshot-tab" onclick="goToSnapshot(2)"><span class="tab-icon">🏙️</span>Office</button>
+        <button class="snapshot-tab" onclick="goToSnapshot(3)"><span class="tab-icon">🛍️</span>Retail</button>
+        <button class="snapshot-tab" onclick="goToSnapshot(4)"><span class="tab-icon">🖥️</span>Data Ctrs</button>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-value"><span class="counter" data-target="16.32" data-decimals="2" data-prefix="$">0</span><span class="stat-unit">/SF</span></div>
-        <div><span class="stat-trend down">↓ $0.06 QoQ</span></div>
-        <div class="stat-label">GTA Industrial Avg. Net Rent</div>
-        <div class="stat-source">CBRE · Q1 2026</div>
+      <div class="snapshot-progress">
+        <div class="snapshot-progress-bar" id="snapshotBar"></div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-value"><span class="counter" data-target="2.1" data-decimals="1">0</span><span class="stat-unit">M SF</span></div>
-        <div><span class="stat-trend up">↑ Record High</span></div>
-        <div class="stat-label">Downtown Office Net Absorption</div>
-        <div class="stat-source">CBRE · Q1 2026</div>
-      </div>
+      <div class="snapshot-viewport" id="snapshotViewport">
+        <div class="snapshot-track" id="snapshotTrack">
 
-      <div class="stat-card">
-        <div class="stat-value"><span class="stat-unit">$</span><span class="counter" data-target="675" data-decimals="0">0</span><span class="stat-unit">M</span></div>
-        <div><span class="stat-trend up">↑ 232% YoY</span></div>
-        <div class="stat-label">GTA Multifamily Investment</div>
-        <div class="stat-source">Altus Group · Q1 2026</div>
-      </div>
+          <div class="snapshot-slide">
+            <div class="snapshot-sector-label">Industrial <span class="sector-src">CBRE & Altus · Q1 2026</span></div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Investment Volume</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="1.5" data-decimals="1" data-prefix="$" data-suffix="B">1.5B</span><span class="snapshot-stat-sub">+11% YoY</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">GTA Availability Rate</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="5.0" data-decimals="1" data-suffix="%">5.0%</span><span class="snapshot-stat-sub">Held steady QoQ</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Avg. Net Asking Rent</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="16.32" data-decimals="2" data-prefix="$">16.32</span><span class="snapshot-stat-sub">Per sq. ft.</span></div>
+            </div>
+            <div class="snapshot-trend"><span class="snapshot-trend-arrow">↓</span>Stabilizing after 9 consecutive quarters of rent decline</div>
+          </div>
 
-      <div class="stat-card wide">
-        <div class="stat-value"><span class="counter" data-target="52" data-decimals="0">0</span><span class="stat-unit"> MW</span></div>
-        <div><span class="stat-trend up">↑ Largest in Canadian History</span></div>
-        <div class="stat-label">GTA Data Centre Preleased · CoreWeave led wholesale colocation market</div>
-        <div class="stat-source">CBRE · H1 2025</div>
-      </div>
+          <div class="snapshot-slide">
+            <div class="snapshot-sector-label">Multifamily <span class="sector-src">Altus & CMHC · Q1 2026</span></div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Investment Volume</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="675" data-decimals="0" data-prefix="$" data-suffix="M">675M</span><span class="snapshot-stat-sub">+232% YoY</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Purpose-Built Vacancy</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="3.0" data-decimals="1" data-suffix="%">3.0%</span><span class="snapshot-stat-sub">Highest since 2004</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">YoY Investment Surge</div>
+              <div class="snapshot-stat-value">+<span class="snap-count" data-target="232" data-decimals="0" data-suffix="%">232%</span><span class="snapshot-stat-sub">Toronto +569%</span></div>
+            </div>
+            <div class="snapshot-trend"><span class="snapshot-trend-arrow">↓</span>Vacancy rising, rents softening amid declining migration and condo oversupply</div>
+          </div>
 
+          <div class="snapshot-slide">
+            <div class="snapshot-sector-label">Office <span class="sector-src">CBRE & Altus · Q1 2026</span></div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Investment Volume</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="485" data-decimals="0" data-prefix="$" data-suffix="M">485M</span><span class="snapshot-stat-sub">+103% YoY</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Downtown Vacancy</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="13.4" data-decimals="1" data-suffix="%">13.4%</span><span class="snapshot-stat-sub">↓ 120 bps QoQ</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Downtown Net Absorption</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="2.1" data-decimals="1" data-suffix="M SF">2.1M SF</span><span class="snapshot-stat-sub">Record high</span></div>
+            </div>
+            <div class="snapshot-trend"><span class="snapshot-trend-arrow">↑</span>Largest downtown quarterly absorption in recorded history</div>
+          </div>
+
+          <div class="snapshot-slide">
+            <div class="snapshot-sector-label">Retail <span class="sector-src">Altus & JLL · Q1 2026</span></div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Investment Volume</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="314" data-decimals="0" data-prefix="$" data-suffix="M">314M</span><span class="snapshot-stat-sub">-66% YoY</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Vacancy</div>
+              <div class="snapshot-stat-value">Tight<span class="snapshot-stat-sub">Supply-constrained corridors</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Retail Spending Growth</div>
+              <div class="snapshot-stat-value">+<span class="snap-count" data-target="4.5" data-decimals="1" data-suffix="%">4.5%</span><span class="snapshot-stat-sub">YoY through Nov 2025</span></div>
+            </div>
+            <div class="snapshot-trend"><span class="snapshot-trend-arrow">→</span>Stable fundamentals; volume decline reflects supply constraints, not weak demand</div>
+          </div>
+
+          <div class="snapshot-slide">
+            <div class="snapshot-sector-label">Data Centers <span class="sector-src">CBRE · H1 2025</span></div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">GTA Locations Available</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="3" data-decimals="0">3</span><span class="snapshot-stat-sub">3–6 MW colocation space</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Supply Constraint</div>
+              <div class="snapshot-stat-value">Power<span class="snapshot-stat-sub">Grid capacity binding</span></div>
+            </div>
+            <div class="snapshot-stat">
+              <div class="snapshot-stat-label">Largest Canadian Prelease</div>
+              <div class="snapshot-stat-value"><span class="snap-count" data-target="52" data-decimals="0" data-suffix=" MW">52 MW</span><span class="snapshot-stat-sub">CoreWeave · GTA</span></div>
+            </div>
+            <div class="snapshot-trend"><span class="snapshot-trend-arrow">↑</span>AI demand driving structural supply shortage; power-secured sites at significant premium</div>
+          </div>
+
+        </div>
+      </div>
+      <div class="snapshot-nav">
+        <button class="snapshot-nav-btn" onclick="goToSnapshot((snapIndex - 1 + snapCount) % snapCount)" aria-label="Previous">←</button>
+        <span class="snapshot-nav-indicator" id="snapNavIndicator">1 / 5</span>
+        <button class="snapshot-nav-btn" onclick="goToSnapshot((snapIndex + 1) % snapCount)" aria-label="Next">→</button>
+      </div>
     </div>
-    <div class="stat-block-footer">Q1 2026 · Toronto CRE Research</div>
+    <div class="snapshot-footer">Q1 2026 · Toronto CRE Research</div>
   </div>
 
+
+<svg id="skylineSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 340" preserveAspectRatio="xMidYMax slice" style="position:absolute;bottom:0;left:0;width:100%;height:60%;pointer-events:none;z-index:0;opacity:0.5;">
+  <defs>
+    <style>
+      .sb{fill:#e8cdd6}.sw{fill:#d4a8b8}
+      @keyframes wf{0%,92%,100%{opacity:0}93%,99%{opacity:1}}
+      @keyframes drift{0%{transform:translateX(0)}50%{transform:translateX(-8px)}100%{transform:translateX(0)}}
+      #skyG{animation:drift 20s ease-in-out infinite;transform-origin:center bottom}
+    </style>
+  </defs>
+  <g id="skyG">
+    <rect class="sb" x="0" y="310" width="1440" height="30"/>
+    <!-- Far left low buildings -->
+    <rect class="sb" x="0" y="270" width="38" height="70"/>
+    <rect class="sb" x="42" y="255" width="30" height="85"/>
+    <rect class="sb" x="76" y="265" width="25" height="75"/>
+    <rect class="sb" x="105" y="248" width="35" height="92"/>
+    <rect class="sb" x="144" y="260" width="28" height="80"/>
+    <rect class="sb" x="176" y="240" width="40" height="100"/>
+    <rect class="sb" x="220" y="255" width="30" height="85"/>
+    <rect class="sb" x="254" y="245" width="35" height="95"/>
+    <!-- Financial district left towers -->
+    <rect class="sb" x="293" y="155" width="48" height="175"/>
+    <rect class="sb" x="297" y="146" width="40" height="11"/>
+    <rect class="sb" x="303" y="138" width="28" height="10"/>
+    <rect class="sw" x="299" y="162" width="7" height="9" style="animation:wf 9.2s 1.4s infinite"/>
+    <rect class="sw" x="310" y="162" width="7" height="9" style="animation:wf 7.6s 3.8s infinite"/>
+    <rect class="sw" x="321" y="180" width="7" height="9" style="animation:wf 11s 2.3s infinite"/>
+    <rect class="sw" x="299" y="198" width="7" height="9" style="animation:wf 15s 0.9s infinite"/>
+    <!-- Scotia Plaza style angled top -->
+    <rect class="sb" x="346" y="125" width="55" height="205"/>
+    <polygon class="sb" points="346,125 401,125 395,105 352,105"/>
+    <rect class="sw" x="353" y="132" width="7" height="9" style="animation:wf 8.8s 1.7s infinite"/>
+    <rect class="sw" x="365" y="132" width="7" height="9" style="animation:wf 12.4s 4.2s infinite"/>
+    <rect class="sw" x="377" y="150" width="7" height="9" style="animation:wf 11.8s 2.0s infinite"/>
+    <rect class="sw" x="389" y="168" width="7" height="9" style="animation:wf 8.1s 4.9s infinite"/>
+    <rect class="sw" x="353" y="186" width="7" height="9" style="animation:wf 16s 1.2s infinite"/>
+    <!-- TD Tower flat top -->
+    <rect class="sb" x="406" y="90" width="60" height="240"/>
+    <rect class="sb" x="406" y="84" width="60" height="8"/>
+    <rect class="sw" x="413" y="100" width="7" height="9" style="animation:wf 10.7s 2.6s infinite"/>
+    <rect class="sw" x="425" y="100" width="7" height="9" style="animation:wf 8.2s 0.5s infinite"/>
+    <rect class="sw" x="437" y="118" width="7" height="9" style="animation:wf 9.1s 3.0s infinite"/>
+    <rect class="sw" x="449" y="136" width="7" height="9" style="animation:wf 14.8s 0.7s infinite"/>
+    <rect class="sw" x="413" y="154" width="7" height="9" style="animation:wf 8.6s 4.1s infinite"/>
+    <!-- CN TOWER centrepiece -->
+    <!-- Base legs -->
+    <polygon class="sb" points="498,320 506,320 509,268 521,262 533,268 536,320"/>
+    <!-- Main tapering shaft -->
+    <polygon class="sb" points="509,268 511,235 514,195 516,155 517,110 517,65 523,65 523,110 524,155 526,195 529,235 531,268"/>
+    <!-- Space deck pod -->
+    <ellipse class="sb" cx="520" cy="112" rx="24" ry="14"/>
+    <rect class="sb" x="509" y="106" width="22" height="15"/>
+    <!-- Upper observation level -->
+    <ellipse class="sb" cx="520" cy="94" rx="15" ry="9"/>
+    <rect class="sb" x="514" y="90" width="12" height="10"/>
+    <!-- Antenna needle -->
+    <rect class="sb" x="519" y="8" width="3" height="58"/>
+    <circle class="sb" cx="520.5" cy="8" r="3"/>
+    <!-- Legs crossbar -->
+    <rect class="sb" x="506" y="265" width="28" height="5"/>
+    <!-- First Canadian Place tallest -->
+    <rect class="sb" x="545" y="65" width="62" height="265"/>
+    <rect class="sb" x="545" y="59" width="62" height="8"/>
+    <rect class="sw" x="552" y="75" width="7" height="9" style="animation:wf 9.4s 1.1s infinite"/>
+    <rect class="sw" x="564" y="75" width="7" height="9" style="animation:wf 7.9s 3.6s infinite"/>
+    <rect class="sw" x="576" y="93" width="7" height="9" style="animation:wf 12.6s 5.2s infinite"/>
+    <rect class="sw" x="588" y="93" width="7" height="9" style="animation:wf 10.1s 0.4s infinite"/>
+    <rect class="sw" x="552" y="111" width="7" height="9" style="animation:wf 8.3s 4.7s infinite"/>
+    <rect class="sw" x="576" y="111" width="7" height="9" style="animation:wf 15.2s 2.1s infinite"/>
+    <rect class="sw" x="588" y="129" width="7" height="9" style="animation:wf 9.7s 3.9s infinite"/>
+    <rect class="sw" x="552" y="147" width="7" height="9" style="animation:wf 11.6s 5.6s infinite"/>
+    <rect class="sw" x="576" y="165" width="7" height="9" style="animation:wf 13.9s 0.8s infinite"/>
+    <!-- Commerce Court -->
+    <rect class="sb" x="612" y="138" width="50" height="192"/>
+    <rect class="sb" x="615" y="132" width="44" height="8"/>
+    <rect class="sw" x="619" y="148" width="6" height="8" style="animation:wf 9.0s 1.6s infinite"/>
+    <rect class="sw" x="629" y="148" width="6" height="8" style="animation:wf 12.8s 4.3s infinite"/>
+    <rect class="sw" x="639" y="166" width="6" height="8" style="animation:wf 7.2s 5.7s infinite"/>
+    <rect class="sw" x="649" y="166" width="6" height="8" style="animation:wf 11.3s 2.2s infinite"/>
+    <!-- Bay Adelaide stepped top -->
+    <rect class="sb" x="667" y="112" width="54" height="218"/>
+    <rect class="sb" x="671" y="104" width="46" height="10"/>
+    <rect class="sb" x="677" y="96" width="34" height="10"/>
+    <rect class="sw" x="674" y="122" width="7" height="9" style="animation:wf 8.9s 1.8s infinite"/>
+    <rect class="sw" x="686" y="122" width="7" height="9" style="animation:wf 13.1s 4.5s infinite"/>
+    <rect class="sw" x="698" y="140" width="7" height="9" style="animation:wf 9.3s 0.1s infinite"/>
+    <rect class="sw" x="710" y="140" width="7" height="9" style="animation:wf 7.7s 3.2s infinite"/>
+    <rect class="sw" x="674" y="158" width="7" height="9" style="animation:wf 14.6s 5.0s infinite"/>
+    <rect class="sw" x="698" y="176" width="7" height="9" style="animation:wf 10.5s 2.5s infinite"/>
+    <!-- Mid-right towers -->
+    <rect class="sb" x="727" y="172" width="44" height="158"/>
+    <rect class="sw" x="734" y="184" width="6" height="8" style="animation:wf 9.5s 1.0s infinite"/>
+    <rect class="sw" x="754" y="200" width="6" height="8" style="animation:wf 8.2s 5.4s infinite"/>
+    <rect class="sb" x="776" y="192" width="36" height="138"/>
+    <rect class="sb" x="817" y="162" width="48" height="168"/>
+    <rect class="sb" x="820" y="155" width="42" height="9"/>
+    <rect class="sw" x="824" y="170" width="6" height="8" style="animation:wf 10.6s 2.8s infinite"/>
+    <rect class="sw" x="836" y="170" width="6" height="8" style="animation:wf 7.3s 4.2s infinite"/>
+    <rect class="sw" x="848" y="188" width="6" height="8" style="animation:wf 13.7s 0.6s infinite"/>
+    <!-- Receding right skyline -->
+    <rect class="sb" x="870" y="208" width="34" height="122"/>
+    <rect class="sb" x="909" y="222" width="28" height="108"/>
+    <rect class="sb" x="942" y="198" width="42" height="132"/>
+    <rect class="sb" x="989" y="218" width="30" height="112"/>
+    <rect class="sb" x="1024" y="232" width="28" height="98"/>
+    <rect class="sb" x="1056" y="212" width="38" height="118"/>
+    <rect class="sb" x="1099" y="228" width="32" height="102"/>
+    <rect class="sb" x="1136" y="242" width="26" height="88"/>
+    <rect class="sb" x="1166" y="222" width="36" height="108"/>
+    <rect class="sb" x="1207" y="238" width="28" height="92"/>
+    <rect class="sb" x="1240" y="248" width="30" height="82"/>
+    <rect class="sb" x="1275" y="232" width="36" height="98"/>
+    <rect class="sb" x="1316" y="252" width="26" height="78"/>
+    <rect class="sb" x="1346" y="238" width="30" height="92"/>
+    <rect class="sb" x="1380" y="258" width="60" height="72"/>
+  </g>
+</svg>
 </section>
 
 <!-- SECTORS -->
-<section id="sectors" style="background: var(--accent-light);">
+<section id="sectors">
   <p class="section-label">Market Knowledge</p>
   <h2 class="section-title">Commercial Real Estate Sectors</h2>
   <p class="section-intro">A working knowledge of five core CRE asset classes — their investment drivers, supply dynamics, and macroeconomic sensitivities, with a focus on the Toronto market.</p>
@@ -510,6 +922,38 @@
 </section>
 
 <!-- WORK SAMPLES -->
+
+<section id="submarket-map">
+  <div class="section-label"><span></span>GTA Submarket Map</div>
+  <h2 class="section-title">Toronto Commercial Real Estate Submarkets</h2>
+  <p class="section-intro">Click any submarket to explore key market stats, primary asset classes, and investment themes across the Greater Toronto Area.</p>
+  <div class="map-container">
+    <div class="map-svg-wrap">
+      <svg id="gtaMap" width="100%" viewBox="0 0 700 520" preserveAspectRatio="xMidYMid meet" style="display:block"></svg>
+    </div>
+    <div class="map-panel" id="mapPanel">
+      <div class="map-panel-default" id="mapDefault">
+        <div class="map-panel-icon">📍</div>
+        <div class="map-panel-prompt">Select a submarket</div>
+        <div class="map-panel-sub">Click any area on the map or a chip below to view market stats, primary asset classes, and investment themes.</div>
+        <div class="map-panel-list"><span class="map-chip" onclick="selectSubmarket('Etobicoke')">🏭 Etobicoke</span><span class="map-chip" onclick="selectSubmarket('York-Crosstown')">🏢 York-Crosstown</span><span class="map-chip" onclick="selectSubmarket('West End')">🛍️ West End</span><span class="map-chip" onclick="selectSubmarket('North York')">🏗️ North York</span><span class="map-chip" onclick="selectSubmarket('Uptown')">🏙️ Uptown</span><span class="map-chip" onclick="selectSubmarket('Midtown')">🏢 Midtown</span><span class="map-chip" onclick="selectSubmarket('Downtown')">🏙️ Downtown</span><span class="map-chip" onclick="selectSubmarket('East York')">🏢 East York</span><span class="map-chip" onclick="selectSubmarket('East End')">🛍️ East End</span><span class="map-chip" onclick="selectSubmarket('Scarborough')">🏭 Scarborough</span></div>
+      </div>
+      <div class="map-panel-detail" id="mapDetail" style="display:none">
+        <div class="map-detail-header">
+          <span class="map-detail-icon" id="detailIcon"></span>
+          <div>
+            <div class="map-detail-name" id="detailName"></div>
+            <div class="map-detail-primary" id="detailPrimary"></div>
+          </div>
+        </div>
+        <div class="map-detail-stats" id="detailStats"></div>
+        <div class="map-detail-insight" id="detailInsight"></div>
+        <div class="map-detail-source" id="detailSource"></div>
+        <button onclick="document.getElementById('mapDefault').style.display='flex';document.getElementById('mapDetail').style.display='none';document.querySelectorAll('.submarket-path').forEach(p=>p.setAttribute('fill-opacity','0.25'));" style="margin-top:1rem;font-family:sans-serif;font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;background:none;border:1px solid var(--border);color:var(--light);padding:0.4rem 0.8rem;cursor:pointer;">← All Submarkets</button>
+      </div>
+    </div>
+  </div>
+</section>
 <section id="work">
   <p class="section-label">Work Samples</p>
   <h2 class="section-title">Reports & Financial Models</h2>
@@ -577,6 +1021,217 @@
 </section>
 
 <!-- ABOUT -->
+
+
+<section id="timeline">
+  <div class="section-label"><span></span>Market History</div>
+  <h2 class="section-title">GTA CRE Market Timeline</h2>
+  <p class="section-intro">Key turning points in Toronto commercial real estate from 2018 to Q1 2026 — click any event to read more.</p>
+
+  <div class="vtl-legend">
+    <span class="vtl-legend-item"><span class="vtl-legend-dot" style="background:#c0475f"></span>CRE Event</span>
+    <span class="vtl-legend-item"><span class="vtl-legend-dot" style="background:#1a4a6b"></span>Macro</span>
+    <span class="vtl-legend-item"><span class="vtl-legend-dot" style="background:#8B5E83"></span>Policy</span>
+  </div>
+
+  <div class="vtl-nav">
+    <button class="vtl-arrow" id="vtlPrev" onclick="scrollTimeline(-1)">&#8592;</button>
+    <div class="vtl-scroll-wrap" id="vtlScroll">
+      <div class="vtl-track" style="width:4445px;height:380px">
+        <!-- Horizontal axis line -->
+        <div class="vtl-line" style="top:160px;width:4445px"></div>
+        <!-- Year markers -->
+        <div class="vtl-year" style="left:40px">2018</div><div class="vtl-year-tick" style="left:56px"></div><div class="vtl-year" style="left:322px">2019</div><div class="vtl-year-tick" style="left:338px"></div><div class="vtl-year" style="left:605px">2020</div><div class="vtl-year-tick" style="left:621px"></div><div class="vtl-year" style="left:887px">2021</div><div class="vtl-year-tick" style="left:903px"></div><div class="vtl-year" style="left:1169px">2022</div><div class="vtl-year-tick" style="left:1185px"></div><div class="vtl-year" style="left:1452px">2023</div><div class="vtl-year-tick" style="left:1468px"></div><div class="vtl-year" style="left:1734px">2024</div><div class="vtl-year-tick" style="left:1750px"></div><div class="vtl-year" style="left:2016px">2025</div><div class="vtl-year-tick" style="left:2032px"></div><div class="vtl-year" style="left:2299px">2026</div><div class="vtl-year-tick" style="left:2315px"></div>
+        <!-- Events -->
+        
+      <div class="vtl-dot" style="left:148px;top:154px;background:#8B5E83" onclick="openTlModal(0)"></div>
+      <div class="vtl-connector" style="left:153px;top:142px;height:18px;background:#8B5E83"></div>
+      <div class="vtl-card vtl-card--top" style="left:64px;bottom:178px;border-color:#8B5E83" onclick="openTlModal(0)">
+        <div class="vtl-card-date" style="color:#8B5E83">Jan 2018</div>
+        <div class="vtl-card-title">B-20 Stress Test</div>
+        <div class="vtl-card-short">OSFI tightens mortgage qualification</div>
+        <span class="vtl-badge" style="background:rgba(139,94,131,0.1);color:#8B5E83">Policy</span>
+      </div>
+      <div class="vtl-dot" style="left:359px;top:154px;background:#1a4a6b" onclick="openTlModal(1)"></div>
+      <div class="vtl-connector" style="left:364px;top:160px;height:18px;background:#1a4a6b"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:275px;top:178px;border-color:#1a4a6b" onclick="openTlModal(1)">
+        <div class="vtl-card-date" style="color:#1a4a6b">Oct 2018</div>
+        <div class="vtl-card-title">BoC Peaks at 1.75%</div>
+        <div class="vtl-card-short">Hiking cycle completes</div>
+        <span class="vtl-badge" style="background:rgba(26,74,107,0.1);color:#1a4a6b">Macro</span>
+      </div>
+      <div class="vtl-dot" style="left:689px;top:154px;background:#c0475f" onclick="openTlModal(2)"></div>
+      <div class="vtl-connector" style="left:694px;top:142px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--top" style="left:605px;bottom:178px;border-color:#c0475f" onclick="openTlModal(2)">
+        <div class="vtl-card-date" style="color:#c0475f">Q4 2019</div>
+        <div class="vtl-card-title">Industrial Vacancy Hits Sub-1%</div>
+        <div class="vtl-card-short">Record low across GTA</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:889px;top:154px;background:#1a4a6b" onclick="openTlModal(3)"></div>
+      <div class="vtl-connector" style="left:894px;top:160px;height:18px;background:#1a4a6b"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:805px;top:178px;border-color:#1a4a6b" onclick="openTlModal(3)">
+        <div class="vtl-card-date" style="color:#1a4a6b">Mar 2020</div>
+        <div class="vtl-card-title">BoC Cuts to 0.25%</div>
+        <div class="vtl-card-short">COVID emergency cuts</div>
+        <span class="vtl-badge" style="background:rgba(26,74,107,0.1);color:#1a4a6b">Macro</span>
+      </div>
+      <div class="vtl-dot" style="left:1089px;top:154px;background:#c0475f" onclick="openTlModal(4)"></div>
+      <div class="vtl-connector" style="left:1094px;top:142px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--top" style="left:1005px;bottom:178px;border-color:#c0475f" onclick="openTlModal(4)">
+        <div class="vtl-card-date" style="color:#c0475f">Apr 2020</div>
+        <div class="vtl-card-title">WFH Goes Permanent</div>
+        <div class="vtl-card-short">Toronto office sublease surges</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:1289px;top:154px;background:#c0475f" onclick="openTlModal(5)"></div>
+      <div class="vtl-connector" style="left:1294px;top:160px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:1205px;top:178px;border-color:#c0475f" onclick="openTlModal(5)">
+        <div class="vtl-card-date" style="color:#c0475f">2020</div>
+        <div class="vtl-card-title">E-Commerce Demand Surge</div>
+        <div class="vtl-card-short">Industrial absorption spikes</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:1489px;top:154px;background:#c0475f" onclick="openTlModal(6)"></div>
+      <div class="vtl-connector" style="left:1494px;top:142px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--top" style="left:1405px;bottom:178px;border-color:#c0475f" onclick="openTlModal(6)">
+        <div class="vtl-card-date" style="color:#c0475f">Summer 2021</div>
+        <div class="vtl-card-title">CIBC Square I Opens</div>
+        <div class="vtl-card-short">81 Bay St — largest delivery in a decade</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:1689px;top:154px;background:#c0475f" onclick="openTlModal(7)"></div>
+      <div class="vtl-connector" style="left:1694px;top:160px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:1605px;top:178px;border-color:#c0475f" onclick="openTlModal(7)">
+        <div class="vtl-card-date" style="color:#c0475f">2021–2022</div>
+        <div class="vtl-card-title">GTA CRE Peaks at $41.2B</div>
+        <div class="vtl-card-short">Record institutional capital deployment</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:1889px;top:154px;background:#1a4a6b" onclick="openTlModal(8)"></div>
+      <div class="vtl-connector" style="left:1894px;top:142px;height:18px;background:#1a4a6b"></div>
+      <div class="vtl-card vtl-card--top" style="left:1805px;bottom:178px;border-color:#1a4a6b" onclick="openTlModal(8)">
+        <div class="vtl-card-date" style="color:#1a4a6b">Mar 2022</div>
+        <div class="vtl-card-title">BoC Begins Hiking Cycle</div>
+        <div class="vtl-card-short">Fastest tightening in modern BoC history</div>
+        <span class="vtl-badge" style="background:rgba(26,74,107,0.1);color:#1a4a6b">Macro</span>
+      </div>
+      <div class="vtl-dot" style="left:2089px;top:154px;background:#1a4a6b" onclick="openTlModal(9)"></div>
+      <div class="vtl-connector" style="left:2094px;top:160px;height:18px;background:#1a4a6b"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:2005px;top:178px;border-color:#1a4a6b" onclick="openTlModal(9)">
+        <div class="vtl-card-date" style="color:#1a4a6b">Jun 2022</div>
+        <div class="vtl-card-title">Inflation Peaks at 8.1%</div>
+        <div class="vtl-card-short">40-year high triggers acceleration</div>
+        <span class="vtl-badge" style="background:rgba(26,74,107,0.1);color:#1a4a6b">Macro</span>
+      </div>
+      <div class="vtl-dot" style="left:2289px;top:154px;background:#c0475f" onclick="openTlModal(10)"></div>
+      <div class="vtl-connector" style="left:2294px;top:142px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--top" style="left:2205px;bottom:178px;border-color:#c0475f" onclick="openTlModal(10)">
+        <div class="vtl-card-date" style="color:#c0475f">Late 2022</div>
+        <div class="vtl-card-title">Industrial Supply Wave Begins</div>
+        <div class="vtl-card-short">Speculative deliveries push vacancy higher</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:2489px;top:154px;background:#c0475f" onclick="openTlModal(11)"></div>
+      <div class="vtl-connector" style="left:2494px;top:160px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:2405px;top:178px;border-color:#c0475f" onclick="openTlModal(11)">
+        <div class="vtl-card-date" style="color:#c0475f">2023</div>
+        <div class="vtl-card-title">Oxford / TPG $990M Industrial Sale</div>
+        <div class="vtl-card-short">Largest GTA industrial deal of 2023</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:2689px;top:154px;background:#1a4a6b" onclick="openTlModal(12)"></div>
+      <div class="vtl-connector" style="left:2694px;top:142px;height:18px;background:#1a4a6b"></div>
+      <div class="vtl-card vtl-card--top" style="left:2605px;bottom:178px;border-color:#1a4a6b" onclick="openTlModal(12)">
+        <div class="vtl-card-date" style="color:#1a4a6b">Jul 2023</div>
+        <div class="vtl-card-title">BoC Peaks at 5.0%</div>
+        <div class="vtl-card-short">22-year high halts transactions</div>
+        <span class="vtl-badge" style="background:rgba(26,74,107,0.1);color:#1a4a6b">Macro</span>
+      </div>
+      <div class="vtl-dot" style="left:2889px;top:154px;background:#8B5E83" onclick="openTlModal(13)"></div>
+      <div class="vtl-connector" style="left:2894px;top:160px;height:18px;background:#8B5E83"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:2805px;top:178px;border-color:#8B5E83" onclick="openTlModal(13)">
+        <div class="vtl-card-date" style="color:#8B5E83">Late 2023</div>
+        <div class="vtl-card-title">Canada Sets 500K+ Immigration Targets</div>
+        <div class="vtl-card-short">Record targets re-rate rental demand</div>
+        <span class="vtl-badge" style="background:rgba(139,94,131,0.1);color:#8B5E83">Policy</span>
+      </div>
+      <div class="vtl-dot" style="left:3089px;top:154px;background:#1a4a6b" onclick="openTlModal(14)"></div>
+      <div class="vtl-connector" style="left:3094px;top:142px;height:18px;background:#1a4a6b"></div>
+      <div class="vtl-card vtl-card--top" style="left:3005px;bottom:178px;border-color:#1a4a6b" onclick="openTlModal(14)">
+        <div class="vtl-card-date" style="color:#1a4a6b">Jun 2024</div>
+        <div class="vtl-card-title">BoC Begins Cutting Cycle</div>
+        <div class="vtl-card-short">First of 9 cuts from 5.0%</div>
+        <span class="vtl-badge" style="background:rgba(26,74,107,0.1);color:#1a4a6b">Macro</span>
+      </div>
+      <div class="vtl-dot" style="left:3289px;top:154px;background:#c0475f" onclick="openTlModal(15)"></div>
+      <div class="vtl-connector" style="left:3294px;top:160px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:3205px;top:178px;border-color:#c0475f" onclick="openTlModal(15)">
+        <div class="vtl-card-date" style="color:#c0475f">2024</div>
+        <div class="vtl-card-title">Toronto Office Vacancy Peaks ~19%</div>
+        <div class="vtl-card-short">Highest since early 1990s</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:3489px;top:154px;background:#8B5E83" onclick="openTlModal(16)"></div>
+      <div class="vtl-connector" style="left:3494px;top:142px;height:18px;background:#8B5E83"></div>
+      <div class="vtl-card vtl-card--top" style="left:3405px;bottom:178px;border-color:#8B5E83" onclick="openTlModal(16)">
+        <div class="vtl-card-date" style="color:#8B5E83">Early 2025</div>
+        <div class="vtl-card-title">Immigration Targets Slashed</div>
+        <div class="vtl-card-short">Rental vacancy rises to 3%</div>
+        <span class="vtl-badge" style="background:rgba(139,94,131,0.1);color:#8B5E83">Policy</span>
+      </div>
+      <div class="vtl-dot" style="left:3689px;top:154px;background:#c0475f" onclick="openTlModal(17)"></div>
+      <div class="vtl-connector" style="left:3694px;top:160px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:3605px;top:178px;border-color:#c0475f" onclick="openTlModal(17)">
+        <div class="vtl-card-date" style="color:#c0475f">Feb 2025</div>
+        <div class="vtl-card-title">Hudson's Bay Seeks Creditor Protection</div>
+        <div class="vtl-card-short">Anchor void reshapes retail landscape</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:3889px;top:154px;background:#1a4a6b" onclick="openTlModal(18)"></div>
+      <div class="vtl-connector" style="left:3894px;top:142px;height:18px;background:#1a4a6b"></div>
+      <div class="vtl-card vtl-card--top" style="left:3805px;bottom:178px;border-color:#1a4a6b" onclick="openTlModal(18)">
+        <div class="vtl-card-date" style="color:#1a4a6b">Q1 2025</div>
+        <div class="vtl-card-title">US Tariff Threats Escalate</div>
+        <div class="vtl-card-short">Trade uncertainty dampens industrial outlook</div>
+        <span class="vtl-badge" style="background:rgba(26,74,107,0.1);color:#1a4a6b">Macro</span>
+      </div>
+      <div class="vtl-dot" style="left:4089px;top:154px;background:#c0475f" onclick="openTlModal(19)"></div>
+      <div class="vtl-connector" style="left:4094px;top:160px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--bottom" style="left:4005px;top:178px;border-color:#c0475f" onclick="openTlModal(19)">
+        <div class="vtl-card-date" style="color:#c0475f">2025</div>
+        <div class="vtl-card-title">CIBC Square II Delivers Pre-Leased</div>
+        <div class="vtl-card-short">Office pipeline hits 22-year low</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      <div class="vtl-dot" style="left:4289px;top:154px;background:#c0475f" onclick="openTlModal(20)"></div>
+      <div class="vtl-connector" style="left:4294px;top:142px;height:18px;background:#c0475f"></div>
+      <div class="vtl-card vtl-card--top" style="left:4205px;bottom:178px;border-color:#c0475f" onclick="openTlModal(20)">
+        <div class="vtl-card-date" style="color:#c0475f">Q1 2026</div>
+        <div class="vtl-card-title">Record Downtown Office Absorption</div>
+        <div class="vtl-card-short">2.1M SF; vacancy drops to 13.4%</div>
+        <span class="vtl-badge" style="background:rgba(192,71,95,0.1);color:#c0475f">CRE</span>
+      </div>
+      </div>
+    </div>
+    <button class="vtl-arrow" id="vtlNext" onclick="scrollTimeline(1)">&#8594;</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="vtl-modal" id="vtlModal" onclick="closeTlModal(event)">
+    <div class="vtl-modal-box">
+      <div class="vtl-modal-header">
+        <div>
+          <div class="vtl-modal-date" id="vtlModalDate"></div>
+          <div class="vtl-modal-title" id="vtlModalTitle"></div>
+        </div>
+        <button class="vtl-modal-close" onclick="closeTlModal(null)">✕</button>
+      </div>
+      <div class="vtl-modal-badge-wrap"><span class="vtl-modal-badge" id="vtlModalBadge"></span></div>
+      <div class="vtl-modal-desc" id="vtlModalDesc"></div>
+    </div>
+  </div>
+</section>
 <section id="about">
   <p class="section-label">About</p>
   <h2 class="section-title">Background</h2>
@@ -738,31 +1393,153 @@
 </footer>
 
 <script>
-  // Counter animation
-  function animateCounters() {
-    document.querySelectorAll('.counter').forEach(el => {
+  // Sector snapshot carousel
+  let snapIndex = 0;
+  const snapCount = 5;
+  const snapDuration = 4000;
+  let snapTimer = null;
+  let snapBarTimer = null;
+  let snapPaused = false;
+
+  function animateSnapshot() {
+    const slides = document.querySelectorAll('.snapshot-slide');
+    if (!slides[snapIndex]) return;
+    slides[snapIndex].querySelectorAll('.snap-count').forEach(el => {
       const target = parseFloat(el.dataset.target);
       const decimals = parseInt(el.dataset.decimals) || 0;
       const prefix = el.dataset.prefix || '';
-      const duration = 1800;
+      const suffix = el.dataset.suffix || '';
+      const duration = 900;
       const start = performance.now();
       function update(now) {
         const progress = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        const value = (eased * target).toFixed(decimals);
-        el.textContent = prefix + value;
+        el.textContent = prefix + (eased * target).toFixed(decimals) + suffix;
         if (progress < 1) requestAnimationFrame(update);
       }
       requestAnimationFrame(update);
     });
   }
 
-  // Trigger counters when hero stats scroll into view
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { animateCounters(); statsObserver.disconnect(); } });
-  }, { threshold: 0.3 });
-  const statsEl = document.querySelector('.hero-stats');
-  if (statsEl) statsObserver.observe(statsEl);
+  function renderSnapshot(manual) {
+    const track = document.getElementById('snapshotTrack');
+    if (track) track.style.transform = 'translateX(-' + (snapIndex * 100) + '%)';
+    document.querySelectorAll('.snapshot-tab').forEach((t, i) => t.classList.toggle('active', i === snapIndex));
+    const ind = document.getElementById('snapNavIndicator');
+    if (ind) ind.textContent = (snapIndex + 1) + ' / ' + snapCount;
+    if (manual) resetSnapshotBar();
+    setTimeout(animateSnapshot, 100);
+  }
+
+  function goToSnapshot(i) {
+    snapIndex = i;
+    renderSnapshot(true);
+    clearTimeout(snapTimer);
+    if (!snapPaused) startSnapshotTimer();
+  }
+
+  function startSnapshotTimer() {
+    clearTimeout(snapTimer);
+    resetSnapshotBar();
+    snapTimer = setTimeout(function() {
+      snapIndex = (snapIndex + 1) % snapCount;
+      renderSnapshot(false);
+      startSnapshotTimer();
+    }, snapDuration);
+  }
+
+  function resetSnapshotBar() {
+    const bar = document.getElementById('snapshotBar');
+    if (!bar) return;
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    setTimeout(function() {
+      bar.style.transition = 'width ' + snapDuration + 'ms linear';
+      bar.style.width = '100%';
+    }, 20);
+  }
+
+  const _snapVp = document.getElementById('snapshotViewport');
+  if (_snapVp) {
+    _snapVp.addEventListener('mouseenter', function() { snapPaused = true; clearTimeout(snapTimer); const bar = document.getElementById('snapshotBar'); if (bar) bar.style.transition = 'none'; });
+    _snapVp.addEventListener('mouseleave', function() { snapPaused = false; startSnapshotTimer(); });
+  }
+  const _snapTabs = document.getElementById('snapshotTabs');
+  if (_snapTabs) {
+    _snapTabs.addEventListener('mouseenter', function() { snapPaused = true; clearTimeout(snapTimer); });
+    _snapTabs.addEventListener('mouseleave', function() { snapPaused = false; startSnapshotTimer(); });
+  }
+
+  startSnapshotTimer();
+
+  // GTA Submarket Map — exact paths traced from reference image (City of Toronto)
+  const gtaSubmarkets = {"Etobicoke":{"color":"#993365","label":"#993365","cx":76.9,"cy":265.3,"path":"M 82.2,484.6 L 75.8,478.1 L 61.3,474.8 L 49.0,474.8 L 43.2,479.7 L 41.7,477.7 L 41.1,454.1 L 35.9,439.4 L 35.9,424.0 L 31.8,411.8 L 32.4,390.6 L 37.6,374.3 L 37.6,366.2 L 33.8,360.9 L 23.9,360.1 L 20.1,355.6 L 16.6,344.2 L 20.1,327.9 L 18.4,311.7 L 15.8,308.0 L 5.5,306.8 L 5.5,281.6 L 24.5,262.4 L 27.1,253.9 L 19.2,32.1 L 86.9,39.5 L 88.4,42.3 L 86.6,56.2 L 97.7,70.0 L 99.5,79.7 L 112.6,95.6 L 125.1,101.7 L 117.5,113.9 L 117.5,120.4 L 122.8,129.4 L 124.5,138.3 L 122.8,148.9 L 116.4,160.3 L 121.0,172.5 L 119.3,196.9 L 143.2,232.7 L 139.1,244.9 L 142.0,270.2 L 132.1,284.0 L 124.5,306.8 L 124.5,314.1 L 135.0,325.5 L 133.9,345.9 L 142.6,354.8 L 142.0,371.9 L 152.5,389.8 L 160.1,409.3 L 149.0,421.5 L 153.4,430.9 L 144.7,435.8 L 137.1,434.1 L 119.6,464.3 L 110.8,464.3 L 100.3,476.5 L 87.5,476.5 L 82.2,484.6 Z"},"York-Crosstown":{"color":"#94c9e9","label":"#2a6a9a","cx":190.9,"cy":289.0,"path":"M 153.4,356.8 L 150.5,356.8 L 140.3,342.6 L 140.9,323.9 L 130.4,309.2 L 138.0,287.3 L 147.3,271.0 L 147.3,259.6 L 143.8,250.6 L 147.3,244.1 L 149.3,230.7 L 154.9,238.4 L 158.7,252.7 L 238.0,256.7 L 243.3,269.8 L 254.9,269.8 L 262.2,274.2 L 259.9,299.5 L 265.1,309.2 L 263.7,317.0 L 229.3,316.2 L 226.6,313.3 L 228.4,301.1 L 226.3,298.2 L 184.3,295.8 L 171.2,306.8 L 171.2,328.8 L 166.2,336.5 L 159.2,338.1 L 154.9,343.4 L 155.5,354.8 L 153.4,356.8 Z"},"West End":{"color":"#85ddE9","label":"#2a8a9a","cx":197.3,"cy":367.2,"path":"M 225.2,450.4 L 219.9,439.0 L 206.5,429.3 L 188.4,406.5 L 163.9,404.0 L 159.0,387.4 L 147.9,369.5 L 149.9,365.0 L 157.5,366.6 L 160.7,362.9 L 161.9,347.5 L 173.0,341.0 L 178.8,324.7 L 177.0,312.5 L 183.8,306.4 L 190.2,303.1 L 219.3,304.8 L 221.4,307.6 L 220.2,318.2 L 227.2,326.3 L 225.2,450.4 Z"},"North York":{"color":"#9ee08a","label":"#3a7a2f","cx":283.5,"cy":147.1,"path":"M 391.4,303.1 L 380.9,302.3 L 377.1,288.9 L 364.9,277.5 L 358.8,259.2 L 330.8,257.6 L 324.3,264.9 L 317.9,265.7 L 316.5,249.8 L 321.1,203.4 L 316.8,199.8 L 291.7,197.3 L 288.5,203.4 L 285.5,229.5 L 274.5,234.4 L 273.9,249.8 L 271.2,251.9 L 163.3,245.4 L 153.7,221.3 L 160.7,204.3 L 160.7,198.6 L 158.7,196.5 L 147.0,199.8 L 142.3,188.4 L 126.0,187.6 L 124.5,183.9 L 126.3,172.5 L 122.2,161.1 L 128.0,150.5 L 129.2,132.6 L 124.0,116.4 L 130.4,104.2 L 130.4,96.0 L 117.3,90.7 L 109.1,82.6 L 102.4,70.8 L 103.0,65.1 L 92.5,55.3 L 93.0,48.0 L 96.8,42.7 L 102.7,41.1 L 425.8,44.4 L 427.9,92.0 L 428.5,299.5 L 426.4,302.3 L 418.2,301.5 L 404.8,291.7 L 397.2,302.3 L 391.4,303.1 Z"},"Uptown":{"color":"#f0b4cd","label":"#c0475f","cx":295.3,"cy":262.4,"path":"M 296.3,313.7 L 294.0,313.7 L 294.3,310.0 L 290.8,306.0 L 293.1,290.5 L 288.2,281.2 L 282.3,281.2 L 281.2,286.0 L 270.1,286.0 L 267.5,276.7 L 269.8,271.8 L 266.0,264.1 L 264.2,268.1 L 252.6,264.1 L 250.8,259.2 L 247.3,262.4 L 245.9,258.0 L 271.2,257.6 L 272.4,262.4 L 280.3,252.3 L 279.7,240.1 L 288.2,238.0 L 292.5,231.9 L 290.8,228.7 L 295.5,210.0 L 293.7,206.7 L 298.1,204.7 L 306.8,206.3 L 307.4,212.0 L 312.1,207.1 L 315.3,214.8 L 311.2,236.0 L 312.4,249.0 L 308.9,253.1 L 311.2,261.2 L 309.8,264.1 L 308.0,261.6 L 306.2,264.1 L 302.2,262.4 L 299.8,265.7 L 297.5,263.3 L 293.4,269.0 L 291.7,264.1 L 289.0,271.0 L 290.5,273.0 L 293.4,269.8 L 295.8,273.0 L 298.1,269.0 L 300.4,273.0 L 302.8,267.3 L 304.5,273.0 L 306.2,267.3 L 308.6,273.0 L 310.9,269.8 L 317.3,272.2 L 319.4,280.8 L 317.6,297.0 L 314.1,300.3 L 316.5,303.5 L 314.1,306.8 L 315.3,308.4 L 310.9,312.9 L 296.3,313.7 Z"},"Midtown":{"color":"#9ee08a","label":"#3a7a2f","cx":278.1,"cy":353.7,"path":"M 337.2,389.4 L 234.5,389.4 L 232.5,384.1 L 233.6,326.3 L 267.2,325.1 L 270.4,319.8 L 270.4,306.8 L 265.7,299.5 L 266.3,295.4 L 268.9,292.6 L 284.1,292.6 L 286.7,297.8 L 286.1,313.3 L 288.2,318.6 L 313.5,323.1 L 315.9,332.8 L 312.4,354.8 L 314.7,362.9 L 324.3,372.3 L 337.2,373.1 L 337.2,389.4 Z"},"Downtown":{"color":"#94c9e9","label":"#2a6a9a","cx":290.2,"cy":424.0,"path":"M 320.2,471.6 L 317.0,469.5 L 317.0,458.2 L 314.1,450.8 L 315.3,442.7 L 310.3,435.8 L 269.5,443.1 L 241.5,440.7 L 234.5,452.1 L 231.9,445.9 L 232.5,398.7 L 336.0,398.3 L 338.0,440.3 L 356.7,446.8 L 320.2,471.6 Z"},"East York":{"color":"#85ddE9","label":"#2a8a9a","cx":369.3,"cy":327.2,"path":"M 425.2,372.3 L 388.5,371.5 L 377.4,361.7 L 324.3,364.2 L 318.8,354.8 L 318.2,348.3 L 321.7,333.6 L 318.8,314.9 L 324.0,295.4 L 325.2,275.1 L 331.9,266.5 L 336.6,264.9 L 354.1,265.7 L 359.6,280.8 L 365.2,288.5 L 371.9,292.1 L 373.0,301.1 L 378.0,309.6 L 400.2,309.6 L 409.5,303.1 L 416.5,309.6 L 427.0,312.1 L 429.0,366.2 L 425.2,372.3 Z"},"East End":{"color":"#f0b4cd","label":"#c0475f","cx":381.5,"cy":403.2,"path":"M 368.1,438.2 L 361.7,435.8 L 354.7,438.2 L 351.2,435.0 L 344.2,436.6 L 341.0,433.7 L 344.5,412.6 L 342.1,398.7 L 343.9,377.6 L 347.7,370.7 L 373.9,373.1 L 378.6,369.9 L 389.1,382.1 L 429.0,382.5 L 426.7,414.2 L 428.5,419.9 L 426.4,422.8 L 419.4,425.2 L 394.3,422.8 L 391.4,426.8 L 380.3,429.3 L 368.1,438.2 Z"},"Scarborough":{"color":"#94c9e9","label":"#2a6a9a","cx":543.5,"cy":188.8,"path":"M 437.5,408.9 L 434.3,406.1 L 432.5,46.4 L 670.8,46.0 L 670.5,150.5 L 689.2,195.3 L 691.0,220.5 L 685.1,236.0 L 633.5,284.4 L 603.8,282.8 L 593.8,286.0 L 558.2,308.0 L 542.5,321.8 L 527.3,340.6 L 516.2,347.1 L 511.9,353.2 L 510.7,364.6 L 505.2,370.7 L 497.0,370.7 L 493.5,374.7 L 490.6,371.5 L 484.8,371.5 L 467.8,378.0 L 437.5,408.9 Z"}};
+  const submarketData = {"Etobicoke":{"icon":"\ud83c\udfed","primary":"Industrial \u00b7 Multifamily","stats":[{"label":"GTA West Vacancy","value":"4.7%","note":"Q4 2025"},{"label":"GTA West Avg Rent","value":"$16.56/SF","note":"Q4 2025"},{"label":"Proximity","value":"Pearson Airport","note":"Air cargo corridor"}],"insight":"Etobicoke's position adjacent to Pearson International Airport makes it a key node in the GTA's air cargo and time-sensitive logistics infrastructure.","source":"CBRE GTA West Q4 2025"},"York-Crosstown":{"icon":"\ud83c\udfe2","primary":"Office \u00b7 Multifamily","stats":[{"label":"Market Stage","value":"Emerging","note":"Transit-oriented growth"},{"label":"Purpose-Built Vacancy","value":"3.0%","note":"GTA-wide CMHC 2025"},{"label":"Eglinton LRT","value":"In Progress","note":"Crosstown corridor"}],"insight":"York-Crosstown is positioned along the Eglinton Crosstown LRT corridor, driving mixed-use and transit-oriented development demand.","source":"CMHC 2025 \u00b7 CBRE Q1 2026"},"West End":{"icon":"\ud83d\udecd\ufe0f","primary":"Retail \u00b7 Multifamily","stats":[{"label":"Retail Conditions","value":"Tight Supply","note":"High-demand corridors"},{"label":"Retail Spending Growth","value":"+4.5%","note":"YoY through Nov 2025"},{"label":"Multifamily Vacancy","value":"3.0%","note":"GTA purpose-built"}],"insight":"The West End's high-street corridors maintain some of the tightest retail vacancy in Toronto amid consistent food & beverage and local service demand.","source":"JLL Canada 2026 \u00b7 CMHC 2025"},"North York":{"icon":"\ud83c\udfd7\ufe0f","primary":"Office \u00b7 Multifamily \u00b7 Retail","stats":[{"label":"Multifamily Investment","value":"$675M","note":"+232% YoY (GTA)"},{"label":"Purpose-Built Vacancy","value":"3.0%","note":"Highest since 2004"},{"label":"Market Stage","value":"Suburban Recovery","note":"Lagging downtown"}],"insight":"North York's suburban office market lags downtown but its multifamily fundamentals are drawing institutional capital back to the submarket.","source":"Altus Group & CMHC Q1 2026"},"Uptown":{"icon":"\ud83c\udfd9\ufe0f","primary":"Office \u00b7 Retail \u00b7 Multifamily","stats":[{"label":"Market Trend","value":"Flight to Quality","note":"Class A demand rising"},{"label":"Class A Vacancy \u0394","value":"\u2193 600 bps","note":"YoY improvement"},{"label":"Sublease Trend","value":"\u2193 11 Qtrs","note":"6.5M SF from peak"}],"insight":"Uptown's Yonge-Eglinton node is one of Toronto's most active office recovery submarkets, with Class A assets outperforming broader market averages.","source":"CBRE Q1 2026"},"Midtown":{"icon":"\ud83c\udfe2","primary":"Office \u00b7 Multifamily","stats":[{"label":"Office Investment","value":"$485M","note":"+103% YoY (GTA office)"},{"label":"Downtown Vacancy","value":"13.4%","note":"\u2193 120 bps QoQ"},{"label":"Class A Vacancy \u0394","value":"\u2193 600 bps","note":"YoY improvement"}],"insight":"Midtown is a prime beneficiary of Toronto's office recovery, with Class A leasing momentum spreading south from the Financial Core.","source":"CBRE Q1 2026"},"Downtown":{"icon":"\ud83c\udfd9\ufe0f","primary":"Office \u00b7 Retail \u00b7 Multifamily","stats":[{"label":"Office Vacancy","value":"13.4%","note":"\u2193 120 bps QoQ"},{"label":"Q1 Net Absorption","value":"2.1M SF","note":"Record high"},{"label":"Investment Volume","value":"$485M","note":"+103% YoY"}],"insight":"Toronto's Financial Core is driving national office recovery \u2014 Q1 2026 marked the largest quarterly downtown absorption in recorded history.","source":"CBRE Q1 2026"},"East York":{"icon":"\ud83c\udfe2","primary":"Multifamily \u00b7 Retail","stats":[{"label":"Purpose-Built Vacancy","value":"3.0%","note":"GTA-wide CMHC 2025"},{"label":"Retail Spending Growth","value":"+4.5%","note":"YoY through Nov 2025"},{"label":"Market Character","value":"Established","note":"Low supply, high demand"}],"insight":"East York's established residential character and proximity to the Financial Core supports sustained multifamily demand and tight retail vacancy.","source":"CMHC 2025 \u00b7 JLL Canada 2026"},"East End":{"icon":"\ud83d\udecd\ufe0f","primary":"Retail \u00b7 Multifamily","stats":[{"label":"Retail Conditions","value":"Tight Supply","note":"High-demand corridors"},{"label":"Retail Spending Growth","value":"+4.5%","note":"YoY through Nov 2025"},{"label":"Multifamily Vacancy","value":"3.0%","note":"GTA purpose-built"}],"insight":"The East End \u2014 including The Beaches and Leslieville \u2014 maintains some of the tightest retail vacancy in the GTA, driven by food & beverage and lifestyle tenants.","source":"JLL Canada 2026 \u00b7 CMHC 2025"},"Scarborough":{"icon":"\ud83c\udfed","primary":"Industrial \u00b7 Retail","stats":[{"label":"GTA Availability","value":"5.0%","note":"Held steady QoQ"},{"label":"Avg Net Rent","value":"$16.32/SF","note":"Stabilizing trend"},{"label":"Q1 Net Absorption","value":"2.0M SF","note":"GTA-wide"}],"insight":"Scarborough anchors GTA East industrial demand with strong logistics and last-mile distribution activity along the 401 corridor.","source":"CBRE Q1 2026"}};
+
+  (function() {
+    const svg = document.getElementById('gtaMap');
+    if (!svg) return;
+    const ns = 'http://www.w3.org/2000/svg';
+    svg.setAttribute('viewBox','0 0 700 520');
+
+    Object.entries(gtaSubmarkets).forEach(function([name, d]) {
+      const path = document.createElementNS(ns,'path');
+      path.setAttribute('d', d.path);
+      path.setAttribute('fill', d.color);
+      path.setAttribute('fill-opacity','0.85');
+      path.setAttribute('stroke','#fff');
+      path.setAttribute('stroke-width','3');
+      path.setAttribute('stroke-linejoin','round');
+      path.setAttribute('class','submarket-path');
+      path.setAttribute('data-name', name);
+      path.style.cursor = 'pointer';
+      path.style.transition = 'fill-opacity 0.18s';
+      path.addEventListener('mouseenter', function() {
+        if (this.getAttribute('data-selected')!=='true') this.setAttribute('fill-opacity','1');
+      });
+      path.addEventListener('mouseleave', function() {
+        if (this.getAttribute('data-selected')!=='true') this.setAttribute('fill-opacity','0.85');
+      });
+      path.addEventListener('click', function() {
+        document.querySelectorAll('.submarket-path').forEach(p => {
+          p.setAttribute('fill-opacity','0.85'); p.setAttribute('data-selected','false'); p.setAttribute('stroke-width','3');
+        });
+        this.setAttribute('fill-opacity','1'); this.setAttribute('data-selected','true'); this.setAttribute('stroke-width','4');
+        selectSubmarket(name);
+      });
+      svg.appendChild(path);
+
+      const lbl = document.createElementNS(ns,'text');
+      lbl.setAttribute('x', d.cx); lbl.setAttribute('y', d.cy);
+      lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('dominant-baseline','middle');
+      lbl.setAttribute('fill', d.label); lbl.setAttribute('font-size', name === 'Uptown' ? '7' : '11');
+      lbl.setAttribute('font-weight','700'); lbl.setAttribute('font-family','sans-serif');
+      lbl.setAttribute('pointer-events','none');
+      lbl.textContent = name;
+      svg.appendChild(lbl);
+    });
+  })();
+
+  function selectSubmarket(name) {
+    const data = submarketData[name];
+    if (!data) return;
+    document.getElementById('mapDefault').style.display = 'none';
+    document.getElementById('mapDetail').style.display = 'flex';
+    document.getElementById('detailIcon').textContent = data.icon;
+    document.getElementById('detailName').textContent = name;
+    document.getElementById('detailPrimary').textContent = data.primary;
+    document.getElementById('detailStats').innerHTML = data.stats.map(s =>
+      '<div class="map-stat-row"><span class="map-stat-label">'+s.label+'</span><div><span class="map-stat-value">'+s.value+'</span><span class="map-stat-note">'+s.note+'</span></div></div>'
+    ).join('');
+    document.getElementById('detailInsight').textContent = data.insight;
+    document.getElementById('detailSource').textContent = 'Source: ' + data.source;
+    document.querySelectorAll('.submarket-path').forEach(p => {
+      if (p.getAttribute('data-name')===name) { p.setAttribute('fill-opacity','0.55'); p.setAttribute('stroke-opacity','1'); p.setAttribute('data-selected','true'); }
+      else { p.setAttribute('fill-opacity','0.2'); p.setAttribute('stroke-opacity','0.65'); p.setAttribute('data-selected','false'); }
+    });
+  }
+
+
 
   let sectorIndex = 0;
   const sectorCount = document.querySelectorAll('.sector-card').length;
@@ -786,6 +1563,74 @@
   }
 
   renderSector();
+
+  // Skyline parallax
+  (function() {
+    const skyline = document.getElementById('skylineSvg');
+    if (!skyline) return;
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          const scrollY = window.scrollY;
+          const heroH = document.querySelector('.hero').offsetHeight;
+          if (scrollY < heroH) {
+            const pct = scrollY / heroH;
+            skyline.style.transform = 'translateY(' + (pct * 30) + 'px)';
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+
+
+
+  // Visual Timeline
+  const tlEvents = [{"title": "B-20 Stress Test", "label": "Jan 2018", "type": "policy", "short": "OSFI tightens mortgage qualification", "desc": "OSFI introduces the B-20 stress test, requiring all uninsured borrowers to qualify at contract rate +2%. The policy cools residential leverage and accelerates capital rotation toward purpose-built rental and institutional CRE."}, {"title": "BoC Peaks at 1.75%", "label": "Oct 2018", "type": "macro", "short": "Hiking cycle completes", "desc": "The Bank of Canada completes its post-2015 gradual hiking cycle at 1.75% \u2014 its highest since 2008. Commercial mortgage rates follow. The BoC holds here through all of 2019 before the pandemic forces emergency cuts."}, {"title": "Industrial Vacancy Hits Sub-1%", "label": "Q4 2019", "type": "cre", "short": "Record low across GTA", "desc": "GTA industrial availability falls to a historic sub-1%, driven by sustained e-commerce demand, near-shoring activity, and limited speculative supply. Rents begin rising sharply. The market is structurally supply-constrained heading into the pandemic."}, {"title": "BoC Cuts to 0.25%", "label": "Mar 2020", "type": "macro", "short": "COVID emergency cuts", "desc": "The Bank of Canada makes three emergency cuts in rapid succession \u2014 from 1.75% to 0.25% \u2014 as COVID-19 triggers lockdowns. CERB and CEWS are deployed. Emergency-era monetary policy will hold for nearly two years, fundamentally reshaping CRE capital flows."}, {"title": "WFH Goes Permanent", "label": "Apr 2020", "type": "cre", "short": "Toronto office sublease surges", "desc": "Major financial and tech tenants begin subleasing downtown Toronto office space as remote work is declared a permanent operating model. Sublease availability surges from near-zero to over 6 million SF within 18 months. Office vacancy begins its multi-year climb from ~3%."}, {"title": "E-Commerce Demand Surge", "label": "2020", "type": "cre", "short": "Industrial absorption spikes", "desc": "Online retail penetration accelerates by years in months. GTA industrial absorption hits a record as logistics operators, grocery chains, and 3PLs race to secure last-mile distribution space. Industrial becomes the most sought-after asset class in Canadian CRE."}, {"title": "CIBC Square I Opens", "label": "Summer 2021", "type": "cre", "short": "81 Bay St \u2014 largest delivery in a decade", "desc": "CIBC Square's south tower (81 Bay Street) opens \u2014 the largest new office delivery in Toronto in over a decade at 1.5M SF. Fully pre-leased to CIBC, it represents the last major pre-pandemic office commitment. The north tower breaks ground in March 2021."}, {"title": "GTA CRE Peaks at $41.2B", "label": "2021\u20132022", "type": "cre", "short": "Record institutional capital deployment", "desc": "GTA commercial real estate investment reaches a record $41.2 billion across the GTA and Greater Golden Horseshoe in 2022, per Altus Group \u2014 fuelled by low rates, compressed cap rates, and aggressive institutional capital deployment across all asset classes."}, {"title": "BoC Begins Hiking Cycle", "label": "Mar 2022", "type": "macro", "short": "Fastest tightening in modern BoC history", "desc": "The Bank of Canada initiates its most aggressive tightening cycle in modern history from 0.25%. Within 16 months the overnight rate reaches 5.0% \u2014 a 475 basis point increase. CRE transaction volumes begin to collapse as financing costs surge."}, {"title": "Inflation Peaks at 8.1%", "label": "Jun 2022", "type": "macro", "short": "40-year high triggers acceleration", "desc": "Canadian CPI peaks at 8.1% \u2014 a 40-year high \u2014 driven by supply chain disruptions and pandemic-era stimulus. Construction cost inflation compounds development risk across all CRE sectors. The BoC accelerates its hiking pace in response."}, {"title": "Industrial Supply Wave Begins", "label": "Late 2022", "type": "cre", "short": "Speculative deliveries push vacancy higher", "desc": "The speculative construction boom of 2020\u20132021 begins delivering into a rising interest rate environment. GTA industrial availability starts rising from historic lows as over 20M SF enters the pipeline. Net asking rents begin their multi-year decline."}, {"title": "Oxford / TPG $990M Industrial Sale", "label": "2023", "type": "cre", "short": "Largest GTA industrial deal of 2023", "desc": "Oxford Properties sells a 75% stake in two GTA industrial parks to U.S.-based TPG for $990 million \u2014 the largest GTA industrial transaction of 2023. The deal signals continued institutional conviction in Canadian logistics despite rising vacancy and higher rates."}, {"title": "BoC Peaks at 5.0%", "label": "Jul 2023", "type": "macro", "short": "22-year high halts transactions", "desc": "The Bank of Canada raises the overnight rate to 5.0% \u2014 its highest since 2001. GTA CRE investment falls to $21.5B \u2014 down 30% YoY and the lowest since 2015. Buyers and sellers cannot bridge the cap rate pricing gap created by higher rates."}, {"title": "Canada Sets 500K+ Immigration Targets", "label": "Late 2023", "type": "policy", "short": "Record targets re-rate rental demand", "desc": "The federal government announces over 500,000 new permanent residents per year \u2014 its most ambitious immigration targets in history. The policy turbocharges purpose-built rental underwriting across the GTA. The target will be dramatically reversed within 12 months."}, {"title": "BoC Begins Cutting Cycle", "label": "Jun 2024", "type": "macro", "short": "First of 9 cuts from 5.0%", "desc": "The Bank of Canada makes its first rate cut since the pandemic, from 5.0% to 4.75%. It begins a nine-cut easing cycle reducing the rate to 2.25% by early 2026 \u2014 a 275 bps reduction that reignites CRE capital flows and cap rate compression."}, {"title": "Toronto Office Vacancy Peaks ~19%", "label": "2024", "type": "cre", "short": "Highest since early 1990s", "desc": "Downtown Toronto office vacancy peaks at ~19% \u2014 the highest since the early 1990s recession. The divergence between trophy assets (tightening) and Class B/C (softening) accelerates the flight-to-quality narrative. Office-to-residential conversions hit record levels."}, {"title": "Immigration Targets Slashed", "label": "Early 2025", "type": "policy", "short": "Rental vacancy rises to 3%", "desc": "The federal government announces a dramatic reversal of immigration targets, cutting planned admissions by roughly a third. GTA rental vacancy rises to 3.0% \u2014 the highest since 2004 \u2014 as the immigration-driven demand engine stalls. Purpose-built underwriting is re-assessed."}, {"title": "Hudson's Bay Seeks Creditor Protection", "label": "Feb 2025", "type": "cre", "short": "Anchor void reshapes retail landscape", "desc": "Hudson's Bay Company \u2014 Canada's oldest retailer \u2014 files for creditor protection, triggering closure of all remaining stores. The move creates a large-format retail void across GTA shopping centres. Landlords begin repositioning anchor boxes toward experiential and mixed-use uses."}, {"title": "US Tariff Threats Escalate", "label": "Q1 2025", "type": "macro", "short": "Trade uncertainty dampens industrial outlook", "desc": "Escalating U.S. tariff threats create significant uncertainty for Canada's manufacturing and logistics sectors. GTA industrial leasing activity slows as occupiers defer expansion decisions. Geopolitical trade risk becomes a key headwind to the industrial recovery."}, {"title": "CIBC Square II Delivers Pre-Leased", "label": "2025", "type": "cre", "short": "Office pipeline hits 22-year low", "desc": "CIBC Square's north tower (141 Bay Street) delivers fully pre-leased, completing one of Toronto's most significant office developments. Toronto's new construction pipeline falls to a 22-year low of under 400,000 SF \u2014 a key structural support for the recovery."}, {"title": "Record Downtown Office Absorption", "label": "Q1 2026", "type": "cre", "short": "2.1M SF; vacancy drops to 13.4%", "desc": "Downtown Toronto records 2.1 million SF of net office absorption in Q1 2026 \u2014 the largest single quarter in recorded history (CBRE). Downtown vacancy falls 120 bps to 13.4%. Trophy vacancy drops below 10% for the first time since 2020. Recovery spreads from trophy to Class A."}];
+  const tlColors = {cre:'#c0475f', macro:'#1a4a6b', policy:'#8B5E83'};
+  const tlBgColors = {cre:'rgba(192,71,95,0.1)', macro:'rgba(26,74,107,0.1)', policy:'rgba(139,94,131,0.1)'};
+  const tlLabels = {cre:'CRE', macro:'Macro', policy:'Policy'};
+  let tlOffset = 0;
+  const tlStep = 360;
+
+  function scrollTimeline(dir) {
+    const wrap = document.getElementById('vtlScroll');
+    if (!wrap) return;
+    const track = wrap.querySelector('.vtl-track');
+    const maxScroll = -(track.offsetWidth - wrap.offsetWidth);
+    tlOffset = Math.min(0, Math.max(maxScroll, tlOffset + dir * -tlStep));
+    track.style.transform = 'translateX(' + tlOffset + 'px)';
+    document.getElementById('vtlPrev').disabled = tlOffset >= 0;
+    document.getElementById('vtlNext').disabled = tlOffset <= maxScroll;
+  }
+
+  function openTlModal(idx) {
+    const ev = tlEvents[idx];
+    const color = tlColors[ev.type];
+    const bg = tlBgColors[ev.type];
+    document.getElementById('vtlModalDate').textContent = ev.label;
+    document.getElementById('vtlModalTitle').textContent = ev.title;
+    document.getElementById('vtlModalDesc').textContent = ev.desc;
+    const badge = document.getElementById('vtlModalBadge');
+    badge.textContent = tlLabels[ev.type];
+    badge.style.background = bg;
+    badge.style.color = color;
+    document.getElementById('vtlModal').classList.add('open');
+  }
+
+  function closeTlModal(e) {
+    if (!e || e.target === document.getElementById('vtlModal')) {
+      document.getElementById('vtlModal').classList.remove('open');
+    }
+  }
+
+  // Init arrow states
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('vtlPrev').disabled = true;
+  });
+
 </script>
 </body>
 </html>
